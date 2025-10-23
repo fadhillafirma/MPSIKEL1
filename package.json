@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "name": "project-root",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npm start --prefix ./myapp"
+  }
+}
+
+
