@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Fakultas {
+  id        Int       @id @default(autoincrement())
+  nama      String
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+  prodi     Prodi[]
+}
+
+model Prodi {
+  id          Int       @id @default(autoincrement())
+  nama        String
+  fakultasId  Int
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
+
+  fakultas Fakultas @relation(fields: [fakultasId], references: [id])
+  alumni   Alumni[]
+}
+
+model Alumni {
+  id           Int       @id @default(autoincrement())
+  nama         String
+  nim          String     @unique
+  email        String?
+  tahun_lulus  Int
+  prodiId      Int?
+  createdAt    DateTime?  @default(now())
+  updatedAt    DateTime?  @updatedAt
+
+  prodi          Prodi?          @relation(fields: [prodiId], references: [id])
+  jawaban        Jawaban[]
+  jawabanOpsi    JawabanOpsi[]
+}
+
+model OpsiJawaban {
+  id        Int       @id @default(autoincrement())
+  teks_opsi String
+  nilai     Decimal    @default(0.00)
+  createdAt DateTime?  @default(now())
+  updatedAt DateTime?  @updatedAt
+
+  jawabanOpsi JawabanOpsi[]
+}
+
+model JawabanOpsi {
+  id             Int       @id @default(autoincrement())
+  alumniId       Int
+  opsiJawabanId  Int
+  createdAt      DateTime? @default(now())
+
+  alumni        Alumni       @relation(fields: [alumniId], references: [id])
+  opsiJawaban   OpsiJawaban  @relation(fields: [opsiJawabanId], references: [id])
+  jawaban       Jawaban[]
+}
+
+model Jawaban {
+  id             Int       @id @default(autoincrement())
+  alumniId       Int
+  jawabanOpsiId  Int
+  createdAt      DateTime? @default(now())
+
+  alumni        Alumni       @relation(fields: [alumniId], references: [id])
+  jawabanOpsi   JawabanOpsi  @relation(fields: [jawabanOpsiId], references: [id])
+}
