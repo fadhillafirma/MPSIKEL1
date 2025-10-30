@@ -14,15 +14,17 @@ router.get("/riwayat", (req, res) => {
     SELECT 
       f.nama AS fakultas, 
       p.nama AS prodi, 
-      ROUND(AVG(o.nilai), 2) AS capaian_rata,
+      ROUND(
+        COALESCE(COUNT(DISTINCT jo.alumniId), 0) * 100.0 / 
+        NULLIF(COUNT(DISTINCT a.id), 0), 
+        2
+      ) AS capaian_rata,
       COUNT(DISTINCT a.id) AS jumlah_alumni,
       a.tahun_lulus
     FROM alumni a
     JOIN prodi p ON a.prodiId = p.id
     JOIN fakultas f ON p.fakultasId = f.id
     LEFT JOIN jawaban_opsi jo ON jo.alumniId = a.id
-    LEFT JOIN opsi_jawaban o ON o.id = jo.opsiJawabanId
-    LEFT JOIN jawaban j ON j.jawabanOpsiId = jo.id
     GROUP BY f.nama, p.nama, a.tahun_lulus
     ORDER BY a.tahun_lulus DESC, f.nama, p.nama;
   `;
@@ -34,27 +36,39 @@ router.get("/riwayat", (req, res) => {
     ORDER BY tahun_lulus DESC;
   `;
 
+  // Query untuk mengambil semua fakultas yang ada di database
+  const fakultasQuery = `
+    SELECT DISTINCT nama 
+    FROM fakultas 
+    ORDER BY nama;
+  `;
+
   db.query(capaianQuery, (err, results) => {
     if (err) throw err;
 
     db.query(tahunQuery, (err2, tahunResults) => {
       if (err2) throw err2;
 
-      const totalAlumni = results.reduce((sum, item) => sum + (item.jumlah_alumni || 0), 0);
-      const avgAchievement =
-        results.length > 0
-          ? (
-              results.reduce((sum, item) => sum + parseFloat(item.capaian_rata || 0), 0) /
-              results.length
-            ).toFixed(1)
-          : 0;
-      const totalProdi = new Set(results.map((item) => item.prodi)).size;
-      const totalFakultas = new Set(results.map((item) => item.fakultas)).size;
+      db.query(fakultasQuery, (err3, fakultasResults) => {
+        if (err3) throw err3;
 
-      res.render("index", {
-        data: results,
-        tahunList: tahunResults.map((t) => t.tahun_lulus),
-        stats: { totalAlumni, avgAchievement, totalProdi, totalFakultas },
+        const totalAlumni = results.reduce((sum, item) => sum + (item.jumlah_alumni || 0), 0);
+        const avgAchievement =
+          results.length > 0
+            ? (
+                results.reduce((sum, item) => sum + parseFloat(item.capaian_rata || 0), 0) /
+                results.length
+              ).toFixed(1)
+            : 0;
+        const totalProdi = new Set(results.map((item) => item.prodi)).size;
+        const totalFakultas = new Set(results.map((item) => item.fakultas)).size;
+
+        res.render("index", {
+          data: results,
+          tahunList: tahunResults.map((t) => t.tahun_lulus),
+          fakultasList: fakultasResults.map((f) => f.nama),
+          stats: { totalAlumni, avgAchievement, totalProdi, totalFakultas },
+        });
       });
     });
   });
@@ -66,15 +80,17 @@ router.get("/api/data", (req, res) => {
     SELECT 
       f.nama AS fakultas, 
       p.nama AS prodi, 
-      ROUND(AVG(o.nilai), 2) AS capaian_rata,
+      ROUND(
+        COALESCE(COUNT(DISTINCT jo.alumniId), 0) * 100.0 / 
+        NULLIF(COUNT(DISTINCT a.id), 0), 
+        2
+      ) AS capaian_rata,
       COUNT(DISTINCT a.id) AS jumlah_alumni,
       a.tahun_lulus
     FROM alumni a
     JOIN prodi p ON a.prodiId = p.id
     JOIN fakultas f ON p.fakultasId = f.id
     LEFT JOIN jawaban_opsi jo ON jo.alumniId = a.id
-    LEFT JOIN opsi_jawaban o ON o.id = jo.opsiJawabanId
-    LEFT JOIN jawaban j ON j.jawabanOpsiId = jo.id
     GROUP BY f.nama, p.nama, a.tahun_lulus
     ORDER BY a.tahun_lulus DESC, f.nama, p.nama;
   `;

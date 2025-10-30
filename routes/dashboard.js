@@ -14,17 +14,21 @@ router.get("/", async (req, res) => {
       GROUP BY oj.teks_opsi
     `);
 
-    // Grafik 2️⃣: Rata-rata Capaian IKU per Fakultas
+    // Grafik 2️⃣: Rata-rata Capaian IKU per Fakultas (Rumus IKU1)
     const [capaianFakultas] = await db.promise().query(`
       SELECT 
         f.nama AS fakultas,
-        ROUND(AVG(oj.nilai),2) AS rata_capaian
-      FROM jawaban_opsi jo
-      JOIN opsi_jawaban oj ON jo.opsiJawabanId = oj.id
-      JOIN alumni a ON jo.alumniId = a.id
-      JOIN prodi p ON a.prodiId = p.id
-      JOIN fakultas f ON p.fakultasId = f.id
+        ROUND(
+          COALESCE(COUNT(DISTINCT jo.alumniId), 0) * 100.0 / 
+          NULLIF(COUNT(DISTINCT a.id), 0), 
+          2
+        ) AS rata_capaian
+      FROM fakultas f
+      JOIN prodi p ON p.fakultasId = f.id
+      JOIN alumni a ON a.prodiId = p.id
+      LEFT JOIN jawaban_opsi jo ON jo.alumniId = a.id
       GROUP BY f.id
+      ORDER BY rata_capaian DESC
     `);
 
     // Grafik 3️⃣: Jumlah Alumni per Tahun Lulus
@@ -38,10 +42,17 @@ router.get("/", async (req, res) => {
     // Hitung total statistik tambahan
     const totalAlumni = (await db.promise().query(`SELECT COUNT(*) AS total FROM alumni`))[0][0].total;
     const totalResponden = (await db.promise().query(`SELECT COUNT(DISTINCT alumniId) AS total FROM jawaban_opsi`))[0][0].total;
-    const rataCapaian = (await db.promise().query(`
-      SELECT ROUND(AVG(oj.nilai),2) AS rata FROM jawaban_opsi jo 
-      JOIN opsi_jawaban oj ON jo.opsiJawabanId = oj.id
-    `))[0][0].rata;
+    
+    // Hitung rata-rata capaian IKU1: (Jumlah Alumni Berhasil / Total Alumni) × 100%
+    const rataCapaianResult = await db.promise().query(`
+      SELECT 
+        ROUND(
+          COALESCE((SELECT COUNT(DISTINCT alumniId) FROM jawaban_opsi), 0) * 100.0 / 
+          NULLIF((SELECT COUNT(*) FROM alumni), 0), 
+          2
+        ) AS rata
+    `);
+    const rataCapaian = rataCapaianResult[0][0]?.rata || 0;
 
     res.render("dashboard", {
       data: {

@@ -463,6 +463,11 @@
             <label>Fakultas</label>
             <select id="fakultasFilter">
               <option value="">Semua Fakultas</option>
+              <% if (typeof fakultasList !== 'undefined' && fakultasList && fakultasList.length > 0) { %>
+                <% fakultasList.forEach(function(fakultas) { %>
+                  <option value="<%= fakultas %>"><%= fakultas %></option>
+                <% }) %>
+              <% } %>
             </select>
           </div>
           <div class="filter-group">
@@ -591,14 +596,8 @@
     }
 
     function initializeFilters() {
-      const fakultasSet = new Set(originalData.map(item => item.fakultas));
+      // Fakultas sudah dirender dari server, cukup attach event listener
       const fakultasFilter = document.getElementById('fakultasFilter');
-      fakultasSet.forEach(f => {
-        const option = document.createElement('option');
-        option.value = f;
-        option.textContent = f;
-        fakultasFilter.appendChild(option);
-      });
       fakultasFilter.addEventListener('change', applyFilters);
       document.getElementById('statusFilter').addEventListener('change', applyFilters);
     }
