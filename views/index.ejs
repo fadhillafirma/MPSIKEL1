@@ -485,9 +485,11 @@
             <label>Status</label>
             <select id="statusFilter">
               <option value="">Semua Status</option>
-              <option value="bekerja">Bekerja</option>
-              <option value="wirausaha">Wirausaha</option>
-              <option value="pendidikan">Pendidikan Lanjut</option>
+              <% if (typeof opsiList !== 'undefined' && opsiList && opsiList.length > 0) { %>
+                <% opsiList.forEach(function(opsi) { %>
+                  <option value="<%= (opsi || '').toLowerCase() %>"><%= opsi %></option>
+                <% }) %>
+              <% } %>
             </select>
           </div>
           <button class="btn btn-secondary" onclick="resetFilters()">Reset</button>
@@ -585,7 +587,9 @@
     function initializeStats() {
       const stats = JSON.parse('<%- JSON.stringify(stats || {}) %>');
       document.getElementById('totalAlumni').textContent = (stats.totalAlumni || 0).toLocaleString();
-      document.getElementById('avgAchievement').textContent = (stats.avgAchievement || 0) + '%';
+      // Format rata-rata capaian dengan 2 desimal (sama seperti dashboard)
+      const avgAchievement = parseFloat(stats.avgAchievement || 0);
+      document.getElementById('avgAchievement').textContent = avgAchievement.toFixed(2) + '%';
       document.getElementById('totalProdi').textContent = stats.totalProdi || 0;
     }
 
@@ -739,7 +743,9 @@
         if (!json.success) return;
 
         document.getElementById('totalAlumni').textContent = (json.stats.totalAlumni || 0).toLocaleString();
-        document.getElementById('avgAchievement').textContent = (json.stats.avgAchievement || 0) + '%';
+        // Format rata-rata capaian dengan 2 desimal (sama seperti dashboard)
+        const avgAchievement = parseFloat(json.stats.avgAchievement || 0);
+        document.getElementById('avgAchievement').textContent = avgAchievement.toFixed(2) + '%';
         document.getElementById('totalProdi').textContent = json.stats.totalProdi || 0;
 
         originalData = json.data;

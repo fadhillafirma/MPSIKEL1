@@ -8,8 +8,24 @@ const db = mysql.createConnection({
 });
 
 db.connect((err) => {
-  if (err) throw err;
-  console.log("✅ Terhubung ke database tracer_study_sederhana");
+  if (err) {
+    console.error("❌ Error koneksi ke database:", err.message);
+    console.error("💡 Pastikan MySQL server sudah berjalan!");
+    console.error("💡 Periksa konfigurasi di config/db.js (host, user, password, database)");
+    // Jangan throw error, biarkan aplikasi tetap berjalan
+    // Aplikasi akan error saat route yang butuh database diakses
+  } else {
+    console.log("✅ Terhubung ke database tracer_study_sederhana");
+  }
+});
+
+// Handle error saat koneksi terputus
+db.on("error", (err) => {
+  if (err.code === "PROTOCOL_CONNECTION_LOST") {
+    console.error("❌ Koneksi database terputus. Mencoba reconnect...");
+  } else {
+    console.error("❌ Database error:", err);
+  }
 });
 
 export default db;

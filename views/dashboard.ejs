@@ -84,7 +84,7 @@
 
     .header-right {
       display: flex;
-      gap: 20px;
+      gap: 15px;
       align-items: center;
     }
 
@@ -92,17 +92,75 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      color: var(--primary);
+      color: white;
       text-decoration: none;
       font-size: 14px;
       font-weight: 500;
-      padding: 8px 16px;
-      border-radius: 6px;
-      transition: background 0.3s;
+      padding: 12px 24px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      background: var(--primary);
     }
 
     .header-right a:hover {
-      background: #f0f7ff;
+      background: var(--secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+    }
+
+    /* Alert Messages */
+    .alert {
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin: 15px 0;
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .alert-success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .alert-error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .alert-info {
+      background: #d1ecf1;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .alert-close {
+      margin-left: auto;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+
+    .alert-close:hover {
+      opacity: 1;
     }
 
     /* Main Container */
@@ -120,12 +178,80 @@
       margin-bottom: 30px;
     }
 
+    .visual-card,
+    .table-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .visual-card h3,
+    .table-card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .visual-card .subtext,
+    .table-card .subtext {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: -12px;
+    }
+
+    .prodi-summary-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .prodi-summary-table thead th {
+      background: #f4f6fb;
+      text-align: left;
+      padding: 10px 12px;
+      font-weight: 600;
+      color: var(--text-dark);
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+
+    .prodi-summary-table tbody td {
+      border-bottom: 1px solid #e8eef5;
+      padding: 9px 12px;
+      color: var(--text-dark);
+    }
+
+    .prodi-summary-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .prodi-summary-table tbody tr:nth-child(even) {
+      background: #fbfdff;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 600;
+      background: rgba(25, 118, 210, 0.12);
+      color: var(--primary);
+    }
+
     .stat-card {
       background: var(--card-bg);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 25px;
       text-align: center;
+      position: relative;
     }
 
     .stat-card h3 {
@@ -140,6 +266,91 @@
       font-weight: 700;
       color: var(--primary);
       margin: 0;
+    }
+
+    /* Editable Total Alumni */
+    .stat-card.editable {
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .stat-card.editable:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .edit-icon {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 16px;
+      color: var(--text-muted);
+      opacity: 0.6;
+      transition: opacity 0.3s;
+    }
+
+    .stat-card.editable:hover .edit-icon {
+      opacity: 1;
+    }
+
+    .edit-form {
+      display: none;
+      margin-top: 15px;
+    }
+
+    .edit-form.active {
+      display: block;
+    }
+
+    .edit-form input {
+      width: 100%;
+      padding: 10px;
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+      border: 2px solid var(--primary);
+      border-radius: 8px;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .edit-form input:focus {
+      outline: none;
+      border-color: var(--secondary);
+    }
+
+    .edit-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .edit-btn {
+      padding: 8px 20px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-save {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-save:hover {
+      background: #4caf50;
+      transform: translateY(-2px);
+    }
+
+    .btn-cancel {
+      background: #e0e0e0;
+      color: var(--text-dark);
+    }
+
+    .btn-cancel:hover {
+      background: #d0d0d0;
     }
 
     /* Main Layout */
@@ -347,6 +558,12 @@
         flex-direction: column;
       }
     }
+
+    @media (max-width: 1024px) {
+      .data-visual-section {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 
@@ -362,9 +579,19 @@
       <div class="date" id="currentDate"></div>
     </div>
     <div class="header-right">
-    
+      <a href="/upload">📤 Upload Data CSV</a>
     </div>
   </div>
+
+  <!-- Alert Message -->
+  <% if (typeof msg !== 'undefined' && msg) { %>
+    <div class="container" style="margin-top: 20px;">
+      <div class="alert <%= msg.includes('Error') || msg.includes('Gagal') ? 'alert-error' : (msg.includes('Berhasil') || msg.includes('✅') ? 'alert-success' : 'alert-info') %>">
+        <span><%= msg %></span>
+        <span class="alert-close" onclick="this.parentElement.style.display='none'">×</span>
+      </div>
+    </div>
+  <% } %>
 
   <!-- Main Content -->
   <main class="container">
@@ -372,7 +599,7 @@
     <div class="stats-grid">
       <div class="stat-card">
         <h3>Total Alumni</h3>
-        <p class="stat-value"><%= data.totalAlumni %></p>
+        <p class="stat-value" id="totalAlumniValue"><%= (data.totalAlumniFromTable !== undefined ? data.totalAlumniFromTable : data.totalAlumni) %></p>
       </div>
       <div class="stat-card">
         <h3>Total Responden</h3>
@@ -384,11 +611,13 @@
       </div>
     </div>
 
-    <!-- Main Layout - Two Columns -->
+    <% if (data.prodiData && data.prodiData.length > 0) { %>
+    <% const sortedProdiView = data.prodiData.slice().sort((a, b) => (parseInt(b.total_responden) || 0) - (parseInt(a.total_responden) || 0)); %>
+    <% const topProdiView = sortedProdiView.slice(0, 10); %>
+    <% } %>
+
     <div class="main-content">
-      <!-- Left Column -->
       <div class="left-column">
-        <!-- Circular Chart -->
         <div class="chart-card">
           <h3>Distribusi Status Alumni</h3>
           <div class="circular-chart-wrapper">
@@ -399,7 +628,6 @@
           </div>
         </div>
 
-        <!-- Line Graph -->
         <div class="chart-card">
           <h3>Grafik Pertumbuhan Capaian</h3>
           <div class="chart-container">
@@ -408,7 +636,6 @@
         </div>
       </div>
 
-      <!-- Right Column -->
       <div class="right-column">
         <div class="chart-card" style="height: 100%;">
           <h3>Capaian IKU-1 UNAND:</h3>
@@ -426,18 +653,15 @@
                 <div class="detail-value"><%= data.rataCapaian || '0' %> %</div>
               </div>
               <div class="action-buttons">
-                <a href="/pembobotan" class="action-btn btn-primary">
-                  Detail Pembobotan
-                </a>
-                <a href="/riwayat" class="action-btn btn-success">
-                  Riwayat Capaian
-                </a>
+                <a href="/pembobotan" class="action-btn btn-primary">Detail Pembobotan</a>
+                <a href="/riwayat" class="action-btn btn-success">Riwayat Capaian</a>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </main>
 
   <footer>© 2025 CDC Universitas Andalas — All Rights Reserved</footer>
@@ -491,6 +715,71 @@
         legendItem.appendChild(label);
         legendContainer.appendChild(legendItem);
       });
+    }
+
+    if (data.prodiData && data.prodiData.length > 0) {
+      const sortedForChart = data.prodiData.slice().sort((a, b) => (parseInt(b.total_responden) || 0) - (parseInt(a.total_responden) || 0)).slice(0, 10);
+      const formatLabel = (value) => new Intl.NumberFormat('id-ID').format(value || 0);
+      const labels = sortedForChart.map(item => item.prodi_nama);
+      const alumniSeries = sortedForChart.map(item => parseInt(item.total_alumni) || 0);
+      const respondenSeries = sortedForChart.map(item => parseInt(item.total_responden) || 0);
+
+      const barCanvas = document.getElementById('prodiBarChart');
+      if (barCanvas) {
+        new Chart(barCanvas, {
+          type: 'bar',
+          data: {
+            labels,
+            datasets: [
+              {
+                label: 'Total Alumni',
+                data: alumniSeries,
+                backgroundColor: 'rgba(25, 118, 210, 0.35)',
+                borderColor: '#1976D2',
+                borderWidth: 1.2
+              },
+              {
+                label: 'Total Responden',
+                data: respondenSeries,
+                backgroundColor: 'rgba(102, 187, 106, 0.65)',
+                borderColor: '#43A047',
+                borderWidth: 1.2
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+              x: {
+                ticks: {
+                  maxRotation: 45,
+                  minRotation: 0,
+                  font: {
+                    size: 11
+                  }
+                }
+              },
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: (value) => formatLabel(value)
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                position: 'bottom'
+              },
+              tooltip: {
+                callbacks: {
+                  label: (context) => `${context.dataset.label}: ${formatLabel(context.parsed.y)}`
+                }
+              }
+            }
+          }
+        });
+      }
     }
 
     // 2️⃣ Donut Chart for IKU-1 Capaian
@@ -596,6 +885,8 @@
         }
       });
     }
+
+    // Handle Input Total Alumni per Prodi
   </script>
 </body>
 </html>

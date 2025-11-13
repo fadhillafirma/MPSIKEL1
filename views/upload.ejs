@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upload Data CSV | CDC Universitas Andalas</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary: #1976D2;
+      --secondary: #42A5F5;
+      --accent: #66BB6A;
+      --bg: #f5f7fa;
+      --card-bg: #fff;
+      --text-dark: #2c3e50;
+      --text-muted: #7f8c8d;
+      --radius: 12px;
+      --shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      margin: 0;
+      color: var(--text-dark);
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      background: var(--card-bg);
+      padding: 20px 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .header-left img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+    }
+
+    .header-center {
+      flex: 1;
+      text-align: left;
+      margin-left: 20px;
+    }
+
+    .header-center h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .header-center p {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin: 4px 0 0 0;
+    }
+
+    .header-right {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .header-right a {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      background: #f0f7ff;
+    }
+
+    .header-right a:hover {
+      background: var(--primary);
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 50px;
+    }
+
+    /* Upload Card */
+    .upload-card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 40px;
+      text-align: center;
+    }
+
+    .upload-card h2 {
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+    }
+
+    .upload-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 30px;
+    }
+
+    /* Upload Form */
+    .upload-form {
+      margin-top: 30px;
+    }
+
+    .upload-form label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .import-type-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .import-type-options {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .import-type-options label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-bottom: 0;
+    }
+
+    .import-type-options input[type="radio"] {
+      accent-color: var(--primary);
+      width: 18px;
+      height: 18px;
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .file-input-wrapper input[type="file"] {
+      width: 100%;
+      padding: 15px;
+      border: 2px dashed var(--secondary);
+      border-radius: 8px;
+      background: #f8f9fa;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .file-input-wrapper input[type="file"]:hover {
+      border-color: var(--primary);
+      background: #f0f7ff;
+    }
+
+    .file-input-wrapper input[type="file"]:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .upload-form button {
+      width: 100%;
+      padding: 15px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .upload-form button:hover {
+      background: var(--secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+    }
+
+    .upload-form button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Alert Messages */
+    .alert {
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    .alert-success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+
+    .alert-error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+
+    .alert-info {
+      background: #d1ecf1;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .alert-close {
+      margin-left: auto;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      opacity: 0.7;
+      transition: opacity 0.3s;
+    }
+
+    .alert-close:hover {
+      opacity: 1;
+    }
+
+    /* Info Box */
+    .info-box {
+      background: #e3f2fd;
+      border-left: 4px solid var(--primary);
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 30px;
+      text-align: left;
+    }
+
+    .info-box h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+    }
+
+    .info-box ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .info-box li {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .info-box li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: bold;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header {
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+      }
+
+      .header-left {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .header-center {
+        margin-left: 0;
+        text-align: center;
+      }
+
+      .container {
+        padding: 0 20px;
+      }
+
+      .upload-card {
+        padding: 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <img src="/images/logounand.png" alt="Logo UNAND">
+    </div>
+    <div class="header-center">
+      <h1>CDC Universitas Andalas</h1>
+      <p>Career Development Center Andalas University</p>
+    </div>
+    <div class="header-right">
+      <a href="/dashboard">← Kembali ke Dashboard</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="container">
+    <!-- Alert Message -->
+    <% if (typeof msg !== 'undefined' && msg) { %>
+      <div class="alert <%= msg.includes('Error') || msg.includes('Gagal') ? 'alert-error' : (msg.includes('Berhasil') || msg.includes('✅') ? 'alert-success' : 'alert-info') %>">
+        <span><%= msg %></span>
+        <span class="alert-close" onclick="this.parentElement.style.display='none'">×</span>
+      </div>
+    <% } %>
+
+    <!-- Upload Card -->
+    <div class="upload-card">
+      <h2>📤 Upload Data CSV</h2>
+      <p>Pilih file CSV yang berisi data alumni atau responden untuk diimpor ke sistem</p>
+
+      <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data" class="upload-form">
+        <div class="import-type-group">
+          <label>Tujuan Import</label>
+          <div class="import-type-options">
+            <label>
+              <input type="radio" name="importType" value="alumni" id="importTypeAlumni" checked>
+              <span>Data Alumni (Wisuda)</span>
+            </label>
+            <label>
+              <input type="radio" name="importType" value="responden" id="importTypeResponden">
+              <span>Data Responden Tracer Study</span>
+            </label>
+            <label>
+              <input type="radio" name="importType" value="auto" id="importTypeAuto">
+              <span>Deteksi Otomatis</span>
+            </label>
+          </div>
+        </div>
+
+        <label for="csvfile">Pilih File CSV</label>
+        <div class="file-input-wrapper">
+          <input type="file" name="csvfile" id="csvfile" accept=".csv" required>
+        </div>
+        <button type="submit" id="submitBtn">
+          <span id="btnText">Proses CSV</span>
+          <span id="btnLoader" style="display: none;">⏳ Memproses...</span>
+        </button>
+      </form>
+
+      <!-- Info Box -->
+      <div class="info-box" id="infoBoxAlumni">
+        <h3>📋 Format CSV - Import Data Alumni</h3>
+        <ul>
+          <li>Kolom minimal: <strong>No, NIM, Nama, Program Studi, Fakultas</strong></li>
+          <li>Contoh format: <code>Data Panjang Semua Fakultas Periode Wisuda...</code></li>
+          <li>Data digunakan untuk menambah/memutakhirkan tabel `alumni`.</li>
+          <li>Pastikan nama prodi & fakultas sesuai dengan data master.</li>
+        </ul>
+      </div>
+
+      <div class="info-box" id="infoBoxResponden" style="display: none;">
+        <h3>📋 Format CSV - Import Data Responden</h3>
+        <ul>
+          <li>Kolom minimal: <strong>Nama/Nama Lengkap</strong>, <strong>NIM</strong>, <strong>Program Studi</strong>, <strong>Fakultas</strong> (bisa format tracer maupun format wisuda).</li>
+          <li>Contoh: <code>Data Bersih Sistem Informasi...</code>, <code>databersihkeperawatan.csv</code>, dan file tracer sejenis.</li>
+          <li>Data akan disimpan ke tabel <code>responden</code> dan otomatis memperbarui kartu Total Responden di dashboard.</li>
+          <li>Pastikan nama prodi & fakultas sesuai dengan master data agar baris tidak dilewati.</li>
+        </ul>
+      </div>
+
+      <div class="info-box" id="infoBoxAuto" style="display: none;">
+        <h3>📋 Mode Deteksi Otomatis</h3>
+        <ul>
+          <li>Sistem akan mencoba mengenali tipe CSV secara otomatis.</li>
+          <li>Pilih mode ini bila format file beragam dan ingin sistem menentukan tujuan import.</li>
+          <li>Jika deteksi gagal, silakan pilih tujuan secara manual.</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Handle CSV Upload Form
+    const uploadForm = document.getElementById('uploadForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnText = document.getElementById('btnText');
+    const btnLoader = document.getElementById('btnLoader');
+    const importTypeRadios = document.querySelectorAll('input[name="importType"]');
+    const infoBoxAlumni = document.getElementById('infoBoxAlumni');
+    const infoBoxResponden = document.getElementById('infoBoxResponden');
+    const infoBoxAuto = document.getElementById('infoBoxAuto');
+
+    function updateImportInfo() {
+      let selected = 'alumni';
+      importTypeRadios.forEach(radio => {
+        if (radio.checked) {
+          selected = radio.value;
+        }
+      });
+
+      infoBoxAlumni.style.display = selected === 'alumni' ? 'block' : 'none';
+      infoBoxResponden.style.display = selected === 'responden' ? 'block' : 'none';
+      infoBoxAuto.style.display = selected === 'auto' ? 'block' : 'none';
+
+      if (selected === 'responden') {
+        btnText.textContent = 'Import ke Responden';
+      } else if (selected === 'alumni') {
+        btnText.textContent = 'Import ke Alumni';
+      } else {
+        btnText.textContent = 'Proses Otomatis';
+      }
+    }
+
+    if (importTypeRadios.length > 0) {
+      importTypeRadios.forEach(radio => {
+        radio.addEventListener('change', updateImportInfo);
+      });
+      updateImportInfo();
+    }
+
+    if (uploadForm) {
+      uploadForm.addEventListener('submit', function(e) {
+        const fileInput = document.getElementById('csvfile');
+        if (!fileInput.files || fileInput.files.length === 0) {
+          e.preventDefault();
+          alert('Silakan pilih file CSV terlebih dahulu!');
+          return;
+        }
+
+        // Show loading state
+        submitBtn.disabled = true;
+        btnText.style.display = 'none';
+        btnLoader.style.display = 'inline';
+      });
+    }
+
+    // Auto-hide alert after 5 seconds
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(alert => {
+      setTimeout(() => {
+        alert.style.opacity = '0';
+        setTimeout(() => {
+          alert.style.display = 'none';
+        }, 300);
+      }, 5000);
+    });
+  </script>
+</body>
+</html>
+
