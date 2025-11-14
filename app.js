@@ -2,10 +2,12 @@ import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
+import session from "express-session";
 import logger from "morgan";
 import dashboardRouter from "./routes/dashboard.js";
 import { uploadRouter } from "./routes/dashboard.js";
 import indexRouter from "./routes/index.js";
+import authRouter from "./routes/auth.js";
 // import capaianRouter from "./routes/capaian.js"; // ❌ tidak dipakai
 import pembobotanRouter from "./routes/pembobotan.js";
 const __filename = fileURLToPath(import.meta.url);
@@ -23,6 +25,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// Session configuration
+app.use(session({
+  secret: "cdc-unand-secret-key-2025",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: false, // Set to true if using HTTPS
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }
+}));
+
 
 
 // Static files
@@ -31,6 +45,8 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 app.use("/stylesheets", express.static(path.join(__dirname, "stylesheets")));
 
 // Routes
+// Auth routes (login/logout) - harus di atas routes lain
+app.use("/", authRouter);
 // Mount uploadRouter sebelum indexRouter untuk memastikan route /upload ditangkap
 app.use("/", uploadRouter); // Route untuk upload CSV di root /upload
 app.use("/", indexRouter);

@@ -328,7 +328,7 @@
       <p>Career Development Center Andalas University</p>
     </div>
     <div class="header-right">
-      <a href="/dashboard">← Kembali ke Dashboard</a>
+      <a href="/dashboard">Kembali ke Dashboard</a>
     </div>
   </div>
 
@@ -336,7 +336,7 @@
   <main class="container">
     <!-- Alert Message -->
     <% if (typeof msg !== 'undefined' && msg) { %>
-      <div class="alert <%= msg.includes('Error') || msg.includes('Gagal') ? 'alert-error' : (msg.includes('Berhasil') || msg.includes('✅') ? 'alert-success' : 'alert-info') %>">
+      <div class="alert <%= msg.includes('Error') || msg.includes('Gagal') ? 'alert-error' : (msg.includes('Berhasil') ? 'alert-success' : 'alert-info') %>">
         <span><%= msg %></span>
         <span class="alert-close" onclick="this.parentElement.style.display='none'">×</span>
       </div>
@@ -344,7 +344,7 @@
 
     <!-- Upload Card -->
     <div class="upload-card">
-      <h2>📤 Upload Data CSV</h2>
+      <h2>Upload Data CSV</h2>
       <p>Pilih file CSV yang berisi data alumni atau responden untuk diimpor ke sistem</p>
 
       <div class="upload-layout">
@@ -361,10 +361,6 @@
                   <input type="radio" name="importType" value="responden" id="importTypeResponden">
                   <span>Data Responden Tracer Study</span>
                 </label>
-                <label>
-                  <input type="radio" name="importType" value="auto" id="importTypeAuto">
-                  <span>Deteksi Otomatis</span>
-                </label>
               </div>
             </div>
 
@@ -374,7 +370,7 @@
             </div>
             <button type="submit" id="submitBtn">
               <span id="btnText">Proses CSV</span>
-              <span id="btnLoader" style="display: none;">⏳ Memproses...</span>
+              <span id="btnLoader" style="display: none;">Memproses...</span>
             </button>
           </form>
         </div>
@@ -383,7 +379,7 @@
           <h3>Panduan Format CSV</h3>
           <div class="info-grid">
             <div class="info-box" id="infoBoxAlumni">
-              <h3>📋 Format CSV - Import Data Alumni</h3>
+              <h3>Format CSV - Import Data Alumni</h3>
               <ul>
                 <li>Kolom minimal: <strong>No, NIM, Nama, Program Studi, Fakultas</strong></li>
                 <li>Contoh format: <code>Data Panjang Semua Fakultas Periode Wisuda...</code></li>
@@ -393,7 +389,7 @@
             </div>
 
             <div class="info-box" id="infoBoxResponden" style="display: none;">
-              <h3>📋 Format CSV - Import Data Responden</h3>
+              <h3>Format CSV - Import Data Responden</h3>
               <ul>
                 <li>Kolom minimal: <strong>Nama/Nama Lengkap</strong>, <strong>NIM</strong>, <strong>Program Studi</strong>, <strong>Fakultas</strong> (bisa format tracer maupun format wisuda).</li>
                 <li>Contoh: <code>Data Bersih Sistem Informasi...</code>, <code>databersihkeperawatan.csv</code>, dan file tracer sejenis.</li>
@@ -402,14 +398,6 @@
               </ul>
             </div>
 
-            <div class="info-box" id="infoBoxAuto" style="display: none;">
-              <h3>📋 Mode Deteksi Otomatis</h3>
-              <ul>
-                <li>Sistem akan mencoba mengenali tipe CSV secara otomatis.</li>
-                <li>Pilih mode ini bila format file beragam dan ingin sistem menentukan tujuan import.</li>
-                <li>Jika deteksi gagal, silakan pilih tujuan secara manual.</li>
-              </ul>
-            </div>
           </div>
         </div>
       </div>
@@ -425,7 +413,6 @@
     const importTypeRadios = document.querySelectorAll('input[name="importType"]');
     const infoBoxAlumni = document.getElementById('infoBoxAlumni');
     const infoBoxResponden = document.getElementById('infoBoxResponden');
-    const infoBoxAuto = document.getElementById('infoBoxAuto');
 
     function updateImportInfo() {
       let selected = 'alumni';
@@ -437,14 +424,11 @@
 
       infoBoxAlumni.style.display = selected === 'alumni' ? 'block' : 'none';
       infoBoxResponden.style.display = selected === 'responden' ? 'block' : 'none';
-      infoBoxAuto.style.display = selected === 'auto' ? 'block' : 'none';
 
       if (selected === 'responden') {
         btnText.textContent = 'Import ke Responden';
-      } else if (selected === 'alumni') {
-        btnText.textContent = 'Import ke Alumni';
       } else {
-        btnText.textContent = 'Proses Otomatis';
+        btnText.textContent = 'Import ke Alumni';
       }
     }
 

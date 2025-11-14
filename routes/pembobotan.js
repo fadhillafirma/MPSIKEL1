@@ -1,6 +1,11 @@
 import express from "express";
 import db from "../config/db.js";
+import { requireAuth } from "../middleware/auth.js";
+
 const router = express.Router();
+
+// Apply auth middleware to all pembobotan routes
+router.use(requireAuth);
 
 // Helper function to create table if not exists
 async function ensureUMPTable() {

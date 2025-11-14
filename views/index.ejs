@@ -314,6 +314,7 @@
       height: 100%;
       border-radius: 20px;
       transition: width 0.3s ease;
+      background: #e9ecef;
     }
 
     .progress-fill.green {
@@ -531,23 +532,32 @@
           <tbody id="tableBody">
             <% if (data && data.length > 0) { %>
               <% data.forEach(function(item){ %>
+                <% 
+                  const jumlahAlumni = item.jumlah_alumni || 0;
+                  const capaianRata = (jumlahAlumni === 0 || !item.capaian_rata || isNaN(item.capaian_rata)) ? 0 : parseFloat(item.capaian_rata);
+                  const colorClass = jumlahAlumni === 0 ? '' : (capaianRata >= 75 ? 'green' : capaianRata >= 50 ? 'yellow' : 'red');
+                  const statusClass = jumlahAlumni === 0 ? '' : (capaianRata >= 75 ? 'success' : capaianRata >= 50 ? 'warning' : 'danger');
+                  const statusText = jumlahAlumni === 0 ? '-' : (capaianRata >= 75 ? 'Mencapai Target' : capaianRata >= 50 ? 'Mendekati Target' : 'Perlu Peningkatan');
+                %>
                 <tr>
                   <td><%= item.fakultas %></td>
                   <td><%= item.prodi %></td>
                   <td>
                     <div class="progress-bar">
                       <div 
-                        class="progress-fill <%= item.capaian_rata >= 75 ? 'green' : item.capaian_rata >= 50 ? 'yellow' : 'red' %>" 
-                        data-width="<%= item.capaian_rata %>">
+                        class="progress-fill <%= colorClass %>" 
+                        data-width="<%= capaianRata %>">
                       </div>
-                      <span class="progress-text"><%= item.capaian_rata %>%</span>
+                      <span class="progress-text"><%= capaianRata %>%</span>
                     </div>
                   </td>
-                  <td><%= item.jumlah_alumni || 0 %></td>
+                  <td><%= jumlahAlumni %></td>
                   <td>
-                    <span class="status-badge status-<%= item.capaian_rata >= 75 ? 'success' : item.capaian_rata >= 50 ? 'warning' : 'danger' %>">
-                      <%= item.capaian_rata >= 75 ? 'Mencapai Target' : item.capaian_rata >= 50 ? 'Mendekati Target' : 'Perlu Peningkatan' %>
-                    </span>
+                    <% if (jumlahAlumni === 0) { %>
+                      <span class="status-badge">-</span>
+                    <% } else { %>
+                      <span class="status-badge status-<%= statusClass %>"><%= statusText %></span>
+                    <% } %>
                   </td>
                 </tr>
               <% }) %>
@@ -690,21 +700,26 @@
       }
       
       filteredData.forEach(item => {
-        const colorClass = item.capaian_rata >= 75 ? 'green' : item.capaian_rata >= 50 ? 'yellow' : 'red';
-        const statusClass = item.capaian_rata >= 75 ? 'success' : item.capaian_rata >= 50 ? 'warning' : 'danger';
-        const statusText = item.capaian_rata >= 75 ? 'Mencapai Target' : item.capaian_rata >= 50 ? 'Mendekati Target' : 'Perlu Peningkatan';
+        const jumlahAlumni = item.jumlah_alumni || 0;
+        const capaianRata = (jumlahAlumni === 0 || !item.capaian_rata || isNaN(item.capaian_rata)) ? 0 : parseFloat(item.capaian_rata);
+        const colorClass = jumlahAlumni === 0 ? '' : (capaianRata >= 75 ? 'green' : capaianRata >= 50 ? 'yellow' : 'red');
+        const statusClass = jumlahAlumni === 0 ? '' : (capaianRata >= 75 ? 'success' : capaianRata >= 50 ? 'warning' : 'danger');
+        const statusText = jumlahAlumni === 0 ? '-' : (capaianRata >= 75 ? 'Mencapai Target' : capaianRata >= 50 ? 'Mendekati Target' : 'Perlu Peningkatan');
+        const statusBadge = jumlahAlumni === 0 
+          ? '<span class="status-badge">-</span>' 
+          : `<span class="status-badge status-${statusClass}">${statusText}</span>`;
         const row = `
           <tr>
             <td>${item.fakultas}</td>
             <td>${item.prodi}</td>
             <td>
               <div class="progress-bar">
-                <div class="progress-fill ${colorClass}" data-width="${item.capaian_rata}"></div>
-                <span class="progress-text">${item.capaian_rata}%</span>
+                <div class="progress-fill ${colorClass}" data-width="${capaianRata}"></div>
+                <span class="progress-text">${capaianRata}%</span>
               </div>
             </td>
-            <td>${item.jumlah_alumni || 0}</td>
-            <td><span class="status-badge status-${statusClass}">${statusText}</span></td>
+            <td>${jumlahAlumni}</td>
+            <td>${statusBadge}</td>
           </tr>`;
         tbody.insertAdjacentHTML('beforeend', row);
       });

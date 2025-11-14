@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Admin | CDC Universitas Andalas</title>
+  
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #2F6B31;
+      --primary-dark: #1F4B24;
+      --secondary: #4CA858;
+      --accent: #6BCF78;
+      --text-dark: #1f2e24;
+      --text-muted: #6d7a6f;
+      --white: #ffffff;
+      --shadow: 0 20px 60px rgba(19, 56, 30, 0.3);
+      --shadow-lg: 0 30px 80px rgba(0, 0, 0, 0.4);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Left Section - White Background with Form */
+    .left-section {
+      flex: 1;
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px;
+      position: relative;
+      overflow-y: auto;
+    }
+
+    /* Right Section - Campus Photo */
+    .right-section {
+      flex: 1;
+      background: url('/images/RektoratView.jpg') center/cover no-repeat;
+      background-size: cover;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .right-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(47, 107, 49, 0.3), rgba(31, 75, 36, 0.4));
+      z-index: 1;
+    }
+
+    .right-section-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: var(--white);
+      padding: 40px;
+    }
+
+    .right-section-content img {
+      width: 150px;
+      height: 150px;
+      margin-bottom: 30px;
+      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+    }
+
+    .right-section-content h1 {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      letter-spacing: -0.5px;
+    }
+
+    .right-section-content p {
+      font-size: 18px;
+      font-weight: 300;
+      opacity: 0.95;
+      line-height: 1.6;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      margin-bottom: 10px;
+    }
+
+    .right-section-content .tagline {
+      margin-top: 30px;
+      font-size: 16px;
+      font-weight: 400;
+      opacity: 0.9;
+      font-style: italic;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 480px;
+      animation: slideIn 0.6s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .logo-section img {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 20px;
+      filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
+    }
+
+    .logo-section h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo-section p {
+      font-size: 14px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .form-header {
+      margin-bottom: 35px;
+    }
+
+    .form-header h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    .form-header p {
+      font-size: 14px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .alert-error {
+      background: #fee;
+      border: 1px solid #fcc;
+      color: #c33;
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: shake 0.5s ease-in-out;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      75% { transform: translateX(8px); }
+    }
+
+    .alert-error::before {
+      content: '!';
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 14px;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+      background: #fafafa;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(47, 107, 49, 0.1);
+    }
+
+    .form-group input::placeholder {
+      color: #9ca3af;
+      font-size: 14px;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      transition: all 0.3s;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+    }
+
+    .toggle-password svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--text-muted);
+      transition: stroke 0.3s;
+    }
+
+    .toggle-password:hover svg {
+      stroke: var(--primary);
+    }
+
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      font-size: 13px;
+    }
+
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--text-muted);
+    }
+
+    .remember-me input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      accent-color: var(--primary);
+    }
+
+    .forgot-password {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+      font-size: 13px;
+    }
+
+    .forgot-password:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--white);
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(47, 107, 49, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-login::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn-login:hover::before {
+      left: 100%;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(47, 107, 49, 0.4);
+    }
+
+    .btn-login:active {
+      transform: translateY(0);
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 25px;
+      border-top: 1px solid #e5e7eb;
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    /* Responsive */
+    @media (max-width: 968px) {
+      body {
+        flex-direction: column;
+      }
+
+      .left-section {
+        flex: 1;
+        padding: 40px 30px;
+      }
+
+      .right-section {
+        flex: 0 0 300px;
+        min-height: 300px;
+      }
+
+      .right-section-content {
+        padding: 30px 20px;
+      }
+
+      .right-section-content img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 20px;
+      }
+
+      .right-section-content h1 {
+        font-size: 28px;
+      }
+
+      .right-section-content p {
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .left-section {
+        padding: 30px 20px;
+      }
+
+      .login-container {
+        max-width: 100%;
+      }
+
+      .logo-section img {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 15px;
+      }
+
+      .logo-section h1 {
+        font-size: 24px;
+      }
+
+      .form-header h2 {
+        font-size: 26px;
+      }
+
+      .form-group input {
+        padding: 12px 14px;
+        font-size: 14px;
+      }
+
+      .right-section {
+        flex: 0 0 250px;
+        min-height: 250px;
+      }
+
+      .right-section-content h1 {
+        font-size: 24px;
+      }
+
+      .right-section-content p {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .form-header h2 {
+        font-size: 24px;
+      }
+
+      .right-section {
+        display: none;
+      }
+    }
+
+    /* Loading state */
+    .btn-login:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <!-- Left Section - White Background with Login Form -->
+  <div class="left-section">
+    <div class="login-container">
+      <div class="logo-section">
+        <img src="/images/logounand.png" alt="Logo UNAND">
+        <h1>CDC Universitas Andalas</h1>
+        <p>Career Development Center</p>
+      </div>
+
+      <div class="form-header">
+        <h2>Selamat Datang</h2>
+        <p>Masuk ke akun admin Anda</p>
+      </div>
+
+      <% if (error) { %>
+        <div class="alert-error">
+          <%= error %>
+        </div>
+      <% } %>
+
+      <form action="/login" method="POST" id="loginForm">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input 
+            type="text" 
+            id="username" 
+            name="username" 
+            placeholder="Masukkan username Anda"
+            required
+            autocomplete="username"
+            autofocus
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="password-wrapper">
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              placeholder="Masukkan password Anda"
+              required
+              autocomplete="current-password"
+            >
+            <button type="button" class="toggle-password" onclick="togglePassword()" id="togglePasswordBtn">
+              <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+              <svg id="eyeSlashIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="display: none;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="form-options">
+          <label class="remember-me">
+            <input type="checkbox" name="remember" id="remember">
+            <span>Ingat saya</span>
+          </label>
+          <a href="#" class="forgot-password">Lupa password?</a>
+        </div>
+
+        <button type="submit" class="btn-login" id="loginBtn">
+          Masuk
+        </button>
+      </form>
+
+      <div class="form-footer">
+        <p>© 2025 CDC Universitas Andalas. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Section - Campus Photo -->
+  <div class="right-section">
+    <div class="right-section-content">
+      <img src="/images/logounand.png" alt="Logo UNAND">
+      <h1>CDC Universitas Andalas</h1>
+      <p>Career Development Center</p>
+      <p class="tagline">Membangun Karir, Mengukir Masa Depan</p>
+    </div>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const passwordInput = document.getElementById('password');
+      const eyeIcon = document.getElementById('eyeIcon');
+      const eyeSlashIcon = document.getElementById('eyeSlashIcon');
+      
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        eyeIcon.style.display = 'none';
+        eyeSlashIcon.style.display = 'block';
+      } else {
+        passwordInput.type = 'password';
+        eyeIcon.style.display = 'block';
+        eyeSlashIcon.style.display = 'none';
+      }
+    }
+
+    // Form submission
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      const btn = document.getElementById('loginBtn');
+      btn.disabled = true;
+      btn.textContent = 'Memproses...';
+    });
+
+    // Auto focus on username if error
+    var errorAlert = document.querySelector('.alert-error');
+    if (errorAlert) {
+      setTimeout(function() {
+        document.getElementById('username').focus();
+      }, 100);
+    }
+  </script>
+</body>
+</html>

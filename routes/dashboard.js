@@ -5,6 +5,7 @@ import { fileURLToPath } from "url";
 import { spawn } from "child_process";
 import fs from "fs";
 import { createRequire } from "module";
+import { requireAuth } from "../middleware/auth.js";
 
 const require = createRequire(import.meta.url);
 const multer = require("multer");
@@ -13,6 +14,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const router = express.Router();
+
+// Apply auth middleware to all dashboard routes
+router.use(requireAuth);
 
 // Helper function untuk memastikan tabel settings ada
 async function ensureSettingsTable() {
@@ -228,6 +232,9 @@ router.get("/", async (req, res) => {
 // Karena form action="/upload", kita perlu export router ini atau buat route terpisah
 // Untuk sementara, kita buat route di root level
 export const uploadRouter = express.Router();
+
+// Apply auth middleware to upload routes
+uploadRouter.use(requireAuth);
 
 // 🟢 Route: GET /upload - Halaman upload CSV
 uploadRouter.get("/upload", (req, res) => {

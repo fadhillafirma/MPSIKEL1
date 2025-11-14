@@ -1,11 +1,12 @@
 import express from "express";
 import db from "../config/db.js";
+import { requireAuth } from "../middleware/auth.js";
 
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  // Redirect root path to dashboard
-  res.redirect("/dashboard");
+  // Redirect root path to login
+  res.redirect("/login");
 });
 
 // Helper function untuk memastikan tabel settings ada (sama seperti di dashboard)
@@ -42,28 +43,36 @@ async function ensureSettingsTable() {
 }
 
 // Route untuk halaman riwayat capaian
-router.get("/riwayat", async (req, res) => {
+router.get("/riwayat", requireAuth, async (req, res) => {
   try {
     // Pastikan tabel settings ada
     await ensureSettingsTable();
 
+    // Query menggunakan rumus yang sama dengan dashboard: (Jumlah Responden / Total Alumni) × 100%
+    // Menggunakan tabel responden (bukan jawaban_opsi) dan jumlah_input dari prodi
+    // Menghitung capaian per prodi secara keseluruhan (sama seperti dashboard)
     const capaianQuery = `
       SELECT 
         f.nama AS fakultas, 
         p.nama AS prodi, 
         ROUND(
-          COALESCE(COUNT(DISTINCT jo.alumniId), 0) * 100.0 / 
-          NULLIF(COUNT(DISTINCT a.id), 0), 
+          COALESCE(
+            (SELECT COUNT(*) FROM responden r WHERE r.prodiId = p.id), 
+            0
+          ) * 100.0 / 
+          NULLIF(
+            COALESCE(p.jumlah_input, (SELECT COUNT(*) FROM alumni a2 WHERE a2.prodiId = p.id), 0), 
+            0
+          ), 
           2
         ) AS capaian_rata,
-        COUNT(DISTINCT a.id) AS jumlah_alumni,
-        a.tahun_lulus
-      FROM alumni a
-      JOIN prodi p ON a.prodiId = p.id
+        COALESCE(p.jumlah_input, (SELECT COUNT(*) FROM alumni a3 WHERE a3.prodiId = p.id), 0) AS jumlah_alumni,
+        MIN(a.tahun_lulus) AS tahun_lulus
+      FROM prodi p
       JOIN fakultas f ON p.fakultasId = f.id
-      LEFT JOIN jawaban_opsi jo ON jo.alumniId = a.id
-      GROUP BY f.nama, p.nama, a.tahun_lulus
-      ORDER BY a.tahun_lulus DESC, f.nama, p.nama;
+      LEFT JOIN alumni a ON a.prodiId = p.id
+      GROUP BY f.nama, p.nama, p.id, p.jumlah_input
+      ORDER BY f.nama, p.nama;
     `;
 
     const tahunQuery = `
@@ -93,9 +102,9 @@ router.get("/riwayat", async (req, res) => {
     );
     const totalAlumni = settingsResult.length > 0 ? parseInt(settingsResult[0].setting_value) || 0 : 0;
 
-    // Hitung total responden (sama seperti dashboard)
+    // Hitung total responden (sama seperti dashboard) - menggunakan tabel responden
     const [respondenResult] = await db.promise().query(
-      `SELECT COUNT(DISTINCT alumniId) AS total FROM jawaban_opsi`
+      `SELECT COUNT(*) AS total FROM responden`
     );
     const totalResponden = respondenResult[0]?.total || 0;
 
@@ -137,28 +146,36 @@ router.get("/riwayat", async (req, res) => {
 });
 
 // API untuk refresh data (tanpa reload)
-router.get("/api/data", async (req, res) => {
+router.get("/api/data", requireAuth, async (req, res) => {
   try {
     // Pastikan tabel settings ada
     await ensureSettingsTable();
 
+    // Query menggunakan rumus yang sama dengan dashboard: (Jumlah Responden / Total Alumni) × 100%
+    // Menggunakan tabel responden (bukan jawaban_opsi) dan jumlah_input dari prodi
+    // Menghitung capaian per prodi secara keseluruhan (sama seperti dashboard)
     const sql = `
       SELECT 
         f.nama AS fakultas, 
         p.nama AS prodi, 
         ROUND(
-          COALESCE(COUNT(DISTINCT jo.alumniId), 0) * 100.0 / 
-          NULLIF(COUNT(DISTINCT a.id), 0), 
+          COALESCE(
+            (SELECT COUNT(*) FROM responden r WHERE r.prodiId = p.id), 
+            0
+          ) * 100.0 / 
+          NULLIF(
+            COALESCE(p.jumlah_input, (SELECT COUNT(*) FROM alumni a2 WHERE a2.prodiId = p.id), 0), 
+            0
+          ), 
           2
         ) AS capaian_rata,
-        COUNT(DISTINCT a.id) AS jumlah_alumni,
-        a.tahun_lulus
-      FROM alumni a
-      JOIN prodi p ON a.prodiId = p.id
+        COALESCE(p.jumlah_input, (SELECT COUNT(*) FROM alumni a3 WHERE a3.prodiId = p.id), 0) AS jumlah_alumni,
+        MIN(a.tahun_lulus) AS tahun_lulus
+      FROM prodi p
       JOIN fakultas f ON p.fakultasId = f.id
-      LEFT JOIN jawaban_opsi jo ON jo.alumniId = a.id
-      GROUP BY f.nama, p.nama, a.tahun_lulus
-      ORDER BY a.tahun_lulus DESC, f.nama, p.nama;
+      LEFT JOIN alumni a ON a.prodiId = p.id
+      GROUP BY f.nama, p.nama, p.id, p.jumlah_input
+      ORDER BY f.nama, p.nama;
     `;
 
     // Ambil total alumni dari settings (sama seperti dashboard)
@@ -167,9 +184,9 @@ router.get("/api/data", async (req, res) => {
     );
     const totalAlumni = settingsResult.length > 0 ? parseInt(settingsResult[0].setting_value) || 0 : 0;
 
-    // Hitung total responden (sama seperti dashboard)
+    // Hitung total responden (sama seperti dashboard) - menggunakan tabel responden
     const [respondenResult] = await db.promise().query(
-      `SELECT COUNT(DISTINCT alumniId) AS total FROM jawaban_opsi`
+      `SELECT COUNT(*) AS total FROM responden`
     );
     const totalResponden = respondenResult[0]?.total || 0;
 
