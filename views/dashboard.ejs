@@ -108,6 +108,74 @@
       box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
     }
 
+    /* Navigation Section */
+    .navigation-section {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px 25px;
+      margin-bottom: 30px;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .navigation-section h2 {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin: 0;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.3s;
+      color: white;
+      background: var(--primary);
+    }
+
+    .nav-btn:hover {
+      background: var(--secondary);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(47, 107, 49, 0.3);
+    }
+
+    .nav-btn.upload {
+      background: var(--accent);
+    }
+
+    .nav-btn.upload:hover {
+      background: #4caf50;
+      box-shadow: 0 4px 12px rgba(102, 187, 106, 0.3);
+    }
+
+    .nav-btn.profile {
+      background: #6366f1;
+    }
+
+    .nav-btn.profile:hover {
+      background: #4f46e5;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
     /* Alert Messages */
     .alert {
       padding: 15px 20px;
@@ -579,7 +647,7 @@
       <div class="date" id="currentDate"></div>
     </div>
     <div class="header-right">
-      <a href="/upload">Upload Data CSV</a>
+      <a href="/logout">Logout</a>
     </div>
   </div>
 
@@ -595,6 +663,28 @@
 
   <!-- Main Content -->
   <main class="container">
+    <!-- Navigation Section -->
+    <div class="navigation-section">
+      <h2>Menu Utama</h2>
+      <div class="nav-buttons">
+        <a href="/upload" class="nav-btn upload">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Upload Data CSV
+        </a>
+        <a href="/profile" class="nav-btn profile">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          Profil Admin
+        </a>
+      </div>
+    </div>
+
     <!-- Stats Grid -->
     <div class="stats-grid">
       <div class="stat-card">
