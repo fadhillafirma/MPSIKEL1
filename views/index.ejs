@@ -8,6 +8,8 @@
   <!-- Google Font & Chart.js -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
     :root {
@@ -256,6 +258,35 @@
       margin-bottom: 20px;
     }
 
+    .export-buttons {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-export {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      background: #f8f9fa;
+      color: var(--text-dark);
+      border: 1px solid #e9ecef;
+    }
+
+    .btn-export:hover {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+      transform: translateY(-1px);
+    }
+
     .chart-wrapper {
       height: 350px;
       position: relative;
@@ -430,6 +461,14 @@
       <div class="date" id="currentDate"></div>
     </div>
     <div class="header-right">
+      <button class="btn" onclick="exportFullPage()" style="background: #f59e0b; border: none; cursor: pointer; color: white;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        Export PDF
+      </button>
       <a href="/dashboard">Dashboard</a>
     </div>
   </div>
@@ -501,7 +540,17 @@
     <div class="chart-card">
       <div class="card-header">
         <h2>Grafik Capaian IKU-1</h2>
-        <button class="btn btn-small" onclick="toggleChartType()">Ganti Tampilan</button>
+        <div style="display: flex; gap: 10px; align-items: center;">
+          <button class="btn-export" onclick="exportChart('barChart', 'grafik-capaian-iku1')" title="Export sebagai PNG">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="17 8 12 3 7 8"></polyline>
+              <line x1="12" y1="3" x2="12" y2="15"></line>
+            </svg>
+            Export PNG
+          </button>
+          <button class="btn btn-small" onclick="toggleChartType()">Ganti Tampilan</button>
+        </div>
       </div>
       <div class="chart-wrapper">
         <canvas id="barChart"></canvas>
@@ -775,6 +824,123 @@
 
     // Uncomment to enable auto-refresh
     // setInterval(autoRefreshDashboard, 5000);
+
+    // Export Chart Function - Export individual chart as PNG
+    function exportChart(canvasId, fileName) {
+      try {
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) {
+          alert('Chart tidak ditemukan!');
+          return;
+        }
+
+        // Get chart instance
+        const chart = Chart.getChart(canvasId);
+        if (!chart) {
+          alert('Chart belum dimuat!');
+          return;
+        }
+
+        // Export chart as PNG using Chart.js built-in method
+        const url = chart.toBase64Image('image/png', 1);
+        
+        // Create download link
+        const link = document.createElement('a');
+        link.download = `${fileName || 'chart'}-${new Date().getTime()}.png`;
+        link.href = url;
+        link.click();
+
+        // Show success message
+        console.log('Chart berhasil diekspor!');
+      } catch (error) {
+        console.error('Error exporting chart:', error);
+        alert('Gagal mengekspor chart. Silakan coba lagi.');
+      }
+    }
+
+    // Export Full Page as PDF
+    async function exportFullPage() {
+      try {
+        // Show loading message
+        const btn = event.target.closest('button');
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span>Memproses...</span>';
+
+        // Wait a bit for any animations to complete
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // Get main content area (exclude header and footer)
+        const element = document.querySelector('.container');
+        if (!element) {
+          alert('Konten tidak ditemukan!');
+          return;
+        }
+
+        // Use html2canvas to capture the content
+        if (typeof html2canvas === 'undefined') {
+          alert('Library export tidak dimuat. Silakan refresh halaman.');
+          return;
+        }
+
+        const canvas = await html2canvas(element, {
+          backgroundColor: '#ffffff',
+          scale: 2,
+          logging: false,
+          useCORS: true,
+          windowWidth: element.scrollWidth,
+          windowHeight: element.scrollHeight
+        });
+
+        // Convert canvas to image
+        const imgData = canvas.toDataURL('image/png');
+
+        // Create PDF using jsPDF
+        if (typeof window.jspdf === 'undefined') {
+          // Fallback: download as PNG
+          const link = document.createElement('a');
+          link.download = `riwayat-capaian-${new Date().getTime()}.png`;
+          link.href = imgData;
+          link.click();
+        } else {
+          const { jsPDF } = window.jspdf;
+          const pdf = new jsPDF('p', 'mm', 'a4');
+          
+          const imgWidth = 210; // A4 width in mm
+          const pageHeight = 297; // A4 height in mm
+          const imgHeight = (canvas.height * imgWidth) / canvas.width;
+          let heightLeft = imgHeight;
+          let position = 0;
+
+          // Add first page
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+
+          // Add additional pages if needed
+          while (heightLeft > 0) {
+            position = heightLeft - imgHeight;
+            pdf.addPage();
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+          }
+
+          // Save PDF
+          pdf.save(`riwayat-capaian-${new Date().getTime()}.pdf`);
+        }
+
+        // Restore button
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+
+        alert('Halaman berhasil diekspor!');
+      } catch (error) {
+        console.error('Error exporting page:', error);
+        alert('Gagal mengekspor halaman. Silakan coba lagi.');
+        if (event.target.closest('button')) {
+          event.target.closest('button').disabled = false;
+        }
+      }
+    }
   </script>
 </body>
 </html>

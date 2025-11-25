@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verifikasi OTP | CDC Universitas Andalas</title>
+  
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #2F6B31;
+      --primary-dark: #1F4B24;
+      --secondary: #4CA858;
+      --accent: #6BCF78;
+      --text-dark: #1f2e24;
+      --text-muted: #6d7a6f;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .left-section {
+      flex: 1;
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px;
+      position: relative;
+      overflow-y: auto;
+    }
+
+    .right-section {
+      flex: 1;
+      background: url('/images/RektoratView.jpg') center/cover no-repeat;
+      background-size: cover;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .right-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(47, 107, 49, 0.3), rgba(31, 75, 36, 0.4));
+      z-index: 1;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 480px;
+      animation: slideIn 0.6s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .logo-section {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .logo-section img {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 20px;
+    }
+
+    .logo-section h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .form-header {
+      margin-bottom: 35px;
+    }
+
+    .form-header h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    .form-header p {
+      font-size: 14px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .email-info {
+      background: #e3f2fd;
+      border: 1px solid #90caf9;
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #1565c0;
+      text-align: center;
+    }
+
+    .alert-error {
+      background: #fee;
+      border: 1px solid #fcc;
+      color: #c33;
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-size: 13px;
+    }
+
+    .alert-success {
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+      padding: 12px 16px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-size: 13px;
+    }
+
+    .form-group {
+      margin-bottom: 22px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    .otp-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e5e7eb;
+      border-radius: 10px;
+      font-size: 24px;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+      letter-spacing: 8px;
+      transition: all 0.3s ease;
+      background: #fafafa;
+      font-weight: 600;
+    }
+
+    .otp-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: var(--white);
+      box-shadow: 0 0 0 3px rgba(47, 107, 49, 0.1);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--white);
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 25px rgba(47, 107, 49, 0.3);
+      margin-bottom: 20px;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(47, 107, 49, 0.4);
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .back-link {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .back-link a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .back-link a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 968px) {
+      body {
+        flex-direction: column;
+      }
+
+      .right-section {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="left-section">
+    <div class="login-container">
+      <div class="logo-section">
+        <img src="/images/logounand.png" alt="Logo UNAND">
+        <h1>CDC Universitas Andalas</h1>
+      </div>
+
+      <div class="form-header">
+        <h2>Verifikasi OTP</h2>
+        <p>Masukkan kode OTP yang telah dikirim ke email Anda</p>
+      </div>
+
+      <div class="email-info">
+        📧 OTP telah dikirim ke: <strong><%= maskedEmail %></strong>
+      </div>
+
+      <% if (error) { %>
+        <div class="alert-error">
+          <%= error %>
+        </div>
+      <% } %>
+
+      <% if (msg) { %>
+        <div class="alert-success">
+          <%= msg %>
+        </div>
+      <% } %>
+
+      <form action="/verify-otp" method="POST" id="verifyOtpForm">
+        <div class="form-group">
+          <label for="otp">Kode OTP (6 digit)</label>
+          <input 
+            type="text" 
+            id="otp" 
+            name="otp" 
+            class="otp-input"
+            placeholder="000000"
+            required
+            maxlength="6"
+            pattern="[0-9]{6}"
+            autocomplete="off"
+            autofocus
+          >
+        </div>
+
+        <button type="submit" class="btn-submit" id="submitBtn">
+          Verifikasi OTP
+        </button>
+      </form>
+
+      <div class="back-link">
+        <a href="/forgot-password">← Kembali untuk request OTP baru</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="right-section">
+    <div class="right-section-content">
+      <img src="/images/logounand.png" alt="Logo UNAND">
+      <h1>CDC Universitas Andalas</h1>
+      <p>Career Development Center</p>
+    </div>
+  </div>
+
+  <script>
+    // Auto format OTP input (only numbers)
+    const otpInput = document.getElementById('otp');
+    otpInput.addEventListener('input', function(e) {
+      e.target.value = e.target.value.replace(/[^0-9]/g, '');
+    });
+
+    // Form submission
+    document.getElementById('verifyOtpForm').addEventListener('submit', function(e) {
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true;
+      btn.textContent = 'Memverifikasi...';
+    });
+  </script>
+</body>
+</html>
+

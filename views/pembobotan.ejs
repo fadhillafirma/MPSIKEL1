@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pembobotan | CDC Universitas Andalas</title>
+  <title>Pencatatan Pembobotan | CDC Universitas Andalas</title>
 
   <!-- Google Font & Chart.js -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -481,12 +481,12 @@
       <!-- Left Section: Pembobotan -->
       <div class="left-section">
         <div class="section-header">
-          <h2>Pembobotan</h2>
+          <h2>Pencatatan Pembobotan</h2>
         </div>
 
         <!-- Bekerja Section -->
         <div class="card">
-          <h3>Pembobotan untuk kriteria Bekerja</h3>
+          <h3>Data Pembobotan - Bekerja</h3>
           <table class="styled-table" id="bekerjaTable">
             <thead>
               <tr>
@@ -512,7 +512,7 @@
 
         <!-- Wiraswasta Section -->
         <div class="card">
-          <h3>Pembobotan untuk kriteria Wiraswasta</h3>
+          <h3>Data Pembobotan - Wiraswasta</h3>
           <table class="styled-table" id="wiraswastaTable">
             <thead>
               <tr>
@@ -539,19 +539,19 @@
         <!-- Pendidikan Section -->
         <div class="card highlight">
           <p>
-            <span class="label">Pembobotan untuk kriteria melanjutkan studi adalah</span>
+            <span class="label">Data Pembobotan - Melanjutkan Studi:</span>
             <span class="value editable" onclick="editCell(this, 'pendidikan')" id="pendidikanValue">0.6</span>
           </p>
         </div>
 
-        <button class="btn" onclick="openEditModal()"> Edit Pembobotan</button>
+        <button class="btn" onclick="openEditModal()"> Edit Data Pembobotan</button>
       </div>
 
       <!-- Right Section: Upah Minimum Provinsi -->
       <div class="right-section">
         <div class="section-header">
-          <h2>Upah Minimum Provinsi</h2>
-          <button class="btn" onclick="openEditUMPModal()"> Edit UMP</button>
+          <h2>Pencatatan Upah Minimum Provinsi</h2>
+          <button class="btn" onclick="openEditUMPModal()"> Tambah/Edit Data</button>
         </div>
 
         <div class="table-wrapper">
@@ -562,6 +562,7 @@
                 <th>PROPINSI</th>
                 <th>UMP (Rp)</th>
                 <th>LEBIH DARI <span id="multiplierDisplay5">1.2</span> X UMP (Rp)</th>
+                <th>Tanggal Update</th>
               </tr>
             </thead>
             <tbody id="umpTableBody">
@@ -581,7 +582,7 @@
   <div id="editModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2>Edit Pembobotan IKU-1</h2>
+        <h2>Edit Data Pembobotan</h2>
         <button class="close-btn" onclick="closeEditModal()">&times;</button>
       </div>
       
@@ -589,14 +590,14 @@
         <!-- Multiplier Setting -->
         <div class="multiplier-setting">
           <h4>Pengaturan Pengali UMP</h4>
-          <p>Nilai ini akan digunakan untuk menghitung "≥ Xx UMP" dan "< Xx UMP" dalam kriteria Bekerja dan Wiraswasta</p>
+          <p>Catatan: Nilai pengali untuk referensi data</p>
           <div class="form-group">
             <label>Pengali UMP (contoh: 1.2, 1.5, 2.0):</label>
             <input type="number" id="umpMultiplier" value="1.2" step="0.1" min="0.5" max="5">
           </div>
         </div>
 
-        <h3>Kriteria Bekerja</h3>
+        <h3>Data Pembobotan - Bekerja</h3>
         <div class="edit-grid">
           <div class="form-group">
             <label>≤ 6 bulan (Gaji ≥ Xx UMP):</label>
@@ -616,7 +617,7 @@
           </div>
         </div>
 
-        <h3>Kriteria Wiraswasta</h3>
+        <h3>Data Pembobotan - Wiraswasta</h3>
         <div class="edit-grid">
           <div class="form-group">
             <label>≤ 6 bulan (Pendapatan ≥ Xx UMP):</label>
@@ -636,9 +637,9 @@
           </div>
         </div>
 
-        <h3>Kriteria Pendidikan Lanjut</h3>
+        <h3>Data Pembobotan - Pendidikan Lanjut</h3>
         <div class="form-group">
-          <label>Pembobotan untuk melanjutkan studi:</label>
+          <label>Nilai Pembobotan:</label>
           <input type="number" id="edit_pendidikan" value="0.6" step="0.1">
         </div>
       </div>
@@ -654,7 +655,7 @@
   <div id="editUMPModal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2>Edit Upah Minimum Provinsi</h2>
+        <h2>Pencatatan Upah Minimum Provinsi</h2>
         <button class="close-btn" onclick="closeEditUMPModal()">&times;</button>
       </div>
       
@@ -665,13 +666,9 @@
         </div>
         <div class="form-group">
           <label>UMP (Rp):</label>
-          <input type="number" id="newUMP" placeholder="Contoh: 2994193" oninput="calculate1Point2XUMP()">
+          <input type="number" id="newUMP" placeholder="Contoh: 2994193">
         </div>
-        <div class="form-group">
-          <label id="calculatedLabel"></label>
-          <input type="text" id="calculatedUMP" readonly>
-        </div>
-        <button class="btn" id="addProvinsiBtn" onclick="addProvinsi()" style="width: 100%;">Tambah Provinsi</button>
+        <button class="btn" id="addProvinsiBtn" onclick="addProvinsi()" style="width: 100%;">Simpan Data</button>
 
         <hr style="margin: 30px 0; border: none; border-top: 2px solid #e9ecef;">
 
@@ -722,7 +719,7 @@
     function updateUMPTable() {
       const tableBody = document.getElementById('umpTableBody');
       if (umpData.length === 0) {
-        tableBody.innerHTML = '<tr><td colspan="4" class="no-data">Belum ada data UMP. Klik "Edit UMP" untuk menambahkan provinsi.</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="5" class="no-data">Belum ada data UMP. Klik "Tambah/Edit Data" untuk menambahkan provinsi.</td></tr>';
         return;
       }
 
@@ -730,30 +727,21 @@
       umpData.forEach((item, index) => {
         const row = document.createElement('tr');
         const calculated = (item.ump * pembobotan.multiplier).toLocaleString('id-ID');
+        const updateDate = item.updated_at ? new Date(item.updated_at).toLocaleDateString('id-ID') : '-';
         row.innerHTML = `
           <td>${index + 1}</td>
           <td>${item.provinsi}</td>
           <td>${item.ump.toLocaleString('id-ID')}</td>
           <td>${calculated}</td>
+          <td>${updateDate}</td>
         `;
         tableBody.appendChild(row);
       });
     }
 
-    // Calculate 1.2× UMP
+    // Calculate 1.2× UMP (removed - no longer needed for display)
     function calculate1Point2XUMP() {
-      const ump = document.getElementById('newUMP').value;
-      const label = document.getElementById('calculatedLabel');
-      const result = document.getElementById('calculatedUMP');
-      
-      if (ump) {
-        const calculated = parseFloat(ump) * pembobotan.multiplier;
-        result.value = calculated.toLocaleString('id-ID');
-        label.textContent = `${pembobotan.multiplier} × UMP (Rp):`;
-      } else {
-        result.value = '';
-        label.textContent = '';
-      }
+      // Function kept for compatibility but no longer displays calculated value
     }
 
     // Add or update province
@@ -779,10 +767,9 @@
 
           const result = await response.json();
           if (result.success) {
-            alert('Provinsi berhasil diperbarui!');
+            alert('Data provinsi berhasil diperbarui!');
             document.getElementById('newProvinsi').value = '';
             document.getElementById('newUMP').value = '';
-            document.getElementById('calculatedUMP').value = '';
             editingIndex = -1;
             const btn = document.getElementById('addProvinsiBtn');
             if (btn) btn.textContent = 'Tambah Provinsi';
@@ -800,10 +787,9 @@
 
           const result = await response.json();
           if (result.success) {
-            alert('Provinsi berhasil ditambahkan!');
+            alert('Data provinsi berhasil ditambahkan!');
             document.getElementById('newProvinsi').value = '';
             document.getElementById('newUMP').value = '';
-            document.getElementById('calculatedUMP').value = '';
             loadUMPData();
           } else {
             alert(result.message || 'Gagal menambahkan provinsi');
@@ -882,7 +868,6 @@
 
     function openEditUMPModal() {
       document.getElementById('editUMPModal').classList.add('active');
-      document.getElementById('calculatedLabel').textContent = `${pembobotan.multiplier} × UMP (Rp):`;
       loadUMPData();
       updateProvinsiList();
     }
@@ -892,9 +877,8 @@
       editingIndex = -1;
       document.getElementById('newProvinsi').value = '';
       document.getElementById('newUMP').value = '';
-      document.getElementById('calculatedUMP').value = '';
       const btn = document.getElementById('addProvinsiBtn');
-      if (btn) btn.textContent = 'Tambah Provinsi';
+      if (btn) btn.textContent = 'Simpan Data';
     }
 
     // Edit province - fill form with selected province data
@@ -905,11 +889,10 @@
       // Fill the form
       document.getElementById('newProvinsi').value = provinsi.provinsi;
       document.getElementById('newUMP').value = provinsi.ump;
-      calculate1Point2XUMP();
 
       // Change button text
       const btn = document.getElementById('addProvinsiBtn');
-      if (btn) btn.textContent = 'Update Provinsi';
+      if (btn) btn.textContent = 'Update Data';
 
       // Set editing mode
       editingIndex = id;
@@ -935,7 +918,7 @@
       updateMultiplierDisplay();
       updateTables();
       document.getElementById('pendidikanValue').textContent = pembobotan.pendidikan;
-      alert('Pembobotan berhasil disimpan!');
+      alert('Data pembobotan berhasil disimpan!');
       closeEditModal();
     }
 

@@ -8,6 +8,8 @@
   <!-- Google Font & Chart.js -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
     :root {
@@ -682,6 +684,14 @@
           </svg>
           Profil Admin
         </a>
+        <button class="nav-btn" onclick="exportFullDashboard()" style="background: #f59e0b; cursor: pointer;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Export Dashboard PDF
+        </button>
       </div>
     </div>
 
@@ -975,6 +985,269 @@
     }
 
     // Handle Input Total Alumni per Prodi
+
+    // Export Full Dashboard as PDF (hanya visualisasi, tanpa navbar)
+    async function exportFullDashboard() {
+      try {
+        // Show loading message
+        const btn = event.target.closest('button');
+        const originalText = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<span>Memproses...</span>';
+
+        // Wait a bit for any animations to complete
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // Buat container untuk export (exclude navbar dan navigation section)
+        const exportContainer = document.createElement('div');
+        exportContainer.id = 'export-container-temp';
+        exportContainer.style.position = 'absolute';
+        exportContainer.style.left = '-9999px';
+        exportContainer.style.top = '0';
+        exportContainer.style.width = '210mm'; // A4 width in mm
+        exportContainer.style.backgroundColor = '#ffffff';
+        exportContainer.style.padding = '15mm';
+        exportContainer.style.fontFamily = 'Poppins, sans-serif';
+        exportContainer.style.boxSizing = 'border-box';
+
+        // Clone dan style stats grid
+        const statsGrid = document.querySelector('.stats-grid');
+        if (statsGrid) {
+          const clonedStats = statsGrid.cloneNode(true);
+          clonedStats.style.marginBottom = '25px';
+          clonedStats.style.display = 'grid';
+          clonedStats.style.gridTemplateColumns = 'repeat(3, 1fr)';
+          clonedStats.style.gap = '15px';
+          exportContainer.appendChild(clonedStats);
+        }
+
+        // Clone main content (visualisasi charts) - exclude navigation section
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) {
+          const clonedContent = mainContent.cloneNode(true);
+          clonedContent.style.display = 'grid';
+          clonedContent.style.gridTemplateColumns = '1fr 1fr';
+          clonedContent.style.gap = '20px';
+          exportContainer.appendChild(clonedContent);
+        }
+
+        // Append to body temporarily
+        document.body.appendChild(exportContainer);
+
+        // Replace chart canvases with images from original charts
+        // Wait for charts to be fully rendered
+        await new Promise(resolve => setTimeout(resolve, 300));
+
+        // Chart 1: Status Chart (doughnut)
+        const originalStatusChartEl = document.getElementById('statusChart');
+        const clonedStatusChartEl = exportContainer.querySelector('#statusChart');
+        if (originalStatusChartEl && clonedStatusChartEl && window.Chart) {
+          const statusChartInstance = Chart.getChart(originalStatusChartEl);
+          if (statusChartInstance) {
+            try {
+              // Force update chart to ensure it's fully rendered
+              statusChartInstance.update('none');
+              await new Promise(resolve => setTimeout(resolve, 100));
+              const chartImg = statusChartInstance.toBase64Image('image/png', 1.0);
+              const img = document.createElement('img');
+              img.src = chartImg;
+              img.style.width = '200px';
+              img.style.height = '200px';
+              img.style.objectFit = 'contain';
+              img.alt = 'Status Chart';
+              clonedStatusChartEl.parentNode.replaceChild(img, clonedStatusChartEl);
+            } catch (e) {
+              console.error('Error exporting status chart:', e);
+            }
+          }
+        }
+
+        // Chart 2: Lulusan Chart (line)
+        const originalLulusanChartEl = document.getElementById('lulusanChart');
+        const clonedLulusanChartEl = exportContainer.querySelector('#lulusanChart');
+        if (originalLulusanChartEl && clonedLulusanChartEl && window.Chart) {
+          const lulusanChartInstance = Chart.getChart(originalLulusanChartEl);
+          if (lulusanChartInstance) {
+            try {
+              // Force update chart to ensure it's fully rendered
+              lulusanChartInstance.update('none');
+              await new Promise(resolve => setTimeout(resolve, 100));
+              const chartImg = lulusanChartInstance.toBase64Image('image/png', 1.0);
+              const img = document.createElement('img');
+              img.src = chartImg;
+              img.style.width = '100%';
+              img.style.height = '280px';
+              img.style.objectFit = 'contain';
+              img.alt = 'Lulusan Chart';
+              clonedLulusanChartEl.parentNode.replaceChild(img, clonedLulusanChartEl);
+            } catch (e) {
+              console.error('Error exporting lulusan chart:', e);
+            }
+          }
+        }
+
+        // Chart 3: Donut Chart (doughnut)
+        const originalDonutChartEl = document.getElementById('donutChart');
+        const clonedDonutChartEl = exportContainer.querySelector('#donutChart');
+        if (originalDonutChartEl && clonedDonutChartEl && window.Chart) {
+          const donutChartInstance = Chart.getChart(originalDonutChartEl);
+          if (donutChartInstance) {
+            try {
+              // Force update chart to ensure it's fully rendered (including center text)
+              donutChartInstance.update('none');
+              await new Promise(resolve => setTimeout(resolve, 100));
+              const chartImg = donutChartInstance.toBase64Image('image/png', 1.0);
+              const img = document.createElement('img');
+              img.src = chartImg;
+              img.style.width = '300px';
+              img.style.height = '300px';
+              img.style.objectFit = 'contain';
+              img.alt = 'Donut Chart';
+              clonedDonutChartEl.parentNode.replaceChild(img, clonedDonutChartEl);
+            } catch (e) {
+              console.error('Error exporting donut chart:', e);
+            }
+          }
+        }
+
+        // Wait for images to load
+        const images = exportContainer.querySelectorAll('img');
+        await Promise.all(Array.from(images).map(img => {
+          return new Promise((resolve) => {
+            if (img.complete) {
+              resolve();
+            } else {
+              img.onload = resolve;
+              img.onerror = resolve; // Continue even if image fails to load
+              setTimeout(resolve, 2000); // Timeout after 2 seconds
+            }
+          });
+        }));
+
+        // Wait a bit more for rendering
+        await new Promise(resolve => setTimeout(resolve, 300));
+
+        // Use html2canvas to capture the content
+        if (typeof html2canvas === 'undefined') {
+          alert('Library export tidak dimuat. Silakan refresh halaman.');
+          document.body.removeChild(exportContainer);
+          btn.disabled = false;
+          btn.innerHTML = originalText;
+          return;
+        }
+
+        const canvas = await html2canvas(exportContainer, {
+          backgroundColor: '#ffffff',
+          scale: 2,
+          logging: false,
+          useCORS: true,
+          width: exportContainer.scrollWidth,
+          height: exportContainer.scrollHeight,
+          windowWidth: exportContainer.scrollWidth,
+          windowHeight: exportContainer.scrollHeight
+        });
+
+        // Remove temporary container
+        document.body.removeChild(exportContainer);
+
+        // Convert canvas to image
+        const imgData = canvas.toDataURL('image/png', 1.0);
+
+        // Create PDF using jsPDF
+        if (typeof window.jspdf === 'undefined') {
+          alert('Library PDF tidak dimuat. Silakan refresh halaman.');
+          btn.disabled = false;
+          btn.innerHTML = originalText;
+          return;
+        }
+
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        
+        const pageWidth = 210; // A4 width in mm
+        const pageHeight = 297; // A4 height in mm
+        const margin = 10; // margin 10mm
+        const contentWidth = pageWidth - (margin * 2);
+        
+        // Calculate image dimensions to fit page width
+        const imgAspectRatio = canvas.width / canvas.height;
+        const imgWidth = contentWidth;
+        const imgHeight = imgWidth / imgAspectRatio;
+        
+        // Add title to first page
+        const titleHeight = 35;
+        pdf.setFontSize(20);
+        pdf.setFont('helvetica', 'bold');
+        pdf.text('Dashboard IKU-1', margin, 20);
+        pdf.setFontSize(12);
+        pdf.text('CDC Universitas Andalas', margin, 28);
+        pdf.setFontSize(10);
+        pdf.setFont('helvetica', 'normal');
+        pdf.text(`Tanggal: ${new Date().toLocaleDateString('id-ID', { 
+          weekday: 'long', 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric' 
+        })}`, margin, 35);
+        
+        // Calculate available height after title
+        const availableHeight = pageHeight - titleHeight - margin;
+        const startY = titleHeight + 5;
+        
+        // Calculate how many pages needed
+        let heightLeft = imgHeight;
+        let yPos = startY;
+        
+        // Add first page
+        const firstPageHeight = Math.min(heightLeft, availableHeight);
+        pdf.addImage(imgData, 'PNG', margin, yPos, imgWidth, firstPageHeight);
+        heightLeft -= firstPageHeight;
+        
+        // Add additional pages if needed
+        while (heightLeft > 0) {
+          pdf.addPage();
+          const pageHeightToShow = Math.min(heightLeft, pageHeight - (margin * 2));
+          
+          // Calculate source position in original canvas
+          const sourceY = ((imgHeight - heightLeft) / imgHeight) * canvas.height;
+          const sourceHeight = (pageHeightToShow / imgHeight) * canvas.height;
+          
+          // Create canvas for this page slice
+          const pageCanvas = document.createElement('canvas');
+          pageCanvas.width = canvas.width;
+          pageCanvas.height = sourceHeight;
+          const ctx = pageCanvas.getContext('2d');
+          ctx.drawImage(canvas, 0, sourceY, canvas.width, sourceHeight, 0, 0, canvas.width, sourceHeight);
+          
+          const pageImgData = pageCanvas.toDataURL('image/png', 1.0);
+          pdf.addImage(pageImgData, 'PNG', margin, margin, imgWidth, pageHeightToShow);
+          
+          heightLeft -= pageHeightToShow;
+        }
+
+        // Save PDF
+        pdf.save(`dashboard-iku1-${new Date().getTime()}.pdf`);
+
+        // Restore button
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+
+        alert('Dashboard berhasil diekspor ke PDF!');
+      } catch (error) {
+        console.error('Error exporting dashboard:', error);
+        alert('Gagal mengekspor dashboard. Silakan coba lagi.');
+        const btn = event.target.closest('button');
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Export Dashboard PDF';
+        }
+        // Cleanup if container still exists
+        const exportContainer = document.getElementById('export-container-temp');
+        if (exportContainer && exportContainer.parentNode) {
+          exportContainer.parentNode.removeChild(exportContainer);
+        }
+      }
+    }
   </script>
 </body>
 </html>

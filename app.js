@@ -4,6 +4,10 @@ import { fileURLToPath } from "url";
 import cookieParser from "cookie-parser";
 import session from "express-session";
 import logger from "morgan";
+import dotenv from "dotenv";
+
+// Load environment variables from .env file
+dotenv.config();
 import dashboardRouter from "./routes/dashboard.js";
 import { uploadRouter } from "./routes/dashboard.js";
 import indexRouter from "./routes/index.js";
