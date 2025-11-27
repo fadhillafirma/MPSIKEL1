@@ -3,23 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Upload Data CSV | CDC Universitas Andalas</title>
-
-  <!-- Google Font -->
+  <title>Manajemen Admin | CDC Universitas Andalas</title>
+  
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+  
   <style>
     :root {
       --primary: #2F6B31;
       --secondary: #4CA858;
       --accent: #6BCF78;
-      --bg: #ffffff;
+      --bg: #f5f7fa;
       --card-bg: #fff;
       --text-dark: #1f2e24;
       --text-muted: #6d7a6f;
-      --radius: 12px;
-      --shadow: 0 2px 8px rgba(0,0,0,0.05);
-      --border: #e9ecef;
     }
 
     * {
@@ -31,8 +27,6 @@
     body {
       font-family: 'Poppins', sans-serif;
       background: var(--bg);
-      min-height: 100vh;
-      margin: 0;
       color: var(--text-dark);
       display: flex;
     }
@@ -211,16 +205,34 @@
       overflow: hidden;
     }
 
+    .start-tour-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .start-tour-btn:hover::before {
+      left: 100%;
+    }
+
     .start-tour-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 4px 15px rgba(76, 168, 88, 0.35);
       background: linear-gradient(135deg, #5CB85C 0%, #7DD87D 100%);
     }
 
+    .start-tour-btn:active {
+      transform: translateY(0);
+    }
+
     .start-tour-btn svg {
       width: 18px;
       height: 18px;
-      stroke-width: 2.5;
     }
 
     .mobile-menu-toggle {
@@ -242,85 +254,11 @@
       min-height: 100vh;
     }
 
-    /* Header */
-    .header {
-      background: var(--card-bg);
-      padding: 20px 50px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      border-bottom: 1px solid var(--border);
-      flex-shrink: 0;
-    }
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .header-left img {
-      width: 70px;
-      height: 70px;
-      object-fit: contain;
-    }
-
-    .header-center {
-      flex: 1;
-      text-align: left;
-      margin-left: 20px;
-    }
-
-    .header-center h1 {
-      font-size: 28px;
-      font-weight: 600;
-      color: var(--text-dark);
-      margin: 0;
-    }
-
-    .header-center p {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin: 4px 0 0 0;
-    }
-
-    .header-right {
-      display: flex;
-      gap: 15px;
-      align-items: center;
-    }
-
-    .header-right a {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: white;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      padding: 12px 24px;
-      border-radius: 8px;
-      transition: all 0.3s;
-      background: var(--primary);
-    }
-
-    .header-right a:hover {
-      background: var(--secondary);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(47, 107, 49, 0.3);
-    }
-
-    /* Main Container */
     .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 60px 50px;
+      max-width: 1400px;
+      margin: 30px auto;
+      padding: 0 50px;
       flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      min-height: calc(100vh - 120px);
     }
 
     @media (max-width: 768px) {
@@ -346,246 +284,54 @@
       }
     }
 
-    .upload-card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 40px;
-      margin: 0 auto;
-      max-width: 100%;
-      border: 1px solid var(--border);
-    }
-
-    .upload-card h2 {
-      font-size: 22px;
-      font-weight: 600;
-      color: var(--text-dark);
-      margin: 0 0 10px 0;
-    }
-
-    .upload-card p {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin: 0 0 30px 0;
-      line-height: 1.6;
-    }
-
-    .upload-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 30px;
-    }
-
-    .upload-column,
-    .info-column {
+    .page-header {
       display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-
-    .upload-form label {
-      display: block;
-      font-size: 14px;
-      font-weight: 500;
-      margin-bottom: 10px;
-      color: var(--text-dark);
-    }
-
-    .import-type-group {
-      margin-bottom: 24px;
-    }
-
-    .import-type-group label {
-      margin-bottom: 12px;
-    }
-
-    .import-type-options {
-      display: flex;
-      gap: 15px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
       flex-wrap: wrap;
+      gap: 15px;
     }
 
-    .import-type-options label {
+    .page-header h1 {
+      margin: 0;
+    }
+
+    .page-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 18px;
-      border-radius: 8px;
-      background: #f8f9fa;
-      border: 2px solid var(--border);
-      color: var(--text-dark);
-      font-weight: 500;
-      font-size: 14px;
-      cursor: pointer;
-      transition: all 0.3s;
     }
 
-    .import-type-options input[type="radio"] {
-      accent-color: var(--primary);
-      width: 16px;
-      height: 16px;
-      margin: 0;
-    }
-
-    .import-type-options label:hover {
-      background: #e9ecef;
-      border-color: var(--primary);
-    }
-
-    .import-type-options input[type="radio"]:checked {
-      background-color: var(--primary);
-    }
-
-    .import-type-options label:has(input[type="radio"]:checked) {
-      background: rgba(47, 107, 49, 0.1);
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    .file-input-wrapper {
-      margin-bottom: 24px;
-    }
-
-    .file-input-wrapper input[type="file"] {
-      width: 100%;
-      padding: 12px 16px;
-      border-radius: 8px;
-      border: 2px solid var(--border);
-      background: white;
-      font-size: 14px;
-      font-family: 'Poppins', sans-serif;
-      transition: all 0.3s;
-      cursor: pointer;
-    }
-
-    .file-input-wrapper input[type="file"]:focus,
-    .file-input-wrapper input[type="file"]:hover {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(47, 107, 49, 0.1);
-    }
-
-    .upload-form button {
-      width: 100%;
-      padding: 14px 24px;
-      border-radius: 8px;
-      border: none;
-      font-size: 15px;
-      font-weight: 600;
+    .btn-primary {
       background: var(--primary);
-      color: #fff;
-      cursor: pointer;
-      transition: all 0.3s;
-      font-family: 'Poppins', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
+      color: white;
     }
 
-    .upload-form button:hover {
+    .btn-primary:hover {
       background: var(--secondary);
       transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(47, 107, 49, 0.3);
     }
 
-    .upload-form button:disabled {
-      background: #e9ecef;
-      color: var(--text-muted);
-      cursor: not-allowed;
-      transform: none;
-      box-shadow: none;
-    }
-
-    .info-column h3 {
-      font-size: 18px;
-      font-weight: 600;
-      color: var(--text-dark);
-      margin: 0 0 20px 0;
-    }
-
-    .info-grid {
-      display: grid;
-      gap: 20px;
-    }
-
-    .info-box {
-      background: #f8f9fa;
-      border: 1px solid var(--border);
-      border-left: 4px solid var(--primary);
-      border-radius: var(--radius);
-      padding: 20px;
-    }
-
-    .info-box h3 {
-      font-size: 16px;
-      font-weight: 600;
-      margin: 0 0 15px 0;
-      color: var(--text-dark);
-    }
-
-    .info-box ul {
-      list-style: none;
-      display: grid;
-      gap: 12px;
-      margin: 0;
-      padding: 0;
-    }
-
-    .info-box li {
-      font-size: 13px;
-      color: var(--text-muted);
-      padding-left: 22px;
-      position: relative;
-      line-height: 1.6;
-    }
-
-    .info-box li:before {
-      content: "•";
-      position: absolute;
-      left: 0;
-      top: 0;
-      color: var(--primary);
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .info-box code {
-      background: rgba(47, 107, 49, 0.1);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-size: 12px;
-      color: var(--primary);
-      font-family: 'Courier New', monospace;
-    }
-
-    .info-box strong {
-      color: var(--text-dark);
-      font-weight: 600;
-    }
-
-    /* Alerts */
     .alert {
       padding: 15px 20px;
       border-radius: 8px;
       margin-bottom: 20px;
       font-size: 14px;
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      animation: slideIn 0.3s ease-out;
-    }
-
-    @keyframes slideIn {
-      from {
-        opacity: 0;
-        transform: translateY(-10px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     .alert-success {
@@ -600,23 +346,99 @@
       border: 1px solid #f5c6cb;
     }
 
-    .alert-info {
-      background: #d1ecf1;
-      color: #0c5460;
-      border: 1px solid #bee5eb;
+    .table-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      padding: 25px;
+      overflow-x: auto;
     }
 
-    .alert-close {
-      margin-left: auto;
-      cursor: pointer;
-      font-size: 18px;
-      font-weight: bold;
-      opacity: 0.7;
-      transition: opacity 0.3s;
+    table {
+      width: 100%;
+      border-collapse: collapse;
     }
 
-    .alert-close:hover {
-      opacity: 1;
+    thead {
+      background: linear-gradient(135deg, #2F6B31, #4CA858);
+      color: white;
+    }
+
+    th {
+      padding: 15px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    td {
+      padding: 15px;
+      border-bottom: 1px solid #f1f3f4;
+      font-size: 14px;
+    }
+
+    tbody tr:hover {
+      background: #f8f9fa;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge-success {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .badge-danger {
+      background: #f8d7da;
+      color: #721c24;
+    }
+
+    .badge-primary {
+      background: #cfe2ff;
+      color: #084298;
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 12px;
+    }
+
+    .btn-edit {
+      background: #6366f1;
+      color: white;
+    }
+
+    .btn-edit:hover {
+      background: #4f46e5;
+    }
+
+    .btn-delete {
+      background: #dc3545;
+      color: white;
+    }
+
+    .btn-delete:hover {
+      background: #c82333;
+    }
+
+    .permissions-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .permission-tag {
+      padding: 3px 8px;
+      background: #e3f2fd;
+      color: #1976d2;
+      border-radius: 4px;
+      font-size: 11px;
     }
 
     /* Tour Guide Styles */
@@ -624,8 +446,8 @@
       position: fixed;
       top: 0;
       left: 0;
-      right: 0;
-      bottom: 0;
+      width: 100%;
+      height: 100%;
       background: rgba(0, 0, 0, 0.7);
       z-index: 9998;
       opacity: 0;
@@ -751,6 +573,7 @@
       font-weight: 700;
       color: var(--text-dark);
       margin: 0;
+      flex: 1;
     }
 
     .tour-tooltip-content {
@@ -758,126 +581,83 @@
       color: var(--text-muted);
       line-height: 1.6;
       margin-bottom: 16px;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
     }
 
     .tour-tooltip-footer {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      gap: 8px;
+      justify-content: space-between;
+      gap: 12px;
       flex-wrap: wrap;
-      margin-top: 4px;
     }
 
     .tour-progress {
       font-size: 12px;
       color: var(--text-muted);
-      font-weight: 500;
-      flex-shrink: 0;
-      white-space: nowrap;
+      font-weight: 600;
     }
 
     .tour-buttons {
       display: flex;
-      gap: 6px;
+      gap: 8px;
       flex-wrap: wrap;
-      flex-shrink: 0;
+      margin-left: auto;
     }
 
     .tour-btn {
-      padding: 8px 14px;
+      padding: 8px 16px;
       border: none;
-      border-radius: 8px;
-      font-size: 12px;
+      border-radius: 6px;
+      font-size: 13px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.2s;
       font-family: 'Poppins', sans-serif;
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .tour-btn-secondary {
-      background: #f0f0f0;
-      color: var(--text-dark);
-    }
-
-    .tour-btn-secondary:hover {
-      background: #e0e0e0;
+      justify-content: center;
     }
 
     .tour-btn-primary {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      background: var(--primary);
       color: white;
     }
 
     .tour-btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(47, 107, 49, 0.3);
+      background: var(--secondary);
+      transform: translateY(-1px);
+    }
+
+    .tour-btn-secondary {
+      background: #f8f9fa;
+      color: var(--text-dark);
+      border: 1px solid #e9ecef;
+    }
+
+    .tour-btn-secondary:hover {
+      background: #e9ecef;
     }
 
     .tour-btn-skip {
       background: transparent;
       color: var(--text-muted);
-      border: 1px solid #e0e0e0;
+      border: none;
     }
 
     .tour-btn-skip:hover {
-      background: #f8f9fa;
       color: var(--text-dark);
-    }
-
-    /* Responsive */
-    @media (max-width: 1200px) {
-      .upload-layout {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .header {
-        flex-direction: column;
-        padding: 20px;
-        gap: 15px;
-      }
-
-      .header-center {
-        margin-left: 0;
-        text-align: center;
-      }
-
-      .container {
-        padding: 0 20px;
-      }
-
-      .upload-card {
-        padding: 25px;
-      }
-
-      .import-type-options {
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .import-type-options label {
-        width: 100%;
-      }
+      background: #f8f9fa;
     }
   </style>
 </head>
-
 <body>
   <% 
-    // Deklarasi permissions untuk digunakan di seluruh halaman
-    const userPermissions = typeof user !== 'undefined' && user && user.permissions ? user.permissions : {};
-    const isSuperAdmin = typeof user !== 'undefined' && user && user.role === 'superadmin';
+    // Gunakan currentUser yang di-pass dari route, bukan user
+    const currentUserData = typeof currentUser !== 'undefined' ? currentUser : (typeof user !== 'undefined' ? user : null);
+    const userPermissions = currentUserData && currentUserData.permissions ? currentUserData.permissions : {};
+    const isSuperAdmin = currentUserData && currentUserData.role === 'superadmin';
     const hasPermission = (perm) => isSuperAdmin || userPermissions[perm] === true;
-    const currentPath = '/upload';
+    // currentPath akan di-set secara dinamis via JavaScript
   %>
   
   <!-- Sidebar -->
@@ -887,7 +667,8 @@
       <h2>Career Development Center Unand</h2>
     </div>
     <nav class="sidebar-menu">
-      <a href="/dashboard" class="menu-item <%= currentPath === '/dashboard' ? 'active' : '' %>">
+      <!-- Dashboard selalu bisa diakses semua user yang sudah login -->
+      <a href="/dashboard" class="menu-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="7" height="7"></rect>
           <rect x="14" y="3" width="7" height="7"></rect>
@@ -898,7 +679,7 @@
       </a>
       
       <% if (hasPermission('riwayat')) { %>
-        <a href="/riwayat" class="menu-item <%= currentPath === '/riwayat' ? 'active' : '' %>">
+        <a href="/riwayat" class="menu-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
             <polyline points="14 2 14 8 20 8"></polyline>
@@ -911,7 +692,7 @@
       <% } %>
       
       <% if (hasPermission('upload')) { %>
-        <a href="/upload" class="menu-item <%= currentPath === '/upload' ? 'active' : '' %>">
+        <a href="/upload" class="menu-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
             <polyline points="17 8 12 3 7 8"></polyline>
@@ -922,7 +703,7 @@
       <% } %>
       
       <% if (hasPermission('pembobotan')) { %>
-        <a href="/pembobotan" class="menu-item <%= currentPath === '/pembobotan' ? 'active' : '' %>">
+        <a href="/pembobotan" class="menu-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10"></circle>
             <line x1="12" y1="8" x2="12" y2="12"></line>
@@ -932,10 +713,12 @@
         </a>
       <% } %>
       
-      <div class="menu-divider"></div>
+      <% if (hasPermission('manage_admin') || hasPermission('profile')) { %>
+        <div class="menu-divider"></div>
+      <% } %>
       
       <% if (hasPermission('manage_admin')) { %>
-        <a href="/admin" class="menu-item <%= currentPath === '/admin' ? 'active' : '' %>">
+        <a href="/admin" class="menu-item">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
             <circle cx="9" cy="7" r="4"></circle>
@@ -946,15 +729,15 @@
         </a>
       <% } %>
       
-      <% if (hasPermission('profile')) { %>
-        <a href="/profile" class="menu-item <%= currentPath === '/profile' ? 'active' : '' %>">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-          Profil Admin
-        </a>
-      <% } %>
+      <!-- Profil Admin selalu bisa diakses semua user yang sudah login -->
+      <a href="/profile" class="menu-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        Profil Admin
+      </a>
+      
     </nav>
     <div class="sidebar-footer">
       <!-- Tour Guide Button -->
@@ -967,11 +750,11 @@
       </button>
       <div class="user-info">
         <div class="user-avatar">
-          <%= typeof user !== 'undefined' && user ? user.username.charAt(0).toUpperCase() : 'A' %>
+          <%= currentUserData && currentUserData.username ? currentUserData.username.charAt(0).toUpperCase() : 'A' %>
         </div>
         <div class="user-details">
-          <div class="user-name"><%= typeof user !== 'undefined' && user ? user.username : 'Admin' %></div>
-          <div class="user-role"><%= typeof user !== 'undefined' && user && user.role ? user.role : 'Admin' %></div>
+          <div class="user-name"><%= currentUserData && currentUserData.username ? currentUserData.username : 'Admin' %></div>
+          <div class="user-role"><%= currentUserData && currentUserData.role ? currentUserData.role : 'Admin' %></div>
         </div>
       </div>
       <a href="/logout" class="logout-btn">
@@ -987,91 +770,89 @@
 
   <!-- Main Content Wrapper -->
   <div class="main-wrapper">
-    <!-- Header -->
-    <div class="header">
-      <div class="header-left">
-        <button class="mobile-menu-toggle" onclick="toggleSidebar()">☰</button>
-        <div class="header-center">
-          <h1>CDC Universitas Andalas</h1>
-          <p>Career Development Center Andalas University</p>
+    <div class="container">
+      <div class="page-header">
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <button class="mobile-menu-toggle" onclick="toggleSidebar()">☰</button>
+          <h1>Manajemen Admin</h1>
         </div>
+        <a href="/admin/create" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          Tambah Admin
+        </a>
       </div>
-      <div class="header-right">
-      </div>
-    </div>
 
-    <!-- Main Content -->
-    <main class="container">
-    <!-- Alert Message -->
-    <% if (typeof msg !== 'undefined' && msg) { %>
-      <div class="alert <%= msg.includes('Error') || msg.includes('Gagal') ? 'alert-error' : (msg.includes('Berhasil') ? 'alert-success' : 'alert-info') %>">
-        <span><%= msg %></span>
-        <span class="alert-close" onclick="this.parentElement.style.display='none'">×</span>
-      </div>
+    <% if (msg) { %>
+      <div class="alert alert-success"><%= msg %></div>
     <% } %>
 
-    <!-- Upload Card -->
-    <div class="upload-card">
-      <h2>Upload Data CSV</h2>
-      <p>Pilih file CSV yang berisi data alumni atau responden untuk diimpor ke sistem</p>
+    <% if (error) { %>
+      <div class="alert alert-error"><%= error %></div>
+    <% } %>
 
-      <div class="upload-layout">
-        <div class="upload-column">
-          <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data" class="upload-form">
-            <div class="import-type-group">
-              <label>Tujuan Import</label>
-              <div class="import-type-options">
-                <label>
-                  <input type="radio" name="importType" value="alumni" id="importTypeAlumni" checked>
-                  <span>Data Alumni (Wisuda)</span>
-                </label>
-                <label>
-                  <input type="radio" name="importType" value="responden" id="importTypeResponden">
-                  <span>Data Responden Tracer Study</span>
-                </label>
-              </div>
-            </div>
-
-            <label for="csvfile">Pilih File CSV</label>
-            <div class="file-input-wrapper">
-              <input type="file" name="csvfile" id="csvfile" accept=".csv" required>
-            </div>
-            <button type="submit" id="submitBtn">
-              <span id="btnText">Proses CSV</span>
-              <span id="btnLoader" style="display: none;">Memproses...</span>
-            </button>
-          </form>
-        </div>
-
-        <div class="info-column">
-          <h3>Panduan Format CSV</h3>
-          <div class="info-grid">
-            <div class="info-box" id="infoBoxAlumni">
-              <h3>Format CSV - Import Data Alumni</h3>
-              <ul>
-                <li>Kolom minimal: <strong>No, NIM, Nama, Program Studi, Fakultas</strong></li>
-                <li>Contoh format: <code>Data Panjang Semua Fakultas Periode Wisuda...</code></li>
-                <li>Data digunakan untuk menambah/memutakhirkan tabel `alumni`.</li>
-                <li>Pastikan nama prodi & fakultas sesuai dengan data master.</li>
-              </ul>
-            </div>
-
-            <div class="info-box" id="infoBoxResponden" style="display: none;">
-              <h3>Format CSV - Import Data Responden</h3>
-              <ul>
-                <li>Kolom minimal: <strong>Nama/Nama Lengkap</strong>, <strong>NIM</strong>, <strong>Program Studi</strong>, <strong>Fakultas</strong> (bisa format tracer maupun format wisuda).</li>
-                <li>Contoh: <code>Data Bersih Sistem Informasi...</code>, <code>databersihkeperawatan.csv</code>, dan file tracer sejenis.</li>
-                <li>Data akan disimpan ke tabel <code>responden</code> dan otomatis memperbarui kartu Total Responden di dashboard.</li>
-                <li>Pastikan nama prodi & fakultas sesuai dengan master data agar baris tidak dilewati.</li>
-              </ul>
-            </div>
-
-          </div>
-        </div>
-      </div>
+    <div class="table-card">
+      <table>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Permissions</th>
+            <th>Created At</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (admins && admins.length > 0) { %>
+            <% admins.forEach(function(admin) { %>
+              <tr>
+                <td><strong><%= admin.username %></strong></td>
+                <td><%= admin.email || '-' %></td>
+                <td>
+                  <span class="badge badge-primary"><%= admin.role %></span>
+                </td>
+                <td>
+                  <span class="badge <%= admin.is_active ? 'badge-success' : 'badge-danger' %>">
+                    <%= admin.is_active ? 'Aktif' : 'Nonaktif' %>
+                  </span>
+                </td>
+                <td>
+                  <% if (admin.permissions) { %>
+                    <div class="permissions-list">
+                      <% Object.keys(admin.permissions).forEach(function(key) { %>
+                        <% if (admin.permissions[key]) { %>
+                          <span class="permission-tag"><%= key %></span>
+                        <% } %>
+                      <% }) %>
+                    </div>
+                  <% } else { %>
+                    <span style="color: var(--text-muted);">-</span>
+                  <% } %>
+                </td>
+                <td><%= new Date(admin.createdAt).toLocaleDateString('id-ID') %></td>
+                <td>
+                  <a href="/admin/<%= admin.id %>/edit" class="btn btn-sm btn-edit">Edit</a>
+                  <% if (admin.id !== currentUser.id) { %>
+                    <button onclick="deleteAdmin(<%= admin.id %>)" class="btn btn-sm btn-delete">Hapus</button>
+                  <% } %>
+                </td>
+              </tr>
+            <% }) %>
+          <% } else { %>
+            <tr>
+              <td colspan="7" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                Belum ada admin
+              </td>
+            </tr>
+          <% } %>
+        </tbody>
+      </table>
     </div>
-
-  </main>
+  </div>
 
   <!-- Tour Guide Overlay -->
   <div class="tour-overlay" id="tourOverlay"></div>
@@ -1101,100 +882,35 @@
   </div>
 
   <script>
-    // Wait for DOM to be fully loaded
-    document.addEventListener('DOMContentLoaded', function() {
-      // Handle CSV Upload Form
-      const uploadForm = document.getElementById('uploadForm');
-      const submitBtn = document.getElementById('submitBtn');
-      const btnText = document.getElementById('btnText');
-      const btnLoader = document.getElementById('btnLoader');
-      const importTypeRadios = document.querySelectorAll('input[name="importType"]');
-      const infoBoxAlumni = document.getElementById('infoBoxAlumni');
-      const infoBoxResponden = document.getElementById('infoBoxResponden');
-      const csvFileInput = document.getElementById('csvfile');
+    async function deleteAdmin(id) {
+      if (!confirm('Apakah Anda yakin ingin menghapus admin ini?')) {
+        return;
+      }
 
-      function updateImportInfo() {
-        let selected = 'alumni';
-        importTypeRadios.forEach(radio => {
-          if (radio.checked) {
-            selected = radio.value;
+      try {
+        const response = await fetch(`/admin/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
           }
         });
 
-        if (infoBoxAlumni && infoBoxResponden) {
-          infoBoxAlumni.style.display = selected === 'alumni' ? 'block' : 'none';
-          infoBoxResponden.style.display = selected === 'responden' ? 'block' : 'none';
+        const result = await response.json();
+
+        if (result.success) {
+          alert(result.message);
+          location.reload();
+        } else {
+          alert('Error: ' + result.message);
         }
-
-        if (btnText) {
-          if (selected === 'responden') {
-            btnText.textContent = 'Import ke Responden';
-          } else {
-            btnText.textContent = 'Import ke Alumni';
-          }
-        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan saat menghapus admin');
       }
+    }
+  </script>
 
-      if (importTypeRadios.length > 0) {
-        importTypeRadios.forEach(radio => {
-          radio.addEventListener('change', updateImportInfo);
-        });
-        updateImportInfo();
-      }
-
-      // File input validation only
-      if (csvFileInput) {
-        csvFileInput.addEventListener('change', function(e) {
-          const file = e.target.files[0];
-          
-          if (file) {
-            // Check if it's a CSV file
-            const isCSV = file.type === 'text/csv' || 
-                         file.type === 'application/vnd.ms-excel' ||
-                         file.type === 'text/plain' ||
-                         file.type === '' ||
-                         file.name.toLowerCase().endsWith('.csv');
-            
-            if (!isCSV) {
-              alert('Silakan pilih file CSV yang valid!');
-              e.target.value = '';
-            }
-          }
-        });
-      }
-
-      if (uploadForm) {
-        uploadForm.addEventListener('submit', function(e) {
-          const fileInput = document.getElementById('csvfile');
-          if (!fileInput.files || fileInput.files.length === 0) {
-            e.preventDefault();
-            alert('Silakan pilih file CSV terlebih dahulu!');
-            return;
-          }
-
-          // Show loading state
-          if (submitBtn && btnText && btnLoader) {
-            submitBtn.disabled = true;
-            btnText.style.display = 'none';
-            btnLoader.style.display = 'inline';
-          }
-        });
-      }
-
-    });
-
-    // Auto-hide alert after 5 seconds
-    const alerts = document.querySelectorAll('.alert');
-    alerts.forEach(alert => {
-      setTimeout(() => {
-        alert.style.opacity = '0';
-        setTimeout(() => {
-          alert.style.display = 'none';
-        }, 300);
-      }, 5000);
-    });
-
-    // Sidebar functions
+  <script>
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
       sidebar.classList.toggle('open');
@@ -1207,7 +923,8 @@
       
       menuItems.forEach(item => {
         const href = item.getAttribute('href');
-        if (href === currentPath) {
+        // Check if current path matches the href exactly, or if it's an admin page and href is /admin
+        if (href === currentPath || (currentPath.startsWith('/admin') && href === '/admin')) {
           item.classList.add('active');
         } else {
           item.classList.remove('active');
@@ -1221,7 +938,7 @@
       const toggleBtn = document.querySelector('.mobile-menu-toggle');
       
       if (window.innerWidth <= 768) {
-        if (!sidebar.contains(event.target) && !toggleBtn && !toggleBtn.contains(event.target) && sidebar.classList.contains('open')) {
+        if (sidebar && toggleBtn && !sidebar.contains(event.target) && !toggleBtn.contains(event.target) && sidebar.classList.contains('open')) {
           sidebar.classList.remove('open');
         }
       }
@@ -1230,10 +947,11 @@
     // Tour Guide Script
     const tourIcons = {
       menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>',
-      upload: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>',
-      file: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>',
-      info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>',
-      check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+      admin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>',
+      table: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>',
+      add: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>',
+      edit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>',
+      delete: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>'
     };
 
     function getAvailableTourSteps() {
@@ -1246,39 +964,39 @@
           position: 'right'
         },
         {
-          element: '.upload-card',
-          title: 'Form Upload Data CSV',
-          content: 'Halaman ini digunakan untuk mengupload data CSV ke dalam sistem. Pilih jenis data yang ingin diupload (Alumni atau Responden) dan pilih file CSV yang sesuai.',
-          iconKey: 'upload',
+          element: '.page-header',
+          title: 'Manajemen Admin',
+          content: 'Halaman ini digunakan untuk mengelola akun admin dan pengguna sistem. Hanya superadmin yang dapat mengakses halaman ini.',
+          iconKey: 'admin',
+          position: 'bottom'
+        },
+        {
+          element: '.btn-primary[href="/admin/create"]',
+          title: 'Tambah Admin',
+          content: 'Tombol ini digunakan untuk menambahkan admin baru ke dalam sistem. Klik untuk membuka form tambah admin.',
+          iconKey: 'add',
+          position: 'bottom'
+        },
+        {
+          element: '.table-card',
+          title: 'Daftar Admin',
+          content: 'Tabel ini menampilkan daftar semua admin yang terdaftar dalam sistem beserta informasi username, email, role, dan status akun.',
+          iconKey: 'table',
           position: 'top'
         },
         {
-          element: '.import-type-options',
-          title: 'Pilih Jenis Data',
-          content: 'Pilih jenis data yang ingin diupload: Data Alumni untuk mengimpor data alumni baru, atau Data Responden untuk mengimpor data responden tracer study.',
-          iconKey: 'check',
+          element: 'a[href*="/admin/edit"]',
+          title: 'Edit Admin',
+          content: 'Tombol edit digunakan untuk mengubah informasi admin seperti username, email, role, dan permissions. Klik untuk membuka form edit.',
+          iconKey: 'edit',
           position: 'top'
         },
         {
-          element: 'input[type="file"]',
-          title: 'Pilih File CSV',
-          content: 'Klik tombol ini untuk memilih file CSV dari komputer Anda. Pastikan file CSV sudah sesuai dengan format yang ditentukan.',
-          iconKey: 'file',
+          element: 'button[onclick*="deleteAdmin"]',
+          title: 'Hapus Admin',
+          content: 'Tombol hapus digunakan untuk menghapus akun admin dari sistem. Hati-hati, tindakan ini tidak dapat dibatalkan.',
+          iconKey: 'delete',
           position: 'top'
-        },
-        {
-          element: '.upload-form button[type="submit"]',
-          title: 'Upload Data',
-          content: 'Setelah memilih file CSV, klik tombol ini untuk memulai proses upload. Sistem akan memvalidasi dan mengimpor data ke dalam database.',
-          iconKey: 'upload',
-          position: 'top'
-        },
-        {
-          element: '.info-column',
-          title: 'Informasi Upload',
-          content: 'Bagian ini menampilkan informasi penting tentang format CSV yang diperlukan, contoh struktur data, dan panduan upload.',
-          iconKey: 'info',
-          position: 'left'
         }
       ];
 
@@ -1354,11 +1072,14 @@
       const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
 
       const highlight = document.getElementById('tourHighlight');
-      highlight.classList.add('active');
-      highlight.style.top = (rect.top + scrollTop - 4) + 'px';
-      highlight.style.left = (rect.left + scrollLeft - 4) + 'px';
-      highlight.style.width = (rect.width + 8) + 'px';
-      highlight.style.height = (rect.height + 8) + 'px';
+      if (highlight) {
+        highlight.classList.add('active');
+        highlight.style.display = 'block';
+        highlight.style.top = (rect.top + scrollTop - 4) + 'px';
+        highlight.style.left = (rect.left + scrollLeft - 4) + 'px';
+        highlight.style.width = (rect.width + 8) + 'px';
+        highlight.style.height = (rect.height + 8) + 'px';
+      }
 
       const tooltip = document.getElementById('tourTooltip');
       tooltip.style.display = 'block';
@@ -1433,14 +1154,21 @@
     function endTour() {
       tourActive = false;
       const overlay = document.getElementById('tourOverlay');
-      overlay.classList.remove('active');
-      setTimeout(() => {
-        overlay.style.display = 'none';
-      }, 300);
+      if (overlay) {
+        overlay.classList.remove('active');
+        setTimeout(() => {
+          overlay.style.display = 'none';
+        }, 300);
+      }
       const highlight = document.getElementById('tourHighlight');
-      highlight.classList.remove('active');
-      highlight.style.display = 'none';
-      document.getElementById('tourTooltip').style.display = 'none';
+      if (highlight) {
+        highlight.classList.remove('active');
+        highlight.style.display = 'none';
+      }
+      const tooltip = document.getElementById('tourTooltip');
+      if (tooltip) {
+        tooltip.style.display = 'none';
+      }
       localStorage.setItem('tourCompleted', 'true');
     }
 
@@ -1457,9 +1185,15 @@
     `;
     document.head.appendChild(style);
 
-    document.getElementById('tourOverlay').addEventListener('click', function(e) {
-      if (e.target === this) {
-        endTour();
+    // Wait for DOM to be ready before adding event listeners
+    document.addEventListener('DOMContentLoaded', function() {
+      const tourOverlayEl = document.getElementById('tourOverlay');
+      if (tourOverlayEl) {
+        tourOverlayEl.addEventListener('click', function(e) {
+          if (e.target === this) {
+            endTour();
+          }
+        });
       }
     });
 

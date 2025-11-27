@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= mode === 'create' ? 'Tambah' : 'Edit' %> Admin | CDC Universitas Andalas</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #2F6B31;
+      --secondary: #4CA858;
+      --accent: #6BCF78;
+      --bg: #f5f7fa;
+      --card-bg: #fff;
+      --text-dark: #1f2e24;
+      --text-muted: #6d7a6f;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+      display: flex;
+    }
+
+    /* Sidebar - Minimalis Putih */
+    .sidebar {
+      width: 260px;
+      background: #ffffff;
+      color: var(--text-dark);
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 1000;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+      border-right: 1px solid #e9ecef;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar-header {
+      padding: 25px 20px;
+      border-bottom: 1px solid #e9ecef;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .sidebar-header img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+      filter: none;
+    }
+
+    .sidebar-header h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0;
+      color: var(--text-dark);
+    }
+
+    .sidebar-menu {
+      padding: 15px 0;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+      border-left: 3px solid transparent;
+    }
+
+    .menu-item:hover {
+      background: #f8f9fa;
+      border-left-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .menu-item.active {
+      background: #f0f7f1;
+      border-left-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .menu-item svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+    }
+
+    .menu-divider {
+      height: 1px;
+      background: #e9ecef;
+      margin: 10px 20px;
+    }
+
+    .sidebar-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      border-top: 1px solid #e9ecef;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .user-info .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .user-info .user-details {
+      flex: 1;
+    }
+
+    .user-info .user-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+      color: var(--text-dark);
+    }
+
+    .user-info .user-role {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .logout-btn {
+      width: 100%;
+      padding: 10px;
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 6px;
+      color: var(--text-dark);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .logout-btn:hover {
+      background: #e9ecef;
+      color: var(--primary);
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text-dark);
+      padding: 8px;
+    }
+
+    /* Main Content Area */
+    .main-wrapper {
+      flex: 1;
+      margin-left: 260px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 50px;
+      flex: 1;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-wrapper {
+        margin-left: 0;
+      }
+
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      .container {
+        padding: 0 20px;
+      }
+    }
+
+    .page-header {
+      margin-bottom: 30px;
+    }
+
+    .page-header h1 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 10px;
+    }
+
+    .form-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      padding: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-dark);
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 2px solid #e9ecef;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'Poppins', sans-serif;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--primary);
+    }
+
+    .permissions-section {
+      margin-top: 30px;
+      padding-top: 30px;
+      border-top: 2px solid #e9ecef;
+    }
+
+    .permissions-section h3 {
+      color: var(--text-dark);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .permissions-section > p {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+
+    .permissions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .permission-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 20px;
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      border: 2px solid #e9ecef;
+      border-radius: 12px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .permission-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--primary);
+      transform: scaleY(0);
+      transition: transform 0.3s ease;
+    }
+
+    .permission-item:hover {
+      background: linear-gradient(135deg, #f0f4f8 0%, #e8f5e9 100%);
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(47, 107, 49, 0.15);
+    }
+
+    .permission-item:hover::before {
+      transform: scaleY(1);
+    }
+
+    .permission-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: #f0f4f8;
+      transition: all 0.3s ease;
+    }
+
+    .permission-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--text-muted);
+      transition: all 0.3s ease;
+    }
+
+    .permission-item:has(input[type="checkbox"]:checked) .permission-icon {
+      background: var(--primary);
+      transform: scale(1.1);
+    }
+
+    .permission-item:has(input[type="checkbox"]:checked) .permission-icon svg {
+      stroke: white;
+    }
+
+    .permission-content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      position: relative;
+    }
+
+    .permission-label-wrapper {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .permission-item input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .permission-checkbox {
+      width: 24px;
+      height: 24px;
+      border: 2px solid #d0d0d0;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: white;
+      transition: all 0.3s ease;
+      margin-top: 2px;
+    }
+
+    .permission-item:has(input[type="checkbox"]:checked) .permission-checkbox {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .permission-item:has(input[type="checkbox"]:checked) .permission-checkbox::after {
+      content: '✓';
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .permission-item input[type="checkbox"]:disabled + .permission-checkbox {
+      opacity: 0.5;
+      cursor: not-allowed;
+      background: #f5f5f5;
+    }
+
+    .permission-item label {
+      margin: 0;
+      cursor: pointer;
+      font-size: 15px;
+      color: var(--text-dark);
+      font-weight: 600;
+      user-select: none;
+      display: block;
+      line-height: 1.4;
+    }
+
+    .permission-item:has(input[type="checkbox"]:checked) label {
+      color: var(--primary);
+    }
+
+    .permission-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    .permission-item:has(input[type="checkbox"]:checked) {
+      background: linear-gradient(135deg, #e8f5e9 0%, #d4edda 100%);
+      border-color: var(--secondary);
+      box-shadow: 0 4px 16px rgba(47, 107, 49, 0.2);
+    }
+
+    .permission-item:has(input[type="checkbox"]:checked)::before {
+      transform: scaleY(1);
+    }
+
+    .permission-item:has(input[type="checkbox"]:disabled) {
+      background: linear-gradient(135deg, #f5f5f5 0%, #e9ecef 100%);
+      border-color: #d0d0d0;
+      opacity: 0.7;
+    }
+
+    .permission-item:has(input[type="checkbox"]:disabled):hover {
+      transform: none;
+      box-shadow: none;
+    }
+
+    .permission-item:has(input[type="checkbox"]:disabled) .permission-icon {
+      background: #e9ecef;
+    }
+
+    .permission-item:has(input[type="checkbox"]:disabled) .permission-icon svg {
+      stroke: #b0b0b0;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--secondary);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: #f8f9fa;
+      color: var(--text-dark);
+      border: 2px solid #e9ecef;
+    }
+
+    .btn-secondary:hover {
+      background: #e9ecef;
+    }
+
+    .form-actions {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+      padding-top: 30px;
+      border-top: 2px solid #e9ecef;
+    }
+  </style>
+</head>
+<body>
+  <% 
+    const userPermissions = typeof user !== 'undefined' && user && user.permissions ? user.permissions : {};
+    const isSuperAdmin = typeof user !== 'undefined' && user && user.role === 'superadmin';
+    const hasPermission = (perm) => isSuperAdmin || userPermissions[perm] === true;
+    const currentPath = '/admin';
+  %>
+  
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="/images/logounand.png" alt="Logo UNAND">
+      <h2>Career Development Center Unand</h2>
+    </div>
+    <nav class="sidebar-menu">
+      <a href="/dashboard" class="menu-item <%= currentPath === '/dashboard' ? 'active' : '' %>">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        Dashboard
+      </a>
+      
+      <% if (hasPermission('riwayat')) { %>
+        <a href="/riwayat" class="menu-item <%= currentPath === '/riwayat' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          Riwayat Capaian
+        </a>
+      <% } %>
+      
+      <% if (hasPermission('upload')) { %>
+        <a href="/upload" class="menu-item <%= currentPath === '/upload' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Upload Data CSV
+        </a>
+      <% } %>
+      
+      <% if (hasPermission('pembobotan')) { %>
+        <a href="/pembobotan" class="menu-item <%= currentPath === '/pembobotan' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          Pencatatan Pembobotan
+        </a>
+      <% } %>
+      
+      <div class="menu-divider"></div>
+      
+      <% if (hasPermission('manage_admin')) { %>
+        <a href="/admin" class="menu-item <%= currentPath === '/admin' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          Manajemen Admin
+        </a>
+      <% } %>
+      
+      <% if (hasPermission('profile')) { %>
+        <a href="/profile" class="menu-item <%= currentPath === '/profile' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          Profil Admin
+        </a>
+      <% } %>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar">
+          <%= typeof user !== 'undefined' && user ? user.username.charAt(0).toUpperCase() : 'A' %>
+        </div>
+        <div class="user-details">
+          <div class="user-name"><%= typeof user !== 'undefined' && user ? user.username : 'Admin' %></div>
+          <div class="user-role"><%= typeof user !== 'undefined' && user && user.role ? user.role : 'Admin' %></div>
+        </div>
+      </div>
+      <a href="/logout" class="logout-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+        Logout
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content Wrapper -->
+  <div class="main-wrapper">
+    <div class="container">
+      <div class="page-header">
+        <button class="mobile-menu-toggle" onclick="toggleSidebar()">☰</button>
+        <h1><%= mode === 'create' ? 'Tambah Admin Baru' : 'Edit Admin' %></h1>
+      </div>
+
+    <div class="form-card">
+      <form id="adminForm">
+        <div class="form-group">
+          <label for="username">Username *</label>
+          <input 
+            type="text" 
+            id="username" 
+            name="username" 
+            value="<%= admin ? admin.username : '' %>"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            value="<%= admin ? admin.email : '' %>"
+          >
+        </div>
+
+        <div class="form-group">
+          <label for="role">Role *</label>
+          <select id="role" name="role" required>
+            <option value="admin" <%= admin && admin.role === 'admin' ? 'selected' : '' %>>Admin</option>
+            <option value="superadmin" <%= admin && admin.role === 'superadmin' ? 'selected' : '' %>>Super Admin</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="is_active">Status</label>
+          <select id="is_active" name="is_active">
+            <option value="1" <%= admin && admin.is_active ? 'selected' : '' %>>Aktif</option>
+            <option value="0" <%= admin && !admin.is_active ? 'selected' : '' %>>Nonaktif</option>
+          </select>
+        </div>
+
+        <% if (mode === 'create') { %>
+          <div class="form-group">
+            <label for="password">Password *</label>
+            <input 
+              type="password" 
+              id="password" 
+              name="password" 
+              required
+              minlength="6"
+            >
+            <small style="color: var(--text-muted); font-size: 12px;">Minimal 6 karakter</small>
+          </div>
+        <% } else { %>
+          <div class="form-group">
+            <label for="newPassword">Password Baru (kosongkan jika tidak ingin mengubah)</label>
+            <input 
+              type="password" 
+              id="newPassword" 
+              name="newPassword"
+              minlength="6"
+            >
+            <small style="color: var(--text-muted); font-size: 12px;">Minimal 6 karakter</small>
+          </div>
+        <% } %>
+
+        <div class="permissions-section">
+          <h3>Izin Akses (Permissions)</h3>
+          <p>Pilih izin akses yang akan diberikan kepada admin ini. Centang kotak untuk memberikan izin. Izin yang dicentang akan menentukan menu dan fitur yang dapat diakses oleh admin ini.</p>
+          <div class="permissions-grid" id="permissionsGrid">
+            <% 
+              // Permission untuk menu sidebar (dashboard tidak perlu karena semua user bisa akses)
+              const permissionsList = {
+                riwayat: 'Akses Riwayat Capaian',
+                upload: 'Upload Data CSV',
+                pembobotan: 'Akses Pembobotan',
+                profile: 'Akses Profil',
+                manage_admin: 'Manajemen Admin'
+              };
+              
+              // Pastikan permissions sudah di-parse dengan benar
+              let currentPerms = {};
+              if (admin && admin.permissions) {
+                if (typeof admin.permissions === 'object' && !Array.isArray(admin.permissions)) {
+                  currentPerms = admin.permissions;
+                } else if (typeof admin.permissions === 'string') {
+                  try {
+                    currentPerms = JSON.parse(admin.permissions);
+                  } catch (e) {
+                    currentPerms = {};
+                  }
+                }
+              }
+              const isSuperAdminEdit = admin && admin.role === 'superadmin';
+              
+              // Icon mapping untuk setiap permission
+              const permissionIcons = {
+                riwayat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>',
+                upload: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>',
+                pembobotan: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>',
+                profile: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>',
+                manage_admin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>'
+              };
+
+              const permissionDescriptions = {
+                riwayat: 'Melihat dan mengakses data riwayat capaian IKU',
+                upload: 'Mengunggah dan memperbarui data CSV',
+                pembobotan: 'Mengelola data pembobotan dan pencatatan',
+                profile: 'Mengakses dan mengubah profil pengguna',
+                manage_admin: 'Mengelola akun admin dan izin akses'
+              };
+
+              Object.keys(permissionsList).forEach(key => {
+            %>
+              <div class="permission-item" onclick="document.getElementById('perm_<%= key %>').click()">
+                <div class="permission-icon">
+                  <%- permissionIcons[key] %>
+                </div>
+                <div class="permission-content">
+                  <input 
+                    type="checkbox" 
+                    id="perm_<%= key %>" 
+                    name="permissions" 
+                    value="<%= key %>"
+                    <% if (key === 'manage_admin' && isSuperAdminEdit) { %>
+                      checked disabled
+                    <% } else if (key === 'manage_admin') { %>
+                      data-manage-admin-checkbox="true"
+                      <% if (currentPerms && currentPerms[key] === true) { %>
+                        checked
+                      <% } %>
+                    <% } else if (currentPerms && currentPerms[key] === true) { %>
+                      checked
+                    <% } %>
+                  >
+                  <div class="permission-checkbox"></div>
+                  <div class="permission-label-wrapper">
+                    <label for="perm_<%= key %>">
+                      <strong><%= permissionsList[key] %></strong>
+                      <span class="permission-desc"><%= permissionDescriptions[key] %></span>
+                      <% if (key === 'manage_admin' && isSuperAdminEdit) { %>
+                        <span class="permission-desc" style="color: var(--primary); font-weight: 600; margin-top: 2px; display: block;">⚠️ Wajib untuk Superadmin</span>
+                      <% } else if (key === 'manage_admin') { %>
+                        <span class="permission-desc" id="manageAdminWarning" style="color: #dc3545; font-weight: 600; margin-top: 2px; display: none;">⚠️ Hanya untuk Superadmin</span>
+                      <% } %>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            <% }); %>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            <%= mode === 'create' ? 'Tambah Admin' : 'Simpan Perubahan' %>
+          </button>
+          <a href="/admin" class="btn btn-secondary">Batal</a>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Permission list untuk form submission
+    const permissions = {
+      riwayat: 'Akses Riwayat Capaian',
+      upload: 'Upload Data CSV',
+      pembobotan: 'Akses Pembobotan',
+      profile: 'Akses Profil',
+      manage_admin: 'Manajemen Admin'
+    };
+
+    // Handle role change untuk disable/enable manage_admin permission
+    document.addEventListener('DOMContentLoaded', function() {
+      const roleSelect = document.getElementById('role');
+      const manageAdminCheckbox = document.getElementById('perm_manage_admin');
+      const manageAdminItem = manageAdminCheckbox ? manageAdminCheckbox.closest('.permission-item') : null;
+      const manageAdminWarning = document.getElementById('manageAdminWarning');
+
+      function updateManageAdminPermission() {
+        if (!manageAdminCheckbox || !manageAdminItem) return;
+
+        const selectedRole = roleSelect.value;
+        
+        if (selectedRole === 'admin') {
+          // Disable checkbox dan uncheck jika tercentang
+          manageAdminCheckbox.disabled = true;
+          manageAdminCheckbox.checked = false;
+          manageAdminItem.style.opacity = '0.6';
+          manageAdminItem.style.cursor = 'not-allowed';
+          manageAdminItem.style.pointerEvents = 'none';
+          
+          // Tampilkan warning
+          if (manageAdminWarning) {
+            manageAdminWarning.style.display = 'block';
+          }
+          
+          // Prevent click event
+          manageAdminItem.onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+          };
+        } else if (selectedRole === 'superadmin') {
+          // Enable checkbox dan auto-check untuk superadmin
+          manageAdminCheckbox.disabled = false;
+          manageAdminCheckbox.checked = true;
+          manageAdminItem.style.opacity = '1';
+          manageAdminItem.style.cursor = 'pointer';
+          manageAdminItem.style.pointerEvents = 'auto';
+          
+          // Sembunyikan warning
+          if (manageAdminWarning) {
+            manageAdminWarning.style.display = 'none';
+          }
+          
+          // Restore onclick handler
+          manageAdminItem.onclick = function() {
+            document.getElementById('perm_manage_admin').click();
+          };
+        }
+      }
+
+      // Jalankan saat halaman dimuat
+      updateManageAdminPermission();
+
+      // Jalankan saat role berubah
+      if (roleSelect) {
+        roleSelect.addEventListener('change', updateManageAdminPermission);
+      }
+    });
+
+    // Handle form submission
+    document.getElementById('adminForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const permissionsObj = {};
+      
+      // Inisialisasi semua permissions ke false terlebih dahulu
+      Object.keys(permissions).forEach(key => {
+        permissionsObj[key] = false;
+      });
+      
+      // Set permissions yang dicentang menjadi true
+      document.querySelectorAll('input[name="permissions"]:checked').forEach(checkbox => {
+        if (!checkbox.disabled) {
+          permissionsObj[checkbox.value] = true;
+        }
+      });
+      
+      // Jika superadmin, pastikan manage_admin selalu true
+      // Jika admin, pastikan manage_admin selalu false
+      const role = formData.get('role');
+      if (role === 'superadmin') {
+        permissionsObj.manage_admin = true;
+      } else if (role === 'admin') {
+        permissionsObj.manage_admin = false;
+      }
+
+      const data = {
+        username: formData.get('username'),
+        email: formData.get('email'),
+        role: formData.get('role'),
+        is_active: formData.get('is_active'),
+        permissions: JSON.stringify(permissionsObj)
+      };
+
+      <% if (mode === 'create') { %>
+        // Create form - use form submission
+        const form = document.createElement('form');
+        form.method = 'POST';
+        form.action = '/admin';
+        
+        Object.keys(data).forEach(key => {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = key;
+          input.value = data[key];
+          form.appendChild(input);
+        });
+        
+        const passwordInput = document.createElement('input');
+        passwordInput.type = 'hidden';
+        passwordInput.name = 'password';
+        passwordInput.value = formData.get('password');
+        form.appendChild(passwordInput);
+        
+        document.body.appendChild(form);
+        form.submit();
+      <% } else { %>
+        const newPassword = formData.get('newPassword');
+        if (newPassword && newPassword.trim().length > 0) {
+          data.newPassword = newPassword;
+        }
+
+        try {
+          const response = await fetch('/admin/<%= admin.id %>', {
+            method: 'PUT',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+
+          const result = await response.json();
+          
+          if (result.success) {
+            alert(result.message);
+            window.location.href = '/admin';
+          } else {
+            alert('Error: ' + result.message);
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          alert('Terjadi kesalahan saat memperbarui admin');
+        }
+      <% } %>
+    });
+  </script>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('open');
+    }
+
+    // Update active menu item based on current page
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPath = window.location.pathname;
+      const menuItems = document.querySelectorAll('.menu-item');
+      
+      menuItems.forEach(item => {
+        const href = item.getAttribute('href');
+        if (href === currentPath) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+    });
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(event) {
+      const sidebar = document.getElementById('sidebar');
+      const toggleBtn = document.querySelector('.mobile-menu-toggle');
+      
+      if (window.innerWidth <= 768) {
+        if (sidebar && toggleBtn && !sidebar.contains(event.target) && !toggleBtn.contains(event.target) && sidebar.classList.contains('open')) {
+          sidebar.classList.remove('open');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
+

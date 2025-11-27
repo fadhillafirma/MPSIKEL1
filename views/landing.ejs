@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CDC Universitas Andalas | Career Development Center</title>
+  
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #2F6B31;
+      --primary-dark: #1F4B24;
+      --secondary: #4CA858;
+      --accent: #6BCF78;
+      --white: #ffffff;
+      --text-dark: #1f2e24;
+      --text-muted: #6d7a6f;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Header */
+    .header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 20px 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .header-left img {
+      width: 60px;
+      height: 60px;
+      object-fit: contain;
+    }
+
+    .header-left h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 0;
+    }
+
+    .header-right {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: var(--white);
+      box-shadow: 0 4px 15px rgba(47, 107, 49, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(47, 107, 49, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-outline:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    /* Hero Section */
+    .hero {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 50px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 100%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(47, 107, 49, 0.1) 0%, transparent 70%);
+      /* Animasi dihapus */
+    }
+
+    .hero-content {
+      max-width: 800px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-content img {
+      width: 150px;
+      height: 150px;
+      margin-bottom: 30px;
+      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.1));
+      /* Animasi dihapus - logo tidak bergerak */
+    }
+
+    .hero-content h2 {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .hero-content p {
+      font-size: 20px;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    /* Features Section */
+    .features {
+      background: var(--white);
+      padding: 80px 50px;
+    }
+
+    .features-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .features-title {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    .features-title h3 {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 15px;
+    }
+
+    .features-title p {
+      font-size: 18px;
+      color: var(--text-muted);
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+    }
+
+    .feature-card {
+      background: #f8f9fa;
+      padding: 40px;
+      border-radius: 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 2px solid transparent;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 30px rgba(47, 107, 49, 0.1);
+    }
+
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 20px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+    }
+    
+    .feature-icon svg {
+      width: 40px;
+      height: 40px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .feature-card h4 {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 15px;
+    }
+
+    .feature-card p {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--text-dark);
+      color: var(--white);
+      padding: 40px 50px;
+      text-align: center;
+    }
+
+    .footer p {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .header {
+        padding: 15px 20px;
+      }
+
+      .header-left h1 {
+        font-size: 18px;
+      }
+
+      .hero {
+        padding: 60px 20px;
+      }
+
+      .hero-content h2 {
+        font-size: 32px;
+      }
+
+      .hero-content p {
+        font-size: 16px;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .features {
+        padding: 60px 20px;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <img src="/images/logounand.png" alt="Logo UNAND">
+      <h1>CDC Universitas Andalas</h1>
+    </div>
+    <div class="header-right">
+      <!-- Button dihapus sesuai permintaan -->
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="hero-content">
+      <img src="/images/logounand.png" alt="Logo UNAND">
+      <h2>Career Development Center</h2>
+      <p>Universitas Andalas</p>
+      <p style="font-size: 16px; color: var(--text-muted); margin-top: 20px;">
+        Sistem Manajemen Indikator Kinerja Utama (IKU-1) untuk memantau dan mengelola data capaian alumni
+      </p>
+      <div class="hero-buttons">
+        <a href="/login" class="btn btn-primary" style="font-size: 18px; padding: 16px 40px;">Masuk ke Dashboard</a>
+        <button onclick="scrollToFeatures()" class="btn btn-outline" style="font-size: 18px; padding: 16px 40px;">Fitur Utama</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <div class="features" id="features">
+    <div class="features-container">
+      <div class="features-title">
+        <h3>Fitur Utama</h3>
+        <p>Platform terintegrasi untuk manajemen data IKU-1</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="7"></rect>
+              <rect x="14" y="3" width="7" height="7"></rect>
+              <rect x="14" y="14" width="7" height="7"></rect>
+              <rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+          </div>
+          <h4>Dashboard Interaktif</h4>
+          <p>Visualisasi data capaian IKU-1 dengan grafik dan statistik yang informatif</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+              <polyline points="17 6 23 6 23 12"></polyline>
+            </svg>
+          </div>
+          <h4>Analisis Capaian</h4>
+          <p>Pemantauan capaian per fakultas dan program studi secara real-time</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+          </div>
+          <h4>Keamanan Data</h4>
+          <p>Sistem keamanan terjamin dengan akses berbasis peran dan permission</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <h4>Manajemen Data</h4>
+          <p>Upload dan kelola data alumni dengan mudah melalui antarmuka yang intuitif</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+              <line x1="12" y1="18" x2="12.01" y2="18"></line>
+            </svg>
+          </div>
+          <h4>Responsif</h4>
+          <p>Akses dari berbagai perangkat dengan tampilan yang optimal</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+            </svg>
+          </div>
+          <h4>Real-time Updates</h4>
+          <p>Update data secara real-time untuk informasi yang selalu terkini</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>© 2025 CDC Universitas Andalas — All Rights Reserved</p>
+  </div>
+
+  <script>
+    function scrollToFeatures() {
+      const featuresSection = document.getElementById('features');
+      if (featuresSection) {
+        featuresSection.scrollIntoView({ 
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    }
+  </script>
+</body>
+</html>
+

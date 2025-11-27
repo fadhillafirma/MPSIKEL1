@@ -32,6 +32,443 @@
       background: var(--bg);
       margin: 0;
       color: var(--text-dark);
+      display: flex;
+    }
+
+    /* Sidebar - Minimalis Putih */
+    .sidebar {
+      width: 260px;
+      background: #ffffff;
+      color: var(--text-dark);
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 1000;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+      border-right: 1px solid #e9ecef;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar-header {
+      padding: 25px 20px;
+      border-bottom: 1px solid #e9ecef;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .sidebar-header img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+      filter: none;
+    }
+
+    .sidebar-header h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0;
+      color: var(--text-dark);
+    }
+
+    .sidebar-menu {
+      padding: 15px 0;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+      border-left: 3px solid transparent;
+    }
+
+    .menu-item:hover {
+      background: #f8f9fa;
+      border-left-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .menu-item.active {
+      background: #f0f7f1;
+      border-left-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .menu-item svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+    }
+
+    .menu-divider {
+      height: 1px;
+      background: #e9ecef;
+      margin: 10px 20px;
+    }
+
+    .sidebar-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      border-top: 1px solid #e9ecef;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .user-info .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .user-info .user-details {
+      flex: 1;
+    }
+
+    .user-info .user-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+      color: var(--text-dark);
+    }
+
+    .user-info .user-role {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .logout-btn {
+      width: 100%;
+      padding: 10px;
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 6px;
+      color: var(--text-dark);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .logout-btn:hover {
+      background: #e9ecef;
+      color: var(--primary);
+    }
+
+    .start-tour-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #4CA858 0%, #6BCF78 100%);
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: 'Poppins', sans-serif;
+      margin: 0 0 15px 0;
+      box-shadow: 0 2px 8px rgba(76, 168, 88, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .start-tour-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .start-tour-btn:hover::before {
+      left: 100%;
+    }
+
+    .start-tour-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(76, 168, 88, 0.35);
+      background: linear-gradient(135deg, #5CB85C 0%, #7DD87D 100%);
+    }
+
+    .start-tour-btn:active {
+      transform: translateY(0);
+    }
+
+    .start-tour-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text-dark);
+      padding: 8px;
+    }
+
+    /* Tour Guide Styles */
+    .tour-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 9998;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      display: none;
+    }
+
+    .tour-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+      display: block;
+    }
+
+    .tour-highlight {
+      position: absolute;
+      border: 3px solid var(--primary);
+      border-radius: 8px;
+      box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 20px rgba(47, 107, 49, 0.5);
+      z-index: 9999;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      display: none;
+    }
+
+    .tour-highlight.active {
+      display: block;
+    }
+
+    .tour-tooltip {
+      position: absolute;
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 350px;
+      min-width: 300px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      z-index: 10000;
+      animation: tooltipFadeIn 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    @keyframes tooltipFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .tour-tooltip::before {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border: 12px solid transparent;
+    }
+
+    .tour-tooltip.top::before {
+      bottom: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-top-color: white;
+    }
+
+    .tour-tooltip.bottom::before {
+      top: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-bottom-color: white;
+    }
+
+    .tour-tooltip.left::before {
+      right: -24px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-left-color: white;
+    }
+
+    .tour-tooltip.right::before {
+      left: -24px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-right-color: white;
+    }
+
+    .tour-tooltip-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+
+    .tour-tooltip-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      padding: 12px;
+    }
+
+    .tour-tooltip-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: white;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .tour-tooltip-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .tour-tooltip-content {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .tour-tooltip-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .tour-progress {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .tour-buttons {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+
+    .tour-btn {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .tour-btn-secondary {
+      background: #f0f0f0;
+      color: var(--text-dark);
+    }
+
+    .tour-btn-secondary:hover {
+      background: #e0e0e0;
+    }
+
+    .tour-btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+    }
+
+    .tour-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(47, 107, 49, 0.3);
+    }
+
+    .tour-btn-skip {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid #e0e0e0;
+    }
+
+    .tour-btn-skip:hover {
+      background: #f8f9fa;
+      color: var(--text-dark);
+    }
+
+    /* Main Content Area */
+    .main-wrapper {
+      flex: 1;
+      margin-left: 260px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     /* Header */
@@ -59,7 +496,7 @@
     .header-center {
       flex: 1;
       text-align: left;
-      margin-left: 20px;
+      margin-left: 15px;
     }
 
     .header-center h1 {
@@ -103,9 +540,33 @@
 
     /* Main Container */
     .container {
-      max-width: 900px;
+      max-width: 1400px;
       margin: 30px auto;
-      padding: 0 50px;
+      padding: 0 60px;
+      flex: 1;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-wrapper {
+        margin-left: 0;
+      }
+
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      .container {
+        padding: 0 20px;
+      }
     }
 
     /* Profile Card */
@@ -113,8 +574,9 @@
       background: var(--card-bg);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
-      padding: 30px;
+      padding: 50px;
       margin-bottom: 25px;
+      width: 100%;
     }
 
     .profile-card h2 {
@@ -128,12 +590,44 @@
     }
 
     .profile-card h3 {
-      font-size: 18px;
-      font-weight: 600;
+      font-size: 20px;
+      font-weight: 700;
       color: var(--text-dark);
-      margin: 30px 0 20px 0;
-      padding-bottom: 10px;
+      margin: 40px 0 25px 0;
+      padding-bottom: 12px;
+      border-bottom: 3px solid #e9ecef;
+    }
+
+    /* Form Sections Layout - Horizontal */
+    .form-sections {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .form-section {
+      background: #f8f9fa;
+      padding: 25px;
+      border-radius: 12px;
+      border: 1px solid #e9ecef;
+    }
+
+    .form-section h3 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-size: 18px;
+      color: var(--text-dark);
+      padding-bottom: 12px;
       border-bottom: 2px solid #e9ecef;
+    }
+
+    .form-section .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-section .btn-group {
+      margin-top: 20px;
     }
 
     .profile-card h3:first-of-type {
@@ -156,12 +650,12 @@
     .form-group input,
     .form-group select {
       width: 100%;
-      padding: 12px 16px;
+      padding: 14px 18px;
       border: 2px solid #e9ecef;
-      border-radius: 8px;
-      font-size: 14px;
+      border-radius: 10px;
+      font-size: 15px;
       font-family: 'Poppins', sans-serif;
-      transition: border-color 0.3s;
+      transition: all 0.3s ease;
       background: white;
     }
 
@@ -178,9 +672,10 @@
     }
 
     .form-group .help-text {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--text-muted);
-      margin-top: 5px;
+      margin-top: 8px;
+      line-height: 1.5;
     }
 
     /* Buttons */
@@ -234,7 +729,7 @@
     .btn-group {
       display: flex;
       gap: 12px;
-      margin-top: 25px;
+      margin-top: 30px;
     }
 
     /* Alert Messages */
@@ -293,33 +788,54 @@
     }
 
     /* User Info Display */
-    .user-info {
+    .profile-info {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 15px;
-      margin-bottom: 30px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    @media (max-width: 1200px) {
+      .profile-info {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .profile-info {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     .info-item {
-      padding: 15px;
+      padding: 20px;
       background: #f8f9fa;
-      border-radius: 8px;
+      border-radius: 10px;
       border-left: 4px solid var(--primary);
+      transition: all 0.3s ease;
+    }
+
+    .info-item:hover {
+      background: #f0f7f1;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(47, 107, 49, 0.1);
     }
 
     .info-item label {
-      font-size: 12px;
+      font-size: 13px;
+      font-weight: 600;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 5px;
+      margin-bottom: 10px;
       display: block;
     }
 
     .info-item .value {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 600;
       color: var(--text-dark);
+      word-break: break-word;
     }
 
     /* Responsive */
@@ -343,186 +859,344 @@
         flex-direction: column;
       }
 
-      .user-info {
+      .profile-info {
         grid-template-columns: 1fr;
+      }
+
+      .form-sections {
+        grid-template-columns: 1fr;
+      }
+
+      #changePasswordForm {
+        grid-template-columns: 1fr !important;
       }
     }
   </style>
 </head>
 
 <body>
-  <!-- Header -->
-  <div class="header">
-    <div class="header-left">
+  <% 
+    // Deklarasi permissions untuk digunakan di seluruh halaman
+    const userPermissions = typeof user !== 'undefined' && user && user.permissions ? user.permissions : {};
+    const isSuperAdmin = typeof user !== 'undefined' && user && user.role === 'superadmin';
+    const hasPermission = (perm) => isSuperAdmin || userPermissions[perm] === true;
+    const currentPath = '/profile';
+  %>
+  
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
       <img src="/images/logounand.png" alt="Logo UNAND">
+      <h2>Career Development Center Unand</h2>
     </div>
-    <div class="header-center">
-      <h1>CDC Universitas Andalas</h1>
-      <p>Career Development Center Andalas University</p>
-    </div>
-    <div class="header-right">
-      <a href="/dashboard">Dashboard</a>
-      <a href="/logout">Logout</a>
-    </div>
-  </div>
-
-  <!-- Main Content -->
-  <main class="container">
-    <!-- Alert Messages -->
-    <% if (typeof msg !== 'undefined' && msg) { %>
-      <div class="alert <%= msg.includes('Error') || msg.includes('Gagal') ? 'alert-error' : (msg.includes('Berhasil') ? 'alert-success' : 'alert-info') %>">
-        <span><%= msg %></span>
-        <span class="alert-close" onclick="this.parentElement.style.display='none'">×</span>
-      </div>
-    <% } %>
-
-    <!-- Profile Card -->
-    <div class="profile-card">
-      <h2>
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-          <circle cx="12" cy="7" r="4"></circle>
+    <nav class="sidebar-menu">
+      <a href="/dashboard" class="menu-item <%= currentPath === '/dashboard' ? 'active' : '' %>">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
         </svg>
-        Profil Admin
-      </h2>
-
-      <!-- User Information -->
+        Dashboard
+      </a>
+      
+      <% if (hasPermission('riwayat')) { %>
+        <a href="/riwayat" class="menu-item <%= currentPath === '/riwayat' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          Riwayat Capaian
+        </a>
+      <% } %>
+      
+      <% if (hasPermission('upload')) { %>
+        <a href="/upload" class="menu-item <%= currentPath === '/upload' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Upload Data CSV
+        </a>
+      <% } %>
+      
+      <% if (hasPermission('pembobotan')) { %>
+        <a href="/pembobotan" class="menu-item <%= currentPath === '/pembobotan' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          Pencatatan Pembobotan
+        </a>
+      <% } %>
+      
+      <div class="menu-divider"></div>
+      
+      <% if (hasPermission('manage_admin')) { %>
+        <a href="/admin" class="menu-item <%= currentPath === '/admin' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          Manajemen Admin
+        </a>
+      <% } %>
+      
+      <% if (hasPermission('profile')) { %>
+        <a href="/profile" class="menu-item <%= currentPath === '/profile' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          Profil Admin
+        </a>
+      <% } %>
+    </nav>
+    <div class="sidebar-footer">
+      <!-- Tour Guide Button -->
+      <button class="start-tour-btn" id="startTourBtn" onclick="startTour()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 16v-4M12 8h.01"></path>
+        </svg>
+        Mulai Panduan
+      </button>
       <div class="user-info">
-        <div class="info-item">
-          <label>User ID</label>
-          <div class="value">#<%= user.id %></div>
+        <div class="user-avatar">
+          <%= typeof user !== 'undefined' && user ? user.username.charAt(0).toUpperCase() : 'A' %>
         </div>
-        <div class="info-item">
-          <label>Username</label>
-          <div class="value"><%= user.username %></div>
+        <div class="user-details">
+          <div class="user-name"><%= typeof user !== 'undefined' && user ? user.username : 'Admin' %></div>
+          <div class="user-role"><%= typeof user !== 'undefined' && user && user.role ? user.role : 'Admin' %></div>
         </div>
-        <div class="info-item">
-          <label>Email</label>
-          <div class="value"><%= user.email || '-' %></div>
+      </div>
+      <a href="/logout" class="logout-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+        Logout
+      </a>
+    </div>
+  </aside>
+
+  <!-- Main Content Wrapper -->
+  <div class="main-wrapper">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <button class="mobile-menu-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="header-center">
+          <h1>Profil Admin</h1>
+          <p>Career Development Center Andalas University</p>
         </div>
-        <div class="info-item">
-          <label>Role</label>
-          <div class="value"><%= user.role || 'Admin' %></div>
+      </div>
+      <div class="header-right">
+        <!-- Empty for now -->
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container">
+      <!-- Alert Messages -->
+      <% if (typeof msg !== 'undefined' && msg) { %>
+        <div class="alert <%= msg.includes('Error') || msg.includes('Gagal') ? 'alert-error' : (msg.includes('Berhasil') ? 'alert-success' : 'alert-info') %>">
+          <span><%= msg %></span>
+          <span class="alert-close" onclick="this.parentElement.style.display='none'">×</span>
         </div>
-        <div class="info-item">
-          <label>Status</label>
-          <div class="value">
-            <span style="padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; background: <%= user.is_active == 1 ? '#d4edda' : '#f8d7da' %>; color: <%= user.is_active == 1 ? '#155724' : '#721c24' %>;">
-              <%= user.is_active == 1 ? 'Aktif' : 'Tidak Aktif' %>
-            </span>
+      <% } %>
+
+      <!-- Profile Card -->
+      <div class="profile-card">
+        <h2>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          Profil Admin
+        </h2>
+
+        <!-- User Information -->
+        <div class="profile-info">
+          <div class="info-item">
+            <label>User ID</label>
+            <div class="value">#<%= user.id %></div>
+          </div>
+          <div class="info-item">
+            <label>Username</label>
+            <div class="value"><%= user.username %></div>
+          </div>
+          <div class="info-item">
+            <label>Email</label>
+            <div class="value"><%= user.email || '-' %></div>
+          </div>
+          <div class="info-item">
+            <label>Role</label>
+            <div class="value"><%= user.role || 'Admin' %></div>
+          </div>
+          <div class="info-item">
+            <label>Status</label>
+            <div class="value">
+              <span style="padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; background: <%= user.is_active == 1 ? '#d4edda' : '#f8d7da' %>; color: <%= user.is_active == 1 ? '#155724' : '#721c24' %>;">
+                <%= user.is_active == 1 ? 'Aktif' : 'Tidak Aktif' %>
+              </span>
+            </div>
+          </div>
+          <div class="info-item">
+            <label>Tanggal Dibuat</label>
+            <div class="value" style="font-size: 13px;"><%= user.createdAt || '-' %></div>
+          </div>
+          <div class="info-item">
+            <label>Terakhir Diupdate</label>
+            <div class="value" style="font-size: 13px;"><%= user.updatedAt || '-' %></div>
           </div>
         </div>
-        <div class="info-item">
-          <label>Tanggal Dibuat</label>
-          <div class="value" style="font-size: 13px;"><%= user.createdAt || '-' %></div>
+
+        <!-- Form Sections - Horizontal Layout -->
+        <div class="form-sections">
+          <!-- Update Username Section -->
+          <div class="form-section">
+            <h3>Ubah Username</h3>
+            <form action="/profile/update-username" method="POST">
+              <div class="form-group">
+                <label for="newUsername">Username Baru</label>
+                <input 
+                  type="text" 
+                  id="newUsername" 
+                  name="newUsername" 
+                  value="<%= user.username %>"
+                  required
+                  minlength="3"
+                  maxlength="50"
+                >
+                <div class="help-text">Username harus terdiri dari 3-50 karakter</div>
+              </div>
+              <div class="btn-group">
+                <button type="submit" class="btn btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+                  </svg>
+                  Simpan Username
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Update Email Section -->
+          <div class="form-section">
+            <h3>Ubah Email</h3>
+            <form action="/profile/update-email" method="POST">
+              <div class="form-group">
+                <label for="newEmail">Email Baru</label>
+                <input 
+                  type="email" 
+                  id="newEmail" 
+                  name="newEmail" 
+                  value="<%= user.email || '' %>"
+                  required
+                >
+                <div class="help-text">Masukkan alamat email yang valid</div>
+              </div>
+              <div class="btn-group">
+                <button type="submit" class="btn btn-primary">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                  </svg>
+                  Simpan Email
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-        <div class="info-item">
-          <label>Terakhir Diupdate</label>
-          <div class="value" style="font-size: 13px;"><%= user.updatedAt || '-' %></div>
+
+        <!-- Change Password Section - Full Width Horizontal -->
+        <div class="form-section" style="margin-top: 30px;">
+          <h3>Ubah Password</h3>
+          <form action="/profile/change-password" method="POST" id="changePasswordForm" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: end;">
+            <div class="form-group">
+              <label for="currentPassword">Password Saat Ini</label>
+              <input 
+                type="password" 
+                id="currentPassword" 
+                name="currentPassword" 
+                required
+                minlength="6"
+              >
+              <div class="help-text">Masukkan password saat ini</div>
+            </div>
+            <div class="form-group">
+              <label for="newPassword">Password Baru</label>
+              <input 
+                type="password" 
+                id="newPassword" 
+                name="newPassword" 
+                required
+                minlength="6"
+              >
+              <div class="help-text">Password minimal 6 karakter</div>
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">Konfirmasi Password</label>
+              <input 
+                type="password" 
+                id="confirmPassword" 
+                name="confirmPassword" 
+                required
+                minlength="6"
+              >
+              <div class="help-text">Masukkan kembali password baru</div>
+            </div>
+            <div class="btn-group" style="grid-column: 1 / -1; margin-top: 0;">
+              <button type="submit" class="btn btn-primary">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                Ubah Password
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-
-      <!-- Update Username Section -->
-      <h3>Ubah Username</h3>
-      <form action="/profile/update-username" method="POST">
-        <div class="form-group">
-          <label for="newUsername">Username Baru</label>
-          <input 
-            type="text" 
-            id="newUsername" 
-            name="newUsername" 
-            value="<%= user.username %>"
-            required
-            minlength="3"
-            maxlength="50"
-          >
-          <div class="help-text">Username harus terdiri dari 3-50 karakter</div>
-        </div>
-        <div class="btn-group">
-          <button type="submit" class="btn btn-primary">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
-              <polyline points="17 21 17 13 7 13 7 21"></polyline>
-              <polyline points="7 3 7 8 15 8"></polyline>
-            </svg>
-            Simpan Username
-          </button>
-        </div>
-      </form>
-
-      <!-- Update Email Section -->
-      <h3>Ubah Email</h3>
-      <form action="/profile/update-email" method="POST">
-        <div class="form-group">
-          <label for="newEmail">Email Baru</label>
-          <input 
-            type="email" 
-            id="newEmail" 
-            name="newEmail" 
-            value="<%= user.email || '' %>"
-            required
-          >
-          <div class="help-text">Masukkan alamat email yang valid</div>
-        </div>
-        <div class="btn-group">
-          <button type="submit" class="btn btn-primary">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-              <polyline points="22,6 12,13 2,6"></polyline>
-            </svg>
-            Simpan Email
-          </button>
-        </div>
-      </form>
-
-      <!-- Change Password Section -->
-      <h3>Ubah Password</h3>
-      <form action="/profile/change-password" method="POST" id="changePasswordForm">
-        <div class="form-group">
-          <label for="currentPassword">Password Saat Ini</label>
-          <input 
-            type="password" 
-            id="currentPassword" 
-            name="currentPassword" 
-            required
-            minlength="6"
-          >
-          <div class="help-text">Masukkan password saat ini untuk verifikasi</div>
-        </div>
-        <div class="form-group">
-          <label for="newPassword">Password Baru</label>
-          <input 
-            type="password" 
-            id="newPassword" 
-            name="newPassword" 
-            required
-            minlength="6"
-          >
-          <div class="help-text">Password minimal 6 karakter</div>
-        </div>
-        <div class="form-group">
-          <label for="confirmPassword">Konfirmasi Password Baru</label>
-          <input 
-            type="password" 
-            id="confirmPassword" 
-            name="confirmPassword" 
-            required
-            minlength="6"
-          >
-          <div class="help-text">Masukkan kembali password baru</div>
-        </div>
-        <div class="btn-group">
-          <button type="submit" class="btn btn-primary">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-            </svg>
-            Ubah Password
-          </button>
-        </div>
-      </form>
-    </div>
   </main>
+
+  <!-- Tour Guide Overlay -->
+  <div class="tour-overlay" id="tourOverlay"></div>
+  <div class="tour-highlight" id="tourHighlight"></div>
+  <div class="tour-tooltip" id="tourTooltip" style="display: none;">
+    <div class="tour-tooltip-header">
+      <div class="tour-tooltip-icon" id="tourIcon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <h3 class="tour-tooltip-title" id="tourTitle">Judul Panduan</h3>
+    </div>
+    <div class="tour-tooltip-content" id="tourContent">
+      Deskripsi fungsi elemen ini akan ditampilkan di sini.
+    </div>
+    <div class="tour-tooltip-footer">
+      <span class="tour-progress" id="tourProgress">1 / 10</span>
+      <div class="tour-buttons">
+        <button class="tour-btn tour-btn-skip" onclick="skipTour()">Lewati</button>
+        <button class="tour-btn tour-btn-secondary" id="tourPrevBtn" onclick="prevTourStep()" style="display: none;">Sebelumnya</button>
+        <button class="tour-btn tour-btn-primary" id="tourNextBtn" onclick="nextTourStep()">Selanjutnya</button>
+      </div>
+    </div>
+  </div>
 
   <script>
     // Form validation for password change
@@ -540,6 +1214,288 @@
         e.preventDefault();
         alert('Password baru harus minimal 6 karakter!');
         return false;
+      }
+    });
+  </script>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('open');
+    }
+
+    // Update active menu item based on current page
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPath = window.location.pathname;
+      const menuItems = document.querySelectorAll('.menu-item');
+      
+      menuItems.forEach(item => {
+        const href = item.getAttribute('href');
+        if (href === currentPath) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+    });
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(event) {
+      const sidebar = document.getElementById('sidebar');
+      const toggleBtn = document.querySelector('.mobile-menu-toggle');
+      
+      if (window.innerWidth <= 768) {
+        if (sidebar && toggleBtn && !sidebar.contains(event.target) && !toggleBtn.contains(event.target) && sidebar.classList.contains('open')) {
+          sidebar.classList.remove('open');
+        }
+      }
+    });
+
+    // Tour Guide Script
+    const tourIcons = {
+      menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>',
+      profile: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>',
+      form: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>',
+      lock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>',
+      user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>'
+    };
+
+    function getAvailableTourSteps() {
+      const allSteps = [
+        {
+          element: '#sidebar',
+          title: 'Menu Navigasi',
+          content: 'Ini adalah menu navigasi utama. Gunakan menu ini untuk berpindah antar halaman seperti Dashboard, Riwayat Capaian, Upload Data, dan lainnya.',
+          iconKey: 'menu',
+          position: 'right'
+        },
+        {
+          element: '.profile-card',
+          title: 'Profil Admin',
+          content: 'Halaman ini menampilkan informasi lengkap tentang akun admin Anda, termasuk User ID, Username, Email, Role, dan Status akun.',
+          iconKey: 'profile',
+          position: 'top'
+        },
+        {
+          element: '.profile-info',
+          title: 'Informasi Pengguna',
+          content: 'Bagian ini menampilkan detail informasi pengguna seperti User ID, Username, Email, Role, Status, dan tanggal pembuatan/update akun.',
+          iconKey: 'user',
+          position: 'top'
+        },
+        {
+          element: 'form[action="/profile/update-username"]',
+          title: 'Ubah Username',
+          content: 'Form ini digunakan untuk mengubah username akun Anda. Masukkan username baru dan klik tombol Simpan Username.',
+          iconKey: 'form',
+          position: 'top'
+        },
+        {
+          element: 'form[action="/profile/update-email"]',
+          title: 'Ubah Email',
+          content: 'Form ini digunakan untuk mengubah alamat email akun Anda. Pastikan email yang dimasukkan valid dan aktif.',
+          iconKey: 'form',
+          position: 'top'
+        },
+        {
+          element: 'form[action="/profile/change-password"]',
+          title: 'Ubah Password',
+          content: 'Form ini digunakan untuk mengubah password akun Anda. Masukkan password lama, password baru, dan konfirmasi password baru.',
+          iconKey: 'lock',
+          position: 'top'
+        }
+      ];
+
+      return allSteps.filter(step => {
+        const element = document.querySelector(step.element);
+        return element !== null;
+      });
+    }
+
+    let currentTourStep = 0;
+    let tourActive = false;
+    let tourSteps = [];
+
+    function startTour() {
+      const tourCompleted = localStorage.getItem('tourCompleted');
+      if (tourCompleted === 'true') {
+        if (!confirm('Apakah Anda ingin melihat panduan lagi?')) {
+          return;
+        }
+      }
+
+      tourSteps = getAvailableTourSteps();
+      
+      if (tourSteps.length === 0) {
+        alert('Tidak ada elemen yang dapat ditampilkan dalam panduan.');
+        return;
+      }
+
+      tourActive = true;
+      currentTourStep = 0;
+      
+      const overlay = document.getElementById('tourOverlay');
+      overlay.style.display = 'block';
+      setTimeout(() => {
+        overlay.classList.add('active');
+      }, 10);
+      
+      showTourStep(0);
+    }
+
+    function showTourStep(stepIndex) {
+      if (stepIndex < 0 || stepIndex >= tourSteps.length) {
+        endTour();
+        return;
+      }
+
+      const step = tourSteps[stepIndex];
+      const element = document.querySelector(step.element);
+
+      if (!element) {
+        if (stepIndex < tourSteps.length - 1) {
+          showTourStep(stepIndex + 1);
+        } else {
+          endTour();
+        }
+        return;
+      }
+
+      const iconElement = document.getElementById('tourIcon');
+      iconElement.innerHTML = tourIcons[step.iconKey] || tourIcons.menu;
+      document.getElementById('tourTitle').textContent = step.title;
+      document.getElementById('tourContent').textContent = step.content;
+      document.getElementById('tourProgress').textContent = `${stepIndex + 1} / ${tourSteps.length}`;
+
+      const prevBtn = document.getElementById('tourPrevBtn');
+      const nextBtn = document.getElementById('tourNextBtn');
+      
+      prevBtn.style.display = stepIndex === 0 ? 'none' : 'flex';
+      nextBtn.textContent = stepIndex === tourSteps.length - 1 ? 'Selesai' : 'Selanjutnya';
+
+      const rect = element.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+
+      const highlight = document.getElementById('tourHighlight');
+      highlight.classList.add('active');
+      highlight.style.top = (rect.top + scrollTop - 4) + 'px';
+      highlight.style.left = (rect.left + scrollLeft - 4) + 'px';
+      highlight.style.width = (rect.width + 8) + 'px';
+      highlight.style.height = (rect.height + 8) + 'px';
+
+      const tooltip = document.getElementById('tourTooltip');
+      tooltip.style.display = 'block';
+      tooltip.className = 'tour-tooltip ' + step.position;
+
+      let tooltipTop, tooltipLeft;
+      const tooltipWidth = Math.max(300, tooltip.offsetWidth || 350);
+      const tooltipHeight = Math.max(180, tooltip.offsetHeight || 200);
+      const spacing = 20;
+
+      switch(step.position) {
+        case 'top':
+          tooltipTop = rect.top + scrollTop - tooltipHeight - spacing;
+          tooltipLeft = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+          break;
+        case 'bottom':
+          tooltipTop = rect.bottom + scrollTop + spacing;
+          tooltipLeft = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+          break;
+        case 'left':
+          tooltipTop = rect.top + scrollTop + (rect.height / 2) - (tooltipHeight / 2);
+          tooltipLeft = rect.left + scrollLeft - tooltipWidth - spacing;
+          break;
+        case 'right':
+          tooltipTop = rect.top + scrollTop + (rect.height / 2) - (tooltipHeight / 2);
+          tooltipLeft = rect.right + scrollLeft + spacing;
+          break;
+        default:
+          tooltipTop = rect.bottom + scrollTop + spacing;
+          tooltipLeft = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+      }
+
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      if (tooltipLeft < 10) tooltipLeft = 10;
+      if (tooltipLeft + tooltipWidth > viewportWidth - 10) {
+        tooltipLeft = viewportWidth - tooltipWidth - 10;
+      }
+      if (tooltipTop < 10) tooltipTop = 10;
+      if (tooltipTop + tooltipHeight > viewportHeight - 10) {
+        tooltipTop = viewportHeight - tooltipHeight - 10;
+      }
+
+      tooltip.style.top = tooltipTop + 'px';
+      tooltip.style.left = tooltipLeft + 'px';
+
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      highlight.style.animation = 'pulse 2s infinite';
+    }
+
+    function nextTourStep() {
+      if (currentTourStep < tourSteps.length - 1) {
+        currentTourStep++;
+        showTourStep(currentTourStep);
+      } else {
+        endTour();
+      }
+    }
+
+    function prevTourStep() {
+      if (currentTourStep > 0) {
+        currentTourStep--;
+        showTourStep(currentTourStep);
+      }
+    }
+
+    function skipTour() {
+      endTour();
+    }
+
+    function endTour() {
+      tourActive = false;
+      const overlay = document.getElementById('tourOverlay');
+      overlay.classList.remove('active');
+      setTimeout(() => {
+        overlay.style.display = 'none';
+      }, 300);
+      const highlight = document.getElementById('tourHighlight');
+      highlight.classList.remove('active');
+      highlight.style.display = 'none';
+      document.getElementById('tourTooltip').style.display = 'none';
+      localStorage.setItem('tourCompleted', 'true');
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes pulse {
+        0%, 100% {
+          box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 20px rgba(47, 107, 49, 0.5);
+        }
+        50% {
+          box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 30px rgba(47, 107, 49, 0.8);
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    document.getElementById('tourOverlay').addEventListener('click', function(e) {
+      if (e.target === this) {
+        endTour();
+      }
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (!tourActive) return;
+      
+      if (e.key === 'Escape') {
+        endTour();
+      } else if (e.key === 'ArrowRight' || e.key === 'Enter') {
+        nextTourStep();
+      } else if (e.key === 'ArrowLeft') {
+        prevTourStep();
       }
     });
   </script>

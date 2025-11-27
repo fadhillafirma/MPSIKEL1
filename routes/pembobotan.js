@@ -1,11 +1,12 @@
 import express from "express";
 import db from "../config/db.js";
-import { requireAuth } from "../middleware/auth.js";
+import { requireAuth, requirePermission } from "../middleware/auth.js";
 
 const router = express.Router();
 
 // Apply auth middleware to all pembobotan routes
 router.use(requireAuth);
+router.use(requirePermission('pembobotan'));
 
 // Helper function to create table if not exists
 async function ensureUMPTable() {
@@ -39,10 +40,10 @@ router.get("/", async (req, res) => {
       ORDER BY provinsi ASC
     `);
     
-    res.render("pembobotan", { ump: umpRows });
+    res.render("pembobotan", { ump: umpRows, user: req.session.user || null });
   } catch (error) {
     console.error("Error fetching UMP data:", error);
-    res.render("pembobotan", { ump: [] });
+    res.render("pembobotan", { ump: [], user: req.session.user || null });
   }
 });
 

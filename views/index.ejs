@@ -35,6 +35,443 @@
       background: var(--bg);
       margin: 0;
       color: var(--text-dark);
+      display: flex;
+    }
+
+    /* Sidebar - Minimalis Putih */
+    .sidebar {
+      width: 260px;
+      background: #ffffff;
+      color: var(--text-dark);
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 1000;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+      border-right: 1px solid #e9ecef;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar-header {
+      padding: 25px 20px;
+      border-bottom: 1px solid #e9ecef;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .sidebar-header img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+      filter: none;
+    }
+
+    .sidebar-header h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0;
+      color: var(--text-dark);
+    }
+
+    .sidebar-menu {
+      padding: 15px 0;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+      border-left: 3px solid transparent;
+    }
+
+    .menu-item:hover {
+      background: #f8f9fa;
+      border-left-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .menu-item.active {
+      background: #f0f7f1;
+      border-left-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .menu-item svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+    }
+
+    .menu-divider {
+      height: 1px;
+      background: #e9ecef;
+      margin: 10px 20px;
+    }
+
+    .sidebar-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      border-top: 1px solid #e9ecef;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .user-info .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .user-info .user-details {
+      flex: 1;
+    }
+
+    .user-info .user-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+      color: var(--text-dark);
+    }
+
+    .user-info .user-role {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .logout-btn {
+      width: 100%;
+      padding: 10px;
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 6px;
+      color: var(--text-dark);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .logout-btn:hover {
+      background: #e9ecef;
+      color: var(--primary);
+    }
+
+    .start-tour-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #4CA858 0%, #6BCF78 100%);
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: 'Poppins', sans-serif;
+      margin: 0 0 15px 0;
+      box-shadow: 0 2px 8px rgba(76, 168, 88, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .start-tour-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .start-tour-btn:hover::before {
+      left: 100%;
+    }
+
+    .start-tour-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(76, 168, 88, 0.35);
+      background: linear-gradient(135deg, #5CB85C 0%, #7DD87D 100%);
+    }
+
+    .start-tour-btn:active {
+      transform: translateY(0);
+    }
+
+    .start-tour-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text-dark);
+      padding: 8px;
+    }
+
+    /* Tour Guide Styles */
+    .tour-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 9998;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      display: none;
+    }
+
+    .tour-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+      display: block;
+    }
+
+    .tour-highlight {
+      position: absolute;
+      border: 3px solid var(--primary);
+      border-radius: 8px;
+      box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 20px rgba(47, 107, 49, 0.5);
+      z-index: 9999;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      display: none;
+    }
+
+    .tour-highlight.active {
+      display: block;
+    }
+
+    .tour-tooltip {
+      position: absolute;
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 350px;
+      min-width: 300px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      z-index: 10000;
+      animation: tooltipFadeIn 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    @keyframes tooltipFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .tour-tooltip::before {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border: 12px solid transparent;
+    }
+
+    .tour-tooltip.top::before {
+      bottom: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-top-color: white;
+    }
+
+    .tour-tooltip.bottom::before {
+      top: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-bottom-color: white;
+    }
+
+    .tour-tooltip.left::before {
+      right: -24px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-left-color: white;
+    }
+
+    .tour-tooltip.right::before {
+      left: -24px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-right-color: white;
+    }
+
+    .tour-tooltip-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+
+    .tour-tooltip-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      padding: 12px;
+    }
+
+    .tour-tooltip-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: white;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .tour-tooltip-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .tour-tooltip-content {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .tour-tooltip-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .tour-progress {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .tour-buttons {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+
+    .tour-btn {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .tour-btn-secondary {
+      background: #f0f0f0;
+      color: var(--text-dark);
+    }
+
+    .tour-btn-secondary:hover {
+      background: #e0e0e0;
+    }
+
+    .tour-btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+    }
+
+    .tour-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(47, 107, 49, 0.3);
+    }
+
+    .tour-btn-skip {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid #e0e0e0;
+    }
+
+    .tour-btn-skip:hover {
+      background: #f8f9fa;
+      color: var(--text-dark);
+    }
+
+    /* Main Content Area */
+    .main-wrapper {
+      flex: 1;
+      margin-left: 260px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     /* Header */
@@ -112,6 +549,30 @@
       max-width: 1600px;
       margin: 30px auto;
       padding: 0 50px;
+      flex: 1;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .main-wrapper {
+        margin-left: 0;
+      }
+
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      .container {
+        padding: 0 20px;
+      }
     }
 
     /* Stats Grid */
@@ -256,6 +717,35 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
+    }
+
+    .sort-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sort-select {
+      padding: 8px 12px;
+      border: 1px solid #e9ecef;
+      border-radius: 6px;
+      font-size: 13px;
+      font-family: 'Poppins', sans-serif;
+      background: white;
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: all 0.3s;
+      min-width: 220px;
+    }
+
+    .sort-select:hover {
+      border-color: var(--primary);
+    }
+
+    .sort-select:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(47, 107, 49, 0.1);
     }
 
     .export-buttons {
@@ -450,17 +940,132 @@
 </head>
 
 <body>
-  <!-- Header -->
-  <div class="header">
-    <div class="header-left">
+  <% 
+    const userPermissions = typeof user !== 'undefined' && user && user.permissions ? user.permissions : {};
+    const isSuperAdmin = typeof user !== 'undefined' && user && user.role === 'superadmin';
+    const hasPermission = (perm) => isSuperAdmin || userPermissions[perm] === true;
+    const currentPath = '/riwayat';
+  %>
+  
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
       <img src="/images/logounand.png" alt="Logo UNAND">
+      <h2>Career Development Center Unand</h2>
     </div>
-    <div class="header-center">
-      <h1>CDC Universitas Andalas</h1>
-      <p>Career Development Center Andalas University</p>
-      <div class="date" id="currentDate"></div>
+    <nav class="sidebar-menu">
+      <a href="/dashboard" class="menu-item <%= currentPath === '/dashboard' ? 'active' : '' %>">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        Dashboard
+      </a>
+      
+      <% if (hasPermission('riwayat')) { %>
+        <a href="/riwayat" class="menu-item <%= currentPath === '/riwayat' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          Riwayat Capaian
+        </a>
+      <% } %>
+      
+      <% if (hasPermission('upload')) { %>
+        <a href="/upload" class="menu-item <%= currentPath === '/upload' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Upload Data CSV
+        </a>
+      <% } %>
+      
+      <% if (hasPermission('pembobotan')) { %>
+        <a href="/pembobotan" class="menu-item <%= currentPath === '/pembobotan' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          Pencatatan Pembobotan
+        </a>
+      <% } %>
+      
+      <div class="menu-divider"></div>
+      
+      <% if (hasPermission('manage_admin')) { %>
+        <a href="/admin" class="menu-item <%= currentPath === '/admin' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          Manajemen Admin
+        </a>
+      <% } %>
+      
+      <% if (hasPermission('profile')) { %>
+        <a href="/profile" class="menu-item <%= currentPath === '/profile' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          Profil Admin
+        </a>
+      <% } %>
+    </nav>
+    <div class="sidebar-footer">
+      <!-- Tour Guide Button -->
+      <button class="start-tour-btn" id="startTourBtn" onclick="startTour()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 16v-4M12 8h.01"></path>
+        </svg>
+        Mulai Panduan
+      </button>
+      <div class="user-info">
+        <div class="user-avatar">
+          <%= typeof user !== 'undefined' && user ? user.username.charAt(0).toUpperCase() : 'A' %>
+        </div>
+        <div class="user-details">
+          <div class="user-name"><%= typeof user !== 'undefined' && user ? user.username : 'Admin' %></div>
+          <div class="user-role"><%= typeof user !== 'undefined' && user && user.role ? user.role : 'Admin' %></div>
+        </div>
+      </div>
+      <a href="/logout" class="logout-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+        Logout
+      </a>
     </div>
-    <div class="header-right">
+  </aside>
+
+  <!-- Main Content Wrapper -->
+  <div class="main-wrapper">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <button class="mobile-menu-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="header-center">
+          <h1>Riwayat Capaian IKU-1</h1>
+          <p>Career Development Center Andalas University</p>
+          <div class="date" id="currentDate"></div>
+        </div>
+      </div>
+      <div class="header-right">
+      <!-- Export PDF - fitur internal, langsung bisa digunakan tanpa permission check -->
       <button class="btn" onclick="exportFullPage()" style="background: #f59e0b; border: none; cursor: pointer; color: white;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -469,7 +1074,6 @@
         </svg>
         Export PDF
       </button>
-      <a href="/dashboard">Dashboard</a>
     </div>
   </div>
 
@@ -561,7 +1165,19 @@
     <div class="table-card">
       <div class="card-header">
         <h2>Data Capaian Detail</h2>
-        <div style="display: flex; gap: 10px;">
+        <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+          <div class="sort-controls">
+            <label for="sortSelect" style="font-size: 13px; color: var(--text-muted); margin-right: 8px;">Urutkan:</label>
+            <select id="sortSelect" class="sort-select" onchange="sortTable()">
+              <option value="">Pilih Sorting</option>
+              <option value="persentase-desc">Persentase Tertinggi → Terendah</option>
+              <option value="persentase-asc">Persentase Terendah → Tertinggi</option>
+              <option value="fakultas-asc">Fakultas A → Z</option>
+              <option value="fakultas-desc">Fakultas Z → A</option>
+              <option value="prodi-asc">Program Studi A → Z</option>
+              <option value="prodi-desc">Program Studi Z → A</option>
+            </select>
+          </div>
           <button class="btn btn-small" onclick="exportData()">Export</button>
           <button class="btn btn-small" onclick="refreshData()">Refresh</button>
         </div>
@@ -583,12 +1199,18 @@
               <% data.forEach(function(item){ %>
                 <% 
                   const jumlahAlumni = item.jumlah_alumni || 0;
-                  const capaianRata = (jumlahAlumni === 0 || !item.capaian_rata || isNaN(item.capaian_rata)) ? 0 : parseFloat(item.capaian_rata);
+                  // Pastikan capaian_rata selalu di-parse dengan benar
+                  let capaianRata = 0;
+                  if (jumlahAlumni > 0 && item.capaian_rata !== null && item.capaian_rata !== undefined && item.capaian_rata !== '') {
+                    const parsed = parseFloat(item.capaian_rata);
+                    capaianRata = isNaN(parsed) ? 0 : parsed;
+                  }
+                  
                   const colorClass = jumlahAlumni === 0 ? '' : (capaianRata >= 75 ? 'green' : capaianRata >= 50 ? 'yellow' : 'red');
                   const statusClass = jumlahAlumni === 0 ? '' : (capaianRata >= 75 ? 'success' : capaianRata >= 50 ? 'warning' : 'danger');
                   const statusText = jumlahAlumni === 0 ? '-' : (capaianRata >= 75 ? 'Mencapai Target' : capaianRata >= 50 ? 'Mendekati Target' : 'Perlu Peningkatan');
                 %>
-                <tr>
+                <tr data-fakultas="<%= item.fakultas %>" data-prodi="<%= item.prodi %>" data-persentase="<%= capaianRata %>">
                   <td><%= item.fakultas %></td>
                   <td><%= item.prodi %></td>
                   <td>
@@ -621,6 +1243,33 @@
 
   <footer>© 2025 CDC Universitas Andalas — All Rights Reserved</footer>
 
+  <!-- Tour Guide Overlay -->
+  <div class="tour-overlay" id="tourOverlay"></div>
+  <div class="tour-highlight" id="tourHighlight"></div>
+  <div class="tour-tooltip" id="tourTooltip" style="display: none;">
+    <div class="tour-tooltip-header">
+      <div class="tour-tooltip-icon" id="tourIcon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <h3 class="tour-tooltip-title" id="tourTitle">Judul Panduan</h3>
+    </div>
+    <div class="tour-tooltip-content" id="tourContent">
+      Deskripsi fungsi elemen ini akan ditampilkan di sini.
+    </div>
+    <div class="tour-tooltip-footer">
+      <span class="tour-progress" id="tourProgress">1 / 10</span>
+      <div class="tour-buttons">
+        <button class="tour-btn tour-btn-skip" onclick="skipTour()">Lewati</button>
+        <button class="tour-btn tour-btn-secondary" id="tourPrevBtn" onclick="prevTourStep()" style="display: none;">Sebelumnya</button>
+        <button class="tour-btn tour-btn-primary" id="tourNextBtn" onclick="nextTourStep()">Selanjutnya</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Global variables
     let chartInstance = null;
@@ -640,7 +1289,10 @@
       initializeChart();
       initializeTable();
       initializeProgressBars();
-      document.getElementById('tahunFilter').addEventListener('change', applyFilters);
+      const tahunFilter = document.getElementById('tahunFilter');
+      if (tahunFilter) {
+        tahunFilter.addEventListener('change', applyFilters);
+      }
     });
 
     function initializeStats() {
@@ -750,15 +1402,23 @@
       
       filteredData.forEach(item => {
         const jumlahAlumni = item.jumlah_alumni || 0;
-        const capaianRata = (jumlahAlumni === 0 || !item.capaian_rata || isNaN(item.capaian_rata)) ? 0 : parseFloat(item.capaian_rata);
+        // Pastikan capaian_rata selalu di-parse dengan benar
+        let capaianRata = 0;
+        if (jumlahAlumni > 0 && item.capaian_rata !== null && item.capaian_rata !== undefined && item.capaian_rata !== '') {
+          const parsed = parseFloat(item.capaian_rata);
+          capaianRata = isNaN(parsed) ? 0 : parsed;
+        }
+        
         const colorClass = jumlahAlumni === 0 ? '' : (capaianRata >= 75 ? 'green' : capaianRata >= 50 ? 'yellow' : 'red');
         const statusClass = jumlahAlumni === 0 ? '' : (capaianRata >= 75 ? 'success' : capaianRata >= 50 ? 'warning' : 'danger');
         const statusText = jumlahAlumni === 0 ? '-' : (capaianRata >= 75 ? 'Mencapai Target' : capaianRata >= 50 ? 'Mendekati Target' : 'Perlu Peningkatan');
+        
+        // Pastikan status badge selalu ada
         const statusBadge = jumlahAlumni === 0 
           ? '<span class="status-badge">-</span>' 
           : `<span class="status-badge status-${statusClass}">${statusText}</span>`;
         const row = `
-          <tr>
+          <tr data-fakultas="${item.fakultas}" data-prodi="${item.prodi}" data-persentase="${capaianRata}">
             <td>${item.fakultas}</td>
             <td>${item.prodi}</td>
             <td>
@@ -794,6 +1454,96 @@
     function refreshData() {
       location.reload();
     }
+
+    // Function untuk sorting tabel - harus di global scope agar bisa diakses dari inline handler
+    window.sortTable = function sortTable() {
+      const sortSelect = document.getElementById('sortSelect');
+      if (!sortSelect) {
+        console.error('sortSelect tidak ditemukan');
+        return;
+      }
+      
+      const sortValue = sortSelect.value;
+      const tbody = document.getElementById('tableBody');
+      if (!tbody) {
+        console.error('tableBody tidak ditemukan');
+        return;
+      }
+      
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      
+      // Hapus row "no data" jika ada
+      const noDataRow = rows.find(row => row.querySelector('.no-data'));
+      if (noDataRow) {
+        noDataRow.remove();
+      }
+
+      // Jika tidak ada sorting yang dipilih, reset ke data filtered
+      if (!sortValue) {
+        updateTable();
+        return;
+      }
+
+      // Filter rows yang valid (bukan no-data dan memiliki data attributes)
+      const validRows = rows.filter(row => {
+        const hasNoData = row.querySelector('.no-data');
+        const hasData = row.hasAttribute('data-fakultas') || row.hasAttribute('data-prodi') || row.hasAttribute('data-persentase');
+        return !hasNoData && hasData;
+      });
+      
+      if (validRows.length === 0) {
+        console.warn('Tidak ada rows yang valid untuk di-sort');
+        return;
+      }
+
+      // Sort rows berdasarkan pilihan
+      validRows.sort((a, b) => {
+        let aValue, bValue;
+        
+        if (sortValue.startsWith('persentase')) {
+          // Sorting berdasarkan persentase
+          aValue = parseFloat(a.getAttribute('data-persentase') || 0);
+          bValue = parseFloat(b.getAttribute('data-persentase') || 0);
+          
+          if (sortValue === 'persentase-desc') {
+            return bValue - aValue; // Tertinggi ke terendah
+          } else {
+            return aValue - bValue; // Terendah ke tertinggi
+          }
+        } else if (sortValue.startsWith('fakultas')) {
+          // Sorting berdasarkan fakultas
+          aValue = (a.getAttribute('data-fakultas') || '').toLowerCase();
+          bValue = (b.getAttribute('data-fakultas') || '').toLowerCase();
+          
+          if (sortValue === 'fakultas-desc') {
+            return bValue.localeCompare(aValue, 'id'); // Z-A
+          } else {
+            return aValue.localeCompare(bValue, 'id'); // A-Z
+          }
+        } else if (sortValue.startsWith('prodi')) {
+          // Sorting berdasarkan program studi
+          aValue = (a.getAttribute('data-prodi') || '').toLowerCase();
+          bValue = (b.getAttribute('data-prodi') || '').toLowerCase();
+          
+          if (sortValue === 'prodi-desc') {
+            return bValue.localeCompare(aValue, 'id'); // Z-A
+          } else {
+            return aValue.localeCompare(bValue, 'id'); // A-Z
+          }
+        }
+        
+        return 0;
+      });
+
+      // Clear tbody dan append rows yang sudah di-sort
+      tbody.innerHTML = '';
+      validRows.forEach(row => tbody.appendChild(row));
+      
+      // Re-initialize progress bars setelah sorting
+      setTimeout(() => {
+        initializeProgressBars();
+      }, 0);
+    };
 
     function initializeTable() {
       updateTable();
@@ -860,87 +1610,1279 @@
 
     // Export Full Page as PDF
     async function exportFullPage() {
+      const btn = event.target.closest('button');
+      const originalText = btn.innerHTML;
+      let exportContainer = null;
+      
       try {
         // Show loading message
-        const btn = event.target.closest('button');
-        const originalText = btn.innerHTML;
         btn.disabled = true;
-        btn.innerHTML = '<span>Memproses...</span>';
+        btn.innerHTML = '<span>Memproses PDF...</span>';
+
+        // 1. Pastikan semua gambar sudah 100% load
+        const allImages = document.querySelectorAll('img');
+        await Promise.all(Array.from(allImages).map(img => {
+          return new Promise((resolve) => {
+            if (img.complete && img.naturalHeight !== 0) {
+              resolve();
+            } else {
+              img.onload = resolve;
+              img.onerror = resolve; // Continue even if image fails
+              setTimeout(resolve, 3000); // Timeout after 3 seconds
+            }
+          });
+        }));
+
+        // 2. Periksa dan perbaiki canvas yang ukurannya 0
+        const originalBarChartEl = document.getElementById('barChart');
+        if (originalBarChartEl) {
+          const chartInstance = Chart.getChart(originalBarChartEl);
+          if (chartInstance) {
+            // Pastikan chart sudah di-render dengan ukuran yang benar
+            chartInstance.update('none');
+            chartInstance.resize();
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            // Set minimal ukuran jika canvas 0 - Perbesar ukuran default
+            if (originalBarChartEl.width === 0 || originalBarChartEl.height === 0) {
+              originalBarChartEl.width = originalBarChartEl.offsetWidth || 1200;
+              originalBarChartEl.height = originalBarChartEl.offsetHeight || 600;
+              chartInstance.resize();
+              await new Promise(resolve => setTimeout(resolve, 500));
+            }
+          }
+        }
 
         // Wait a bit for any animations to complete
         await new Promise(resolve => setTimeout(resolve, 500));
 
-        // Get main content area (exclude header and footer)
-        const element = document.querySelector('.container');
-        if (!element) {
-          alert('Konten tidak ditemukan!');
-          return;
+        // Buat container untuk export - Perbesar ukuran untuk readability maksimal
+exportContainer = document.createElement('div');
+exportContainer.id = 'export-container-temp';
+exportContainer.style.position = 'absolute';
+exportContainer.style.left = '-9999px';
+exportContainer.style.top = '0';
+
+/* ➜ Gunakan resolusi lebih besar untuk PDF yang lebih besar & tajam */
+exportContainer.style.width = '4200px'; // Perbesar dari 3500px ke 4200px untuk lebih besar
+exportContainer.style.maxWidth = '4200px';
+
+/* ➜ Perbesar padding untuk ruang lega */
+exportContainer.style.backgroundColor = '#ffffff';
+exportContainer.style.padding = '150px'; // Perbesar dari 120px ke 150px
+
+/* ➜ Font besar + readability premium */
+exportContainer.style.fontFamily = 'Arial, "Helvetica Neue", sans-serif';
+exportContainer.style.boxSizing = 'border-box';
+exportContainer.style.overflow = 'visible';
+exportContainer.style.lineHeight = '2.6';   // spacing lebih besar
+exportContainer.style.fontSize = '32px';    // base font lebih besar (dari 28px)
+exportContainer.style.color = '#1f2e24';
+
+        // Clone stats grid - Perbesar ukuran maksimal proporsional dengan 4200px
+        const statsGrid = document.querySelector('.stats-grid');
+        if (statsGrid) {
+          const clonedStats = statsGrid.cloneNode(true);
+          clonedStats.style.marginBottom = '100px'; // Rapikan margin
+          clonedStats.style.display = 'grid';
+          clonedStats.style.gridTemplateColumns = 'repeat(4, 1fr)';
+          clonedStats.style.gap = '70px'; // Rapikan gap
+          clonedStats.style.fontSize = '42px'; // Perbesar font size proporsional
+          clonedStats.style.alignItems = 'stretch'; // Rapikan alignment
+          // Perbesar font size untuk stat numbers
+          const statNumbers = clonedStats.querySelectorAll('.stat-number, .stat-value');
+          statNumbers.forEach(el => {
+            el.style.fontSize = '120px'; // Perbesar angka statistik proporsional
+            el.style.fontWeight = 'bold';
+            el.style.color = '#2F6B31';
+            el.style.lineHeight = '1.2';
+          });
+          // Perbesar label
+          const statLabels = clonedStats.querySelectorAll('h3');
+          statLabels.forEach(el => {
+            el.style.fontSize = '48px'; // Perbesar label proporsional
+            el.style.fontWeight = '600';
+            el.style.marginBottom = '40px';
+            el.style.color = '#1f2e24';
+          });
+          // Perbesar padding card - Rapikan
+          const statCards = clonedStats.querySelectorAll('.stat-card');
+          statCards.forEach(card => {
+            card.style.padding = '80px'; // Rapikan padding
+            card.style.borderRadius = '20px';
+            card.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08)'; // Tambahkan shadow untuk rapi
+            card.style.textAlign = 'center'; // Rapikan alignment
+          });
+          exportContainer.appendChild(clonedStats);
         }
+
+        // Filter card dihilangkan dari PDF - langsung ke chart card
+        // Clone chart card - Pastikan elemen sudah tampil dan perbesar maksimal proporsional dengan 4200px
+        const chartCard = document.querySelector('.chart-card');
+        if (chartCard) {
+          // Pastikan elemen sudah tampil sebelum clone
+          const originalDisplay = window.getComputedStyle(chartCard).display;
+          if (originalDisplay === 'none') {
+            chartCard.style.display = 'block';
+          }
+          
+          const clonedChart = chartCard.cloneNode(true);
+          clonedChart.style.marginBottom = '0px'; // Hapus margin agar tabel langsung di bawah grafik
+          clonedChart.style.padding = '80px 80px 20px 80px'; // Kurangi padding bottom lebih banyak lagi
+          clonedChart.style.display = 'block'; // Pastikan cloned element tampil
+          clonedChart.style.visibility = 'visible';
+          clonedChart.style.opacity = '1';
+          clonedChart.style.borderRadius = '20px';
+          clonedChart.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08)'; // Tambahkan shadow untuk rapi
+          // Perbesar heading chart - Perkecil lebih banyak
+          const chartHeading = clonedChart.querySelector('h3, h2');
+          if (chartHeading) {
+            chartHeading.style.fontSize = '44px'; // Perkecil dari 50px ke 44px
+            chartHeading.style.fontWeight = 'bold';
+            chartHeading.style.marginBottom = '20px'; // Kurangi margin lebih banyak
+            chartHeading.style.color = '#1f2e24';
+          }
+          // Perbesar chart wrapper - Perbesar lagi
+          const chartWrapper = clonedChart.querySelector('.chart-wrapper');
+          if (chartWrapper) {
+            chartWrapper.style.height = '2100px'; // Perbesar dari 1900px ke 2100px
+            chartWrapper.style.minHeight = '2100px';
+          }
+          exportContainer.appendChild(clonedChart);
+          console.log('Chart card cloned and appended');
+        } else {
+          console.warn('Chart card tidak ditemukan!');
+        }
+
+        // Clone table card - Perbesar ukuran maksimal proporsional dengan 4200px
+        const tableCard = document.querySelector('.table-card');
+        if (tableCard) {
+          const clonedTable = tableCard.cloneNode(true);
+          clonedTable.style.marginTop = '-60px'; // Naikkan tabel lebih dekat ke grafik
+          clonedTable.style.marginBottom = '100px'; // Rapikan margin
+          clonedTable.style.padding = '80px'; // Rapikan padding
+          clonedTable.style.fontSize = '36px'; // Perbesar font size proporsional
+          clonedTable.style.borderRadius = '20px';
+          clonedTable.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08)'; // Tambahkan shadow untuk rapi
+          clonedTable.style.overflow = 'visible'; // Pastikan konten tidak terpotong
+          // Hapus heading "Data Capaian Detail"
+          const tableHeading = clonedTable.querySelector('h3, h2');
+          if (tableHeading) {
+            tableHeading.remove(); // Hapus judul tabel
+          }
+          // Perbesar ukuran tabel - Perbesar lagi
+          const table = clonedTable.querySelector('table');
+          if (table) {
+            table.style.fontSize = '48px'; // Perbesar dari 44px ke 48px
+            table.style.width = '100%';
+            table.style.borderCollapse = 'separate';
+            table.style.borderSpacing = '0';
+            table.style.border = '3px solid #e9ecef';
+            table.style.tableLayout = 'auto'; // Rapikan layout
+            // Perbesar header tabel
+            const headers = table.querySelectorAll('th');
+            headers.forEach(th => {
+              th.style.fontSize = '54px'; // Perbesar dari 50px ke 54px
+              th.style.fontWeight = 'bold';
+              th.style.padding = '60px 50px'; // Rapikan padding header
+              th.style.textAlign = 'left';
+              th.style.borderBottom = '5px solid #2F6B31';
+              th.style.backgroundColor = '#2F6B31';
+              th.style.color = '#ffffff';
+              th.style.whiteSpace = 'nowrap';
+              th.style.verticalAlign = 'middle'; // Rapikan alignment
+            });
+            // Perbesar cell tabel
+            const cells = table.querySelectorAll('td');
+            cells.forEach(td => {
+              td.style.fontSize = '48px'; // Perbesar dari 44px ke 48px
+              td.style.padding = '50px 50px'; // Rapikan padding cell
+              td.style.lineHeight = '2.2'; // Rapikan line height
+              td.style.borderBottom = '3px solid #e9ecef';
+              td.style.verticalAlign = 'middle'; // Rapikan alignment
+            });
+            // Perbesar progress bar di tabel
+            const progressBars = table.querySelectorAll('.progress-bar');
+            progressBars.forEach(bar => {
+              bar.style.height = '96px'; // Perbesar dari 88px ke 96px
+              bar.style.minHeight = '96px';
+              bar.style.borderRadius = '48px';
+            });
+            const progressTexts = table.querySelectorAll('.progress-text');
+            progressTexts.forEach(text => {
+              text.style.fontSize = '40px'; // Perbesar dari 36px ke 40px
+              text.style.fontWeight = '600';
+            });
+            // Perbesar status badge
+            const badges = table.querySelectorAll('.status-badge');
+            badges.forEach(badge => {
+              badge.style.fontSize = '44px'; // Perbesar dari 40px ke 44px
+              badge.style.padding = '24px 45px';
+              badge.style.borderRadius = '44px';
+            });
+          }
+          exportContainer.appendChild(clonedTable);
+          console.log('Table card cloned and appended');
+        } else {
+          console.warn('Table card tidak ditemukan!');
+        }
+
+        // Validasi sebelum append ke body
+        const statsInContainer = exportContainer.querySelector('.stats-grid');
+        const chartInContainer = exportContainer.querySelector('.chart-card');
+        const tableInContainer = exportContainer.querySelector('.table-card');
+        
+        console.log('Elements in container before append:');
+        console.log('- Stats grid:', statsInContainer !== null);
+        console.log('- Chart card:', chartInContainer !== null);
+        console.log('- Table card:', tableInContainer !== null);
+
+        // Append to body temporarily
+        document.body.appendChild(exportContainer);
+        
+        // Pastikan container terlihat
+        exportContainer.style.display = 'block';
+        exportContainer.style.visibility = 'visible';
+        exportContainer.style.opacity = '1';
+
+        // Replace chart canvas with image from original chart
+        // PASTIKAN chart asli TIDAK terpengaruh sama sekali
+        await new Promise(resolve => setTimeout(resolve, 300));
+
+        // Chart: barChart - Ganti dengan gambar statis HANYA di container export
+        // PENTING: originalBarChartEl TIDAK BOLEH dihapus atau dimodifikasi
+        // originalBarChartEl sudah dideklarasikan di atas, gunakan yang sudah ada
+        const clonedBarChartEl = exportContainer.querySelector('#barChart');
+        
+        // PASTIKAN original chart tetap ada dan tidak terpengaruh
+        if (originalBarChartEl && clonedBarChartEl && window.Chart) {
+          const barChartInstance = Chart.getChart(originalBarChartEl);
+          if (barChartInstance) {
+            try {
+              // Update chart untuk memastikan sudah di-render (TIDAK mengubah chart asli)
+              barChartInstance.update('none');
+              barChartInstance.resize();
+              await new Promise(resolve => setTimeout(resolve, 500));
+              
+              // 2. Cek dan perbaiki dimensi canvas sebelum export
+              let canvasWidth = originalBarChartEl.width || originalBarChartEl.offsetWidth || 0;
+              let canvasHeight = originalBarChartEl.height || originalBarChartEl.offsetHeight || 0;
+              
+              // Set minimal ukuran jika canvas 0
+              if (canvasWidth === 0) canvasWidth = 800;
+              if (canvasHeight === 0) canvasHeight = 400;
+              
+              if (canvasWidth > 0 && canvasHeight > 0) {
+                // Pastikan canvas cloned juga punya ukuran yang benar
+                clonedBarChartEl.width = canvasWidth;
+                clonedBarChartEl.height = canvasHeight;
+                
+              // Export chart sebagai gambar dengan kualitas tinggi
+const chartImg = barChartInstance.toBase64Image('image/png', 1.0);
+const img = document.createElement('img');
+img.src = chartImg;
+
+// ➜ Ukuran grafik diperbesar dengan aspect ratio yang benar (tidak melebar)
+// Hitung aspect ratio dari chart asli
+const chartAspectRatio = canvasWidth / canvasHeight;
+// Gunakan lebar maksimal yang sesuai dengan container - Perbesar lagi
+const maxChartWidth = 4100; // Perbesar dari 4000px ke 4100px
+// Perbesar tinggi chart sedikit - gunakan aspect ratio yang benar
+const chartHeight = maxChartWidth / chartAspectRatio; // Tinggi berdasarkan aspect ratio
+
+img.style.width = maxChartWidth + 'px'; // Gunakan width tetap, bukan 100%
+img.style.height = chartHeight + 'px'; // Tinggi berdasarkan aspect ratio
+img.style.maxWidth = maxChartWidth + 'px';
+img.style.maxHeight = chartHeight + 'px';
+img.style.minWidth = maxChartWidth + 'px';
+img.style.minHeight = chartHeight + 'px';
+
+img.style.objectFit = 'contain';
+img.style.display = 'block';
+img.style.margin = '30px auto 10px auto'; // Kurangi margin lebih banyak agar tabel lebih tinggi
+img.style.maxWidth = '100%';
+img.alt = 'Grafik Capaian IKU-1';
+
+                
+                // 1. Pastikan gambar sudah load sebelum digunakan
+                await new Promise((resolve) => {
+                  if (img.complete && img.naturalHeight !== 0) {
+                    resolve();
+                  } else {
+                    img.onload = () => {
+                      if (img.naturalHeight !== 0) resolve();
+                      else setTimeout(resolve, 1000);
+                    };
+                    img.onerror = resolve;
+                    setTimeout(resolve, 2000);
+                  }
+                });
+                
+                // Ganti canvas dengan gambar HANYA di container export (BUKAN original)
+                // PASTIKAN originalBarChartEl TIDAK dihapus
+                const parent = clonedBarChartEl.parentNode;
+                if (parent) {
+                  // Hanya hapus cloned canvas, BUKAN original
+                  clonedBarChartEl.remove();
+                  parent.appendChild(img);
+                  console.log('Chart image appended to chart wrapper');
+                } else {
+                  console.error('Parent element tidak ditemukan untuk chart image!');
+                }
+              } else {
+                // Jika canvas tidak valid, hapus dari container export saja
+                clonedBarChartEl.remove();
+              }
+            } catch (e) {
+              console.error('Error exporting bar chart:', e);
+              // Hapus canvas dari container export jika error
+              if (clonedBarChartEl && clonedBarChartEl.parentNode) {
+                clonedBarChartEl.remove();
+              }
+            }
+          } else {
+            // Chart instance tidak ditemukan, hapus canvas dari container export
+            if (clonedBarChartEl && clonedBarChartEl.parentNode) {
+              clonedBarChartEl.remove();
+            }
+          }
+        } else if (clonedBarChartEl) {
+          // Original tidak ditemukan, hapus canvas dari container export
+          clonedBarChartEl.remove();
+        }
+        
+        // PASTIKAN tidak ada canvas yang tersisa di container export
+        const remainingCanvases = exportContainer.querySelectorAll('canvas');
+        remainingCanvases.forEach(canvas => {
+          canvas.remove();
+        });
+
+        // 1. Pastikan semua gambar sudah 100% load
+        const images = exportContainer.querySelectorAll('img');
+        console.log('Total images found:', images.length);
+        await Promise.all(Array.from(images).map(img => {
+          return new Promise((resolve) => {
+            if (img.complete && img.naturalHeight !== 0) {
+              console.log('Image already loaded:', img.alt || img.src.substring(0, 50));
+              resolve();
+            } else {
+              img.onload = () => {
+                if (img.naturalHeight !== 0) {
+                  console.log('Image loaded:', img.alt || img.src.substring(0, 50));
+                  resolve();
+                } else {
+                  setTimeout(resolve, 1000);
+                }
+              };
+              img.onerror = () => {
+                console.warn('Image failed to load:', img.alt || img.src.substring(0, 50));
+                resolve(); // Continue even if image fails
+              };
+              setTimeout(resolve, 5000); // Timeout after 5 seconds
+            }
+          });
+        }));
+        
+        // Validasi: Pastikan chart image dan tabel ada
+        const chartImageFinal = exportContainer.querySelector('.chart-card img');
+        const tableElementFinal = exportContainer.querySelector('.table-card table');
+        const chartCardFinal = exportContainer.querySelector('.chart-card');
+        const tableCardFinal = exportContainer.querySelector('.table-card');
+        
+        console.log('Final validation before html2canvas:');
+        console.log('- Chart card found:', chartCardFinal !== null);
+        console.log('- Chart image found:', chartImageFinal !== null);
+        console.log('- Table card found:', tableCardFinal !== null);
+        console.log('- Table found:', tableElementFinal !== null);
+        
+        if (!chartImageFinal) {
+          console.error('ERROR: Chart image tidak ditemukan di export container!');
+          throw new Error('Chart image tidak ditemukan. Pastikan chart sudah di-render.');
+        }
+        if (!tableElementFinal) {
+          console.error('ERROR: Table tidak ditemukan di export container!');
+          throw new Error('Table tidak ditemukan. Pastikan tabel sudah di-render.');
+        }
+        
+        // Pastikan semua elemen terlihat
+        const allElementsFinal = exportContainer.querySelectorAll('*');
+        allElementsFinal.forEach(el => {
+          const style = window.getComputedStyle(el);
+          if (style.display === 'none') {
+            el.style.display = 'block';
+          }
+          if (style.visibility === 'hidden') {
+            el.style.visibility = 'visible';
+          }
+          if (parseFloat(style.opacity) === 0) {
+            el.style.opacity = '1';
+          }
+        });
+        
+        // Tunggu sebentar untuk memastikan browser selesai rendering
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // 3. Pastikan semua elemen yang di-export sudah tampil
+        const allElementsCheck = exportContainer.querySelectorAll('*');
+        allElementsCheck.forEach(el => {
+          const style = window.getComputedStyle(el);
+          if (style.display === 'none') {
+            el.style.display = 'block';
+          }
+          if (style.visibility === 'hidden') {
+            el.style.visibility = 'visible';
+          }
+          if (parseFloat(style.opacity) === 0) {
+            el.style.opacity = '1';
+          }
+        });
+
+        // 4. Pastikan background image valid (jika ada)
+        const elementsWithBg = exportContainer.querySelectorAll('*');
+        elementsWithBg.forEach(el => {
+          const style = window.getComputedStyle(el);
+          if (style.backgroundImage && style.backgroundImage !== 'none') {
+            const bgUrl = style.backgroundImage.match(/url\(['"]?([^'"]+)['"]?\)/);
+            if (bgUrl && bgUrl[1]) {
+              // Background image ada, pastikan valid
+              const img = new Image();
+              img.onerror = () => {
+                // Jika background image tidak valid, hapus
+                el.style.backgroundImage = 'none';
+              };
+              img.src = bgUrl[1];
+            }
+          }
+        });
+
+        // Wait a bit more for rendering
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        // PASTIKAN tidak ada canvas yang tersisa di container export
+        const allCanvases = exportContainer.querySelectorAll('canvas');
+        allCanvases.forEach(canvas => {
+          canvas.remove();
+        });
 
         // Use html2canvas to capture the content
         if (typeof html2canvas === 'undefined') {
           alert('Library export tidak dimuat. Silakan refresh halaman.');
+          if (exportContainer && exportContainer.parentNode) {
+            document.body.removeChild(exportContainer);
+          }
+          btn.disabled = false;
+          btn.innerHTML = originalText;
           return;
         }
 
-        const canvas = await html2canvas(element, {
-          backgroundColor: '#ffffff',
-          scale: 2,
-          logging: false,
-          useCORS: true,
-          windowWidth: element.scrollWidth,
-          windowHeight: element.scrollHeight
+        // PASTIKAN tidak ada canvas yang tersisa sebelum html2canvas
+        const finalCheckCanvases = exportContainer.querySelectorAll('canvas');
+        finalCheckCanvases.forEach(canvas => {
+          // 2. Pastikan canvas tidak berukuran 0 sebelum dihapus
+          if (canvas.width === 0 || canvas.height === 0) {
+            canvas.remove();
+          } else {
+            canvas.remove();
+          }
         });
 
-        // Convert canvas to image
-        const imgData = canvas.toDataURL('image/png');
+        // Pastikan container sudah tampil dan siap
+        exportContainer.style.display = 'block';
+        exportContainer.style.visibility = 'visible';
+        exportContainer.style.opacity = '1';
+        
+        // Pastikan ukuran container valid
+        if (exportContainer.scrollWidth === 0 || exportContainer.scrollHeight === 0) {
+          exportContainer.style.width = '4200px';
+          exportContainer.style.height = 'auto';
+        }
+
+        // Validasi html2canvas library
+        if (typeof html2canvas === 'undefined') {
+          throw new Error('Library html2canvas tidak dimuat. Silakan refresh halaman.');
+        }
+
+        // Hitung ukuran aktual container
+        const containerWidth = exportContainer.scrollWidth || 4200;
+        const containerHeight = exportContainer.scrollHeight || 8000;
+        
+        // Batasi ukuran maksimal untuk menghindari memory error
+        // Browser biasanya membatasi canvas size sekitar 16,777,216 pixels (4096x4096)
+        // Kita batasi maksimal canvas size ke 15,000,000 pixels untuk kualitas lebih tinggi
+        const maxCanvasPixels = 15000000;
+        const maxCanvasWidth = 7000; // Batas maksimal canvas width - dinaikkan untuk kualitas lebih tinggi
+        const maxCanvasHeight = 7000; // Batas maksimal canvas height - dinaikkan untuk kualitas lebih tinggi
+        
+        // Hitung scale optimal berdasarkan width dan height
+        const scaleByWidth = maxCanvasWidth / containerWidth;
+        const scaleByHeight = maxCanvasHeight / containerHeight;
+        const scaleByPixels = Math.sqrt(maxCanvasPixels / (containerWidth * containerHeight));
+        
+        // Gunakan scale terkecil untuk memastikan tidak melebihi batas - dinaikkan maksimal scale untuk kualitas lebih tajam
+        const optimalScale = Math.min(3.5, scaleByWidth, scaleByHeight, scaleByPixels);
+        
+        console.log('Export container size:', containerWidth, 'x', containerHeight);
+        console.log('Calculated scales - width:', scaleByWidth, 'height:', scaleByHeight, 'pixels:', scaleByPixels);
+        console.log('Using optimal scale:', optimalScale);
+
+        // Tambahkan timeout untuk html2canvas (5 menit)
+        const html2canvasPromise = html2canvas(exportContainer, {
+          backgroundColor: '#ffffff',
+          scale: optimalScale, // Scale optimal untuk kualitas tinggi tanpa memory error
+          logging: false,
+          useCORS: true,
+          allowTaint: false,
+          width: containerWidth,
+          height: containerHeight,
+          windowWidth: containerWidth,
+          windowHeight: containerHeight,
+          // Opsi untuk meningkatkan kualitas gambar
+          imageTimeout: 20000, // Timeout untuk loading gambar - dinaikkan
+          removeContainer: false, // Jangan hapus container
+          foreignObjectRendering: false, // Nonaktifkan untuk kompatibilitas lebih baik
+          pixelRatio: window.devicePixelRatio || 1, // Gunakan device pixel ratio untuk kualitas lebih baik
+          ignoreElements: (el) => {
+            // Skip semua canvas (karena sudah diganti dengan gambar)
+            if (el.tagName === 'CANVAS') {
+              return true;
+            }
+            // Jangan skip elemen penting seperti tabel dan gambar
+            if (el.tagName === 'TABLE' || el.tagName === 'IMG' || el.tagName === 'TR' || el.tagName === 'TD' || el.tagName === 'TH') {
+              return false;
+            }
+            // Skip elemen yang tersembunyi
+            const style = window.getComputedStyle(el);
+            if (style.display === 'none' || style.visibility === 'hidden' || parseFloat(style.opacity) === 0) {
+              return true;
+            }
+            return false;
+          },
+          onclone: function(clonedDoc) {
+            try {
+              const clonedContainer = clonedDoc.getElementById('export-container-temp');
+              if (clonedContainer) {
+                clonedContainer.style.display = 'block';
+                clonedContainer.style.visibility = 'visible';
+                clonedContainer.style.opacity = '1';
+                
+                // Hapus semua canvas dari cloned document
+                const clonedCanvases = clonedContainer.querySelectorAll('canvas');
+                clonedCanvases.forEach(canvas => {
+                  try {
+                    canvas.remove();
+                  } catch (e) {
+                    console.warn('Error removing canvas:', e);
+                  }
+                });
+                
+                // Pastikan semua elemen di cloned document tampil
+                const allClonedElements = clonedContainer.querySelectorAll('*');
+                allClonedElements.forEach(el => {
+                  try {
+                    const style = clonedDoc.defaultView.getComputedStyle(el);
+                    if (style.display === 'none') {
+                      el.style.display = 'block';
+                    }
+                    if (style.visibility === 'hidden') {
+                      el.style.visibility = 'visible';
+                    }
+                  } catch (e) {
+                    // Ignore
+                  }
+                });
+              }
+            } catch (e) {
+              console.warn('Error in onclone:', e);
+            }
+          }
+        });
+
+        // Tambahkan timeout untuk menghindari hang
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('Export timeout: Proses terlalu lama. Silakan coba lagi dengan data yang lebih sedikit.')), 300000); // 5 menit
+        });
+
+        // Jalankan html2canvas dengan timeout
+        let canvas = await Promise.race([html2canvasPromise, timeoutPromise]);
+
+        // Validasi canvas sebelum digunakan
+        if (!canvas || canvas.width === 0 || canvas.height === 0) {
+          throw new Error('Canvas tidak valid atau kosong. Silakan coba lagi.');
+        }
+
+        console.log('Canvas size:', canvas.width, 'x', canvas.height);
+
+        // Batasi ukuran maksimal canvas untuk menghindari error browser
+        // Browser biasanya membatasi canvas size sekitar 16,777,216 pixels (4096x4096)
+        // Kita gunakan batas lebih aman: 12,000,000 pixels
+        const maxCanvasSize = 12000000; // Batas aman
+        const currentCanvasSize = canvas.width * canvas.height;
+        
+        if (currentCanvasSize > maxCanvasSize) {
+          console.warn('Canvas terlalu besar (' + currentCanvasSize + ' pixels), akan dikurangi ukurannya');
+          // Buat canvas baru dengan ukuran yang lebih kecil
+          const scaleFactor = Math.sqrt(maxCanvasSize / currentCanvasSize);
+          const newWidth = Math.floor(canvas.width * scaleFactor);
+          const newHeight = Math.floor(canvas.height * scaleFactor);
+          
+          console.log('Resizing canvas from', canvas.width, 'x', canvas.height, 'to', newWidth, 'x', newHeight);
+          
+          const resizedCanvas = document.createElement('canvas');
+          resizedCanvas.width = newWidth;
+          resizedCanvas.height = newHeight;
+          const resizedCtx = resizedCanvas.getContext('2d');
+          
+          // Gunakan imageSmoothingEnabled untuk kualitas lebih baik
+          resizedCtx.imageSmoothingEnabled = true;
+          resizedCtx.imageSmoothingQuality = 'high';
+          
+          resizedCtx.drawImage(canvas, 0, 0, newWidth, newHeight);
+          
+          // Gunakan canvas yang sudah di-resize
+          canvas = resizedCanvas;
+          console.log('Canvas resized successfully to:', newWidth, 'x', newHeight);
+        }
+
+        // Remove temporary container
+        if (exportContainer && exportContainer.parentNode) {
+          document.body.removeChild(exportContainer);
+          exportContainer = null;
+        }
+
+        // Convert canvas to image dengan error handling yang lebih baik
+        let imgData;
+        try {
+          // Coba dengan kualitas tinggi dulu
+          imgData = canvas.toDataURL('image/png', 1.0);
+          
+          // Validasi hasil
+          if (!imgData || imgData === 'data:,') {
+            // Coba dengan kualitas lebih rendah
+            console.warn('Konversi dengan kualitas tinggi gagal, mencoba kualitas lebih rendah...');
+            imgData = canvas.toDataURL('image/jpeg', 0.9);
+            
+            if (!imgData || imgData === 'data:,') {
+              // Coba dengan kualitas lebih rendah lagi
+              imgData = canvas.toDataURL('image/jpeg', 0.7);
+              
+              if (!imgData || imgData === 'data:,') {
+                throw new Error('Gagal mengkonversi canvas ke gambar setelah beberapa percobaan.');
+              }
+            }
+          }
+          
+          console.log('Image data length:', imgData.length, 'characters');
+        } catch (e) {
+          console.error('Error converting canvas:', e);
+          
+          // Coba metode alternatif dengan blob
+          try {
+            await new Promise((resolve, reject) => {
+              canvas.toBlob((blob) => {
+                if (!blob) {
+                  reject(new Error('Gagal mengkonversi canvas ke blob. Canvas mungkin terlalu besar atau browser tidak mendukung.'));
+                  return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = () => {
+                  imgData = reader.result;
+                  resolve(imgData);
+                };
+                reader.onerror = () => {
+                  reject(new Error('Gagal membaca blob.'));
+                };
+                reader.readAsDataURL(blob);
+              }, 'image/png', 0.9);
+            });
+          } catch (blobError) {
+            throw new Error('Gagal mengkonversi canvas: ' + (e.message || e.toString()) + '. Error blob: ' + (blobError.message || blobError.toString()) + '. Silakan coba refresh halaman atau kurangi jumlah data.');
+          }
+        }
 
         // Create PDF using jsPDF
         if (typeof window.jspdf === 'undefined') {
-          // Fallback: download as PNG
-          const link = document.createElement('a');
-          link.download = `riwayat-capaian-${new Date().getTime()}.png`;
-          link.href = imgData;
-          link.click();
-        } else {
-          const { jsPDF } = window.jspdf;
-          const pdf = new jsPDF('p', 'mm', 'a4');
+          alert('Library PDF tidak dimuat. Silakan refresh halaman.');
+          btn.disabled = false;
+          btn.innerHTML = originalText;
+          return;
+        }
+
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF('p', 'mm', 'a4');
+        
+        const pageWidth = 210; // A4 width in mm
+        const pageHeight = 297; // A4 height in mm
+        const margin = 15; // Perbesar margin untuk spacing lebih baik
+        const contentWidth = pageWidth - (margin * 2);
+        
+        // Fungsi untuk menambahkan header ke setiap halaman - Rapikan spacing
+        function addPageHeader(pdf, pageNum, totalPages) {
+          pdf.setFontSize(36); // Rapikan ukuran
+          pdf.setFont('helvetica', 'bold');
+          pdf.setTextColor(47, 107, 49);
+          pdf.text('Riwayat Capaian IKU-1', margin, 20);
           
-          const imgWidth = 210; // A4 width in mm
-          const pageHeight = 297; // A4 height in mm
-          const imgHeight = (canvas.height * imgWidth) / canvas.width;
-          let heightLeft = imgHeight;
-          let position = 0;
+          pdf.setFontSize(16); // Rapikan ukuran
+          pdf.setFont('helvetica', 'normal');
+          pdf.setTextColor(0, 0, 0);
+          pdf.text('Career Development Center Universitas Andalas', margin, 28);
+          
+          pdf.setFontSize(12); // Rapikan ukuran
+          pdf.setTextColor(100, 100, 100);
+          pdf.text(`Tanggal: ${new Date().toLocaleDateString('id-ID', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          })}`, margin, 36);
+          
+          // Tambahkan garis pemisah
+          pdf.setDrawColor(200, 200, 200);
+          pdf.setLineWidth(0.5);
+          pdf.line(margin, 40, pageWidth - margin, 40);
+          
+          // Tambahkan nomor halaman
+          pdf.setFontSize(11); // Rapikan ukuran
+          pdf.setTextColor(150, 150, 150);
+          pdf.text(`Halaman ${pageNum} dari ${totalPages}`, pageWidth - margin - 30, pageHeight - 10, { align: 'right' });
+        }
 
-          // Add first page
-          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-
-          // Add additional pages if needed
-          while (heightLeft > 0) {
-            position = heightLeft - imgHeight;
+        // Calculate image dimensions - Perbesar ukuran maksimal
+        const imgAspectRatio = canvas.width / canvas.height;
+        const imgWidth = contentWidth; // Gunakan full width
+        const imgHeight = imgWidth / imgAspectRatio;
+        
+        // Calculate available height per page - Rapikan spacing
+        const titleHeight = 45; // Tinggi header - disesuaikan dengan header baru
+        const footerHeight = 12; // Tinggi footer - rapikan
+        // Tambahkan safety margin SANGAT BESAR untuk mencegah potongan baris tabel
+        // Safety margin besar untuk memastikan tidak ada nama fakultas/prodi yang terpotong
+        const safetyMargin = 20; // Margin keamanan SANGAT BESAR untuk mencegah potongan
+        const maxHeightPerPage = pageHeight - titleHeight - margin - footerHeight - safetyMargin;
+        
+        // Hitung berapa halaman yang dibutuhkan
+        const totalPages = Math.ceil(imgHeight / maxHeightPerPage);
+        
+        console.log('Total pages needed:', totalPages);
+        console.log('Image height:', imgHeight, 'mm');
+        console.log('Max height per page:', maxHeightPerPage, 'mm');
+        console.log('Content width:', contentWidth, 'mm');
+        
+        // Split gambar ke multiple pages menggunakan temporary canvas untuk crop
+        const tempCanvas = document.createElement('canvas');
+        const tempCtx = tempCanvas.getContext('2d');
+        tempCanvas.width = canvas.width;
+        // Enable image smoothing untuk kualitas lebih baik
+        tempCtx.imageSmoothingEnabled = true;
+        tempCtx.imageSmoothingQuality = 'high';
+        
+        let sourceY = 0; // Offset dalam pixels dari gambar asli
+        const overlapPixels = 100; // Overlap BESAR untuk memastikan tidak ada konten yang terpotong
+        
+        for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+          // Jika bukan halaman pertama, tambahkan halaman baru
+          if (pageNum > 1) {
             pdf.addPage();
-            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-            heightLeft -= pageHeight;
           }
+          
+          // Set currentY setelah header
+          let currentY = titleHeight;
+          
+          // Tambahkan header ke setiap halaman (termasuk halaman pertama)
+          addPageHeader(pdf, pageNum, totalPages);
+          
+          // Hitung tinggi gambar untuk halaman ini dalam mm
+          // Gunakan perhitungan yang SANGAT KONSERVATIF untuk mencegah potongan
+          const remainingHeight = imgHeight - ((pageNum - 1) * maxHeightPerPage);
+          
+          // Kurangi tinggi setiap halaman dengan buffer untuk memastikan tidak ada yang terpotong
+          const bufferMm = 5; // Buffer 5mm untuk setiap halaman
+          let pageImgHeight = Math.min(maxHeightPerPage - bufferMm, remainingHeight);
+          
+          // Untuk halaman setelah pertama, tambahkan overlap
+          if (pageNum > 1) {
+            const overlapMm = (overlapPixels / (canvas.height / imgHeight)); // Convert overlap ke mm
+            // Pastikan pageImgHeight tidak terlalu besar
+            pageImgHeight = Math.min(maxHeightPerPage - bufferMm, remainingHeight + overlapMm - bufferMm);
+          }
+          
+          // Pastikan pageImgHeight tidak negatif atau terlalu kecil
+          if (pageImgHeight < 10) {
+            pageImgHeight = Math.min(remainingHeight, maxHeightPerPage);
+          }
+          
+          const pageImgWidth = imgWidth;
+          
+          // Hitung proporsi yang akan di-crop dalam pixels
+          // Gunakan proporsi yang tepat antara mm dan pixels
+          const pixelsPerMm = canvas.height / imgHeight; // Pixels per mm
+          let pixelsForThisPage = pageImgHeight * pixelsPerMm;
+          
+          // Untuk halaman setelah pertama, tambahkan overlap di awal
+          let actualSourceY = sourceY;
+          if (pageNum > 1) {
+            const overlapSource = Math.floor(overlapPixels);
+            if (sourceY >= overlapSource) {
+              actualSourceY = sourceY - overlapSource; // Mulai lebih awal untuk overlap
+              pixelsForThisPage += overlapSource; // Tambahkan tinggi untuk overlap
+            }
+          }
+          
+          // Hitung tinggi dalam pixels untuk crop - pastikan tidak melebihi canvas height
+          // Gunakan perhitungan yang SANGAT KONSERVATIF dengan buffer tambahan
+          const maxAvailableHeight = canvas.height - actualSourceY;
+          let sourceHeight = Math.min(
+            Math.ceil(pixelsForThisPage),
+            maxAvailableHeight // Pastikan tidak melebihi sisa canvas
+          );
+          
+          // Tambahkan buffer pixel untuk memastikan tidak ada yang terpotong
+          const pixelBuffer = 30; // Buffer 30 pixels
+          sourceHeight = Math.min(sourceHeight, maxAvailableHeight - pixelBuffer);
+          
+          // Pastikan actualSourceY tidak negatif
+          if (actualSourceY < 0) {
+            sourceHeight += actualSourceY; // Kurangi sourceHeight dengan nilai negatif
+            actualSourceY = 0;
+          }
+          
+          // Pastikan sourceHeight valid dan tidak negatif atau terlalu kecil
+          if (sourceHeight <= pixelBuffer || actualSourceY >= canvas.height) {
+            console.warn(`Page ${pageNum}: No more content to render. actualSourceY: ${actualSourceY}, canvas.height: ${canvas.height}, sourceHeight: ${sourceHeight}`);
+            break;
+          }
+          
+          // Pastikan actualSourceY + sourceHeight tidak melebihi canvas.height
+          if (actualSourceY + sourceHeight > canvas.height) {
+            // Sesuaikan sourceHeight agar tidak melebihi canvas dengan buffer
+            const adjustedSourceHeight = canvas.height - actualSourceY - pixelBuffer;
+            if (adjustedSourceHeight > pixelBuffer) {
+              sourceHeight = adjustedSourceHeight;
+            } else {
+              // Jika sisa terlalu kecil, gunakan semua yang tersisa
+              sourceHeight = canvas.height - actualSourceY;
+              if (sourceHeight <= 0) {
+                break; // Tidak ada lagi konten
+              }
+            }
+          }
+          
+          // Validasi final: pastikan sourceHeight minimal
+          if (sourceHeight < 50) {
+            // Jika terlalu kecil, mungkin ini halaman terakhir, gunakan semua yang tersisa
+            sourceHeight = Math.min(sourceHeight, canvas.height - actualSourceY);
+            if (sourceHeight <= 0) {
+              break;
+            }
+          }
+          
+          // Gunakan actualSourceY untuk draw
+          const drawSourceY = actualSourceY;
+          
+          tempCanvas.height = sourceHeight;
+          
+          // Clear canvas
+          tempCtx.clearRect(0, 0, tempCanvas.width, tempCanvas.height);
+          
+          // Enable image smoothing untuk kualitas lebih baik
+          tempCtx.imageSmoothingEnabled = true;
+          tempCtx.imageSmoothingQuality = 'high';
+          
+          // Draw bagian gambar yang sesuai ke temporary canvas (crop)
+          tempCtx.drawImage(
+            canvas,
+            0, drawSourceY, canvas.width, sourceHeight, // source rectangle - gunakan drawSourceY
+            0, 0, canvas.width, sourceHeight // destination rectangle
+          );
+          
+          // Convert temporary canvas ke image data dengan kualitas maksimal
+          const pageImgData = tempCanvas.toDataURL('image/png', 1.0);
+          
+          // Tambahkan gambar ke PDF dengan kualitas tinggi (bukan 'FAST')
+          pdf.addImage(pageImgData, 'PNG', margin, currentY, pageImgWidth, pageImgHeight, undefined, 'SLOW');
+          
+          // Update sourceY untuk halaman berikutnya - pastikan tidak melebihi canvas height
+          // Untuk halaman dengan overlap, hanya maju sejauh yang diperlukan (kurangi overlap)
+          if (pageNum > 1 && pageNum < totalPages) {
+            // Untuk halaman tengah, maju dengan mengurangi overlap yang sudah ditambahkan
+            const overlapSource = Math.floor(overlapPixels);
+            sourceY = drawSourceY + sourceHeight - overlapSource; // Kurangi overlap
+          } else if (pageNum === 1) {
+            // Halaman pertama, maju normal
+            sourceY = drawSourceY + sourceHeight;
+          } else {
+            // Halaman terakhir, maju sampai akhir
+            sourceY = drawSourceY + sourceHeight;
+          }
+          
+          // Pastikan sourceY tidak melebihi canvas height
+          if (sourceY >= canvas.height) {
+            break; // Semua konten sudah di-render
+          }
+          
+          // Pastikan sourceY tidak mundur (harus selalu maju)
+          if (sourceY <= drawSourceY) {
+            sourceY = drawSourceY + sourceHeight; // Pastikan selalu maju
+          }
+        }
+        
+        // Cleanup temporary canvas
+        tempCanvas.width = 0;
+        tempCanvas.height = 0;
 
-          // Save PDF
-          pdf.save(`riwayat-capaian-${new Date().getTime()}.pdf`);
+        // Save PDF
+        pdf.save(`riwayat-capaian-${new Date().getTime()}.pdf`);
+
+        // PASTIKAN chart asli masih ada dan tidak terpengaruh
+        // Chart asli TIDAK pernah dihapus, jadi seharusnya masih ada
+        const checkOriginalChart = document.getElementById('barChart');
+        if (checkOriginalChart) {
+          const checkChartInstance = Chart.getChart('barChart');
+          if (!checkChartInstance) {
+            // Instance hilang, render ulang
+            if (filteredData.length > 0) {
+              createChart();
+            }
+          } else {
+            // Pastikan chart tetap terlihat dengan update
+            checkChartInstance.update('none');
+          }
         }
 
         // Restore button
         btn.disabled = false;
         btn.innerHTML = originalText;
 
-        alert('Halaman berhasil diekspor!');
+        alert('Halaman berhasil diekspor ke PDF!');
       } catch (error) {
         console.error('Error exporting page:', error);
-        alert('Gagal mengekspor halaman. Silakan coba lagi.');
-        if (event.target.closest('button')) {
-          event.target.closest('button').disabled = false;
+        let errorMessage = 'Gagal mengekspor halaman ke PDF.';
+        
+        if (error.message) {
+          if (error.message.includes('timeout')) {
+            errorMessage = 'Export timeout: Proses terlalu lama. Silakan coba lagi atau kurangi jumlah data.';
+          } else if (error.message.includes('Canvas')) {
+            errorMessage = 'Error pada canvas: ' + error.message;
+          } else if (error.message.includes('memory')) {
+            errorMessage = 'Memory tidak cukup. Silakan tutup aplikasi lain dan coba lagi.';
+          } else {
+            errorMessage = error.message;
+          }
+        }
+        
+        alert(errorMessage + '\n\nDetail error: ' + (error.stack || error.toString()));
+        
+        // Cleanup if container still exists
+        if (exportContainer && exportContainer.parentNode) {
+          exportContainer.parentNode.removeChild(exportContainer);
+        }
+        
+        // PASTIKAN chart asli masih ada setelah error
+        const checkOriginalChart = document.getElementById('barChart');
+        if (checkOriginalChart) {
+          const checkChartInstance = Chart.getChart('barChart');
+          if (!checkChartInstance) {
+            // Instance hilang, render ulang
+            if (filteredData.length > 0) {
+              createChart();
+            }
+          } else {
+            // Pastikan chart tetap terlihat dengan update
+            checkChartInstance.update('none');
+          }
+        }
+        
+        // Restore button
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = originalText;
         }
       }
     }
+  </script>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('open');
+    }
+
+    // Update active menu item based on current page
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPath = window.location.pathname;
+      const menuItems = document.querySelectorAll('.menu-item');
+      
+      menuItems.forEach(item => {
+        const href = item.getAttribute('href');
+        if (href === currentPath) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+    });
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(event) {
+      const sidebar = document.getElementById('sidebar');
+      const toggleBtn = document.querySelector('.mobile-menu-toggle');
+      
+      if (window.innerWidth <= 768) {
+        if (sidebar && toggleBtn && !sidebar.contains(event.target) && !toggleBtn.contains(event.target) && sidebar.classList.contains('open')) {
+          sidebar.classList.remove('open');
+        }
+      }
+    });
+
+    // Tour Guide Script
+    const tourIcons = {
+      menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>',
+      history: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>',
+      table: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>',
+      filter: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>',
+      export: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>',
+      search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.35-4.35"></path></svg>'
+    };
+
+    function getAvailableTourSteps() {
+      const allSteps = [
+        {
+          element: '#sidebar',
+          title: 'Menu Navigasi',
+          content: 'Ini adalah menu navigasi utama. Gunakan menu ini untuk berpindah antar halaman seperti Dashboard, Riwayat Capaian, Upload Data, dan lainnya.',
+          iconKey: 'menu',
+          position: 'right'
+        },
+        {
+          element: '.filter-section',
+          title: 'Filter Data',
+          content: 'Gunakan filter ini untuk mencari data berdasarkan Fakultas, Program Studi, atau Tahun. Filter membantu Anda menemukan data spesifik dengan cepat.',
+          iconKey: 'filter',
+          position: 'top'
+        },
+        {
+          element: 'input[type="text"][placeholder*="Cari"]',
+          title: 'Pencarian',
+          content: 'Kotak pencarian ini memungkinkan Anda mencari data berdasarkan nama fakultas atau program studi. Ketik kata kunci untuk memfilter hasil.',
+          iconKey: 'search',
+          position: 'top'
+        },
+        {
+          element: '.data-table',
+          title: 'Tabel Riwayat Capaian',
+          content: 'Tabel ini menampilkan riwayat capaian IKU-1 per fakultas dan program studi. Setiap baris menampilkan data capaian dengan progress bar visual.',
+          iconKey: 'table',
+          position: 'top'
+        },
+        {
+          element: '.progress-bar',
+          title: 'Progress Bar Capaian',
+          content: 'Progress bar menunjukkan persentase capaian IKU-1 secara visual. Warna hijau = mencapai target, kuning = mendekati target, merah = perlu peningkatan.',
+          iconKey: 'history',
+          position: 'top'
+        },
+        {
+          element: 'button[onclick*="export"]',
+          title: 'Export Data',
+          content: 'Tombol ini digunakan untuk mengekspor data riwayat capaian ke format Excel. Berguna untuk analisis lebih lanjut atau pelaporan.',
+          iconKey: 'export',
+          position: 'top'
+        }
+      ];
+
+      return allSteps.filter(step => {
+        const element = document.querySelector(step.element);
+        return element !== null;
+      });
+    }
+
+    let currentTourStep = 0;
+    let tourActive = false;
+    let tourSteps = [];
+
+    function startTour() {
+      const tourCompleted = localStorage.getItem('tourCompleted');
+      if (tourCompleted === 'true') {
+        if (!confirm('Apakah Anda ingin melihat panduan lagi?')) {
+          return;
+        }
+      }
+
+      tourSteps = getAvailableTourSteps();
+      
+      if (tourSteps.length === 0) {
+        alert('Tidak ada elemen yang dapat ditampilkan dalam panduan.');
+        return;
+      }
+
+      tourActive = true;
+      currentTourStep = 0;
+      
+      const overlay = document.getElementById('tourOverlay');
+      overlay.style.display = 'block';
+      setTimeout(() => {
+        overlay.classList.add('active');
+      }, 10);
+      
+      showTourStep(0);
+    }
+
+    function showTourStep(stepIndex) {
+      if (stepIndex < 0 || stepIndex >= tourSteps.length) {
+        endTour();
+        return;
+      }
+
+      const step = tourSteps[stepIndex];
+      const element = document.querySelector(step.element);
+
+      if (!element) {
+        if (stepIndex < tourSteps.length - 1) {
+          showTourStep(stepIndex + 1);
+        } else {
+          endTour();
+        }
+        return;
+      }
+
+      const iconElement = document.getElementById('tourIcon');
+      iconElement.innerHTML = tourIcons[step.iconKey] || tourIcons.menu;
+      document.getElementById('tourTitle').textContent = step.title;
+      document.getElementById('tourContent').textContent = step.content;
+      document.getElementById('tourProgress').textContent = `${stepIndex + 1} / ${tourSteps.length}`;
+
+      const prevBtn = document.getElementById('tourPrevBtn');
+      const nextBtn = document.getElementById('tourNextBtn');
+      
+      prevBtn.style.display = stepIndex === 0 ? 'none' : 'flex';
+      nextBtn.textContent = stepIndex === tourSteps.length - 1 ? 'Selesai' : 'Selanjutnya';
+
+      const rect = element.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+
+      const highlight = document.getElementById('tourHighlight');
+      highlight.classList.add('active');
+      highlight.style.top = (rect.top + scrollTop - 4) + 'px';
+      highlight.style.left = (rect.left + scrollLeft - 4) + 'px';
+      highlight.style.width = (rect.width + 8) + 'px';
+      highlight.style.height = (rect.height + 8) + 'px';
+
+      const tooltip = document.getElementById('tourTooltip');
+      tooltip.style.display = 'block';
+      tooltip.className = 'tour-tooltip ' + step.position;
+
+      let tooltipTop, tooltipLeft;
+      const tooltipWidth = Math.max(300, tooltip.offsetWidth || 350);
+      const tooltipHeight = Math.max(180, tooltip.offsetHeight || 200);
+      const spacing = 20;
+
+      switch(step.position) {
+        case 'top':
+          tooltipTop = rect.top + scrollTop - tooltipHeight - spacing;
+          tooltipLeft = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+          break;
+        case 'bottom':
+          tooltipTop = rect.bottom + scrollTop + spacing;
+          tooltipLeft = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+          break;
+        case 'left':
+          tooltipTop = rect.top + scrollTop + (rect.height / 2) - (tooltipHeight / 2);
+          tooltipLeft = rect.left + scrollLeft - tooltipWidth - spacing;
+          break;
+        case 'right':
+          tooltipTop = rect.top + scrollTop + (rect.height / 2) - (tooltipHeight / 2);
+          tooltipLeft = rect.right + scrollLeft + spacing;
+          break;
+        default:
+          tooltipTop = rect.bottom + scrollTop + spacing;
+          tooltipLeft = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+      }
+
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      if (tooltipLeft < 10) tooltipLeft = 10;
+      if (tooltipLeft + tooltipWidth > viewportWidth - 10) {
+        tooltipLeft = viewportWidth - tooltipWidth - 10;
+      }
+      if (tooltipTop < 10) tooltipTop = 10;
+      if (tooltipTop + tooltipHeight > viewportHeight - 10) {
+        tooltipTop = viewportHeight - tooltipHeight - 10;
+      }
+
+      tooltip.style.top = tooltipTop + 'px';
+      tooltip.style.left = tooltipLeft + 'px';
+
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      highlight.style.animation = 'pulse 2s infinite';
+    }
+
+    function nextTourStep() {
+      if (currentTourStep < tourSteps.length - 1) {
+        currentTourStep++;
+        showTourStep(currentTourStep);
+      } else {
+        endTour();
+      }
+    }
+
+    function prevTourStep() {
+      if (currentTourStep > 0) {
+        currentTourStep--;
+        showTourStep(currentTourStep);
+      }
+    }
+
+    function skipTour() {
+      endTour();
+    }
+
+    function endTour() {
+      tourActive = false;
+      const overlay = document.getElementById('tourOverlay');
+      overlay.classList.remove('active');
+      setTimeout(() => {
+        overlay.style.display = 'none';
+      }, 300);
+      const highlight = document.getElementById('tourHighlight');
+      highlight.classList.remove('active');
+      highlight.style.display = 'none';
+      document.getElementById('tourTooltip').style.display = 'none';
+      localStorage.setItem('tourCompleted', 'true');
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes pulse {
+        0%, 100% {
+          box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 20px rgba(47, 107, 49, 0.5);
+        }
+        50% {
+          box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 30px rgba(47, 107, 49, 0.8);
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    document.getElementById('tourOverlay').addEventListener('click', function(e) {
+      if (e.target === this) {
+        endTour();
+      }
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (!tourActive) return;
+      
+      if (e.key === 'Escape') {
+        endTour();
+      } else if (e.key === 'ArrowRight' || e.key === 'Enter') {
+        nextTourStep();
+      } else if (e.key === 'ArrowLeft') {
+        prevTourStep();
+      }
+    });
   </script>
 </body>
 </html>

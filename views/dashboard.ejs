@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard IKU-1 | CDC Universitas Andalas</title>
+  <title>Dashboard Monitoring Capaian IKU-1 | Career Development Center Unand</title>
 
   <!-- Google Font & Chart.js -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -35,6 +35,167 @@
       background: var(--bg);
       margin: 0;
       color: var(--text-dark);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar - Minimalis Putih */
+    .sidebar {
+      width: 260px;
+      background: #ffffff;
+      color: var(--text-dark);
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 1000;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+      border-right: 1px solid #e9ecef;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar-header {
+      padding: 25px 20px;
+      border-bottom: 1px solid #e9ecef;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .sidebar-header img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+      filter: none;
+    }
+
+    .sidebar-header h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0;
+      color: var(--text-dark);
+    }
+
+    .sidebar-menu {
+      padding: 15px 0;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+      border-left: 3px solid transparent;
+    }
+
+    .menu-item:hover {
+      background: #f8f9fa;
+      border-left-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .menu-item.active {
+      background: #f0f7f1;
+      border-left-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .menu-item svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+    }
+
+    .menu-divider {
+      height: 1px;
+      background: #e9ecef;
+      margin: 10px 20px;
+    }
+
+    .sidebar-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      border-top: 1px solid #e9ecef;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .user-info .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .user-info .user-details {
+      flex: 1;
+    }
+
+    .user-info .user-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+      color: var(--text-dark);
+    }
+
+    .user-info .user-role {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .logout-btn {
+      width: 100%;
+      padding: 10px;
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 6px;
+      color: var(--text-dark);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .logout-btn:hover {
+      background: #e9ecef;
+      color: var(--primary);
+    }
+
+    /* Main Content Area */
+    .main-wrapper {
+      flex: 1;
+      margin-left: 280px;
+      display: flex;
+      flex-direction: column;
     }
 
     /* Header */
@@ -45,6 +206,9 @@
       align-items: center;
       justify-content: space-between;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     .header-left {
@@ -90,93 +254,284 @@
       align-items: center;
     }
 
-    .header-right a {
+    .header-right {
       display: flex;
       align-items: center;
-      gap: 8px;
-      color: white;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 500;
-      padding: 12px 24px;
-      border-radius: 8px;
-      transition: all 0.3s;
-      background: var(--primary);
-    }
-
-    .header-right a:hover {
-      background: var(--secondary);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
-    }
-
-    /* Navigation Section */
-    .navigation-section {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 20px 25px;
-      margin-bottom: 30px;
-      display: flex;
       gap: 15px;
-      align-items: center;
-      flex-wrap: wrap;
     }
 
-    .navigation-section h2 {
-      font-size: 20px;
-      font-weight: 600;
+    .header-right .date-display {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    /* Tour Guide Styles */
+    .tour-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 9998;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      display: none;
+    }
+
+    .tour-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+      display: block;
+    }
+
+    .tour-highlight {
+      position: absolute;
+      border: 3px solid var(--primary);
+      border-radius: 8px;
+      box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 20px rgba(47, 107, 49, 0.5);
+      z-index: 9999;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      display: none;
+    }
+
+    .tour-highlight.active {
+      display: block;
+    }
+
+    .tour-tooltip {
+      position: absolute;
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 350px;
+      min-width: 300px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      z-index: 10000;
+      animation: tooltipFadeIn 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    @keyframes tooltipFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .tour-tooltip::before {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border: 12px solid transparent;
+    }
+
+    .tour-tooltip.top::before {
+      bottom: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-top-color: white;
+    }
+
+    .tour-tooltip.bottom::before {
+      top: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-bottom-color: white;
+    }
+
+    .tour-tooltip.left::before {
+      right: -24px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-left-color: white;
+    }
+
+    .tour-tooltip.right::before {
+      left: -24px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-right-color: white;
+    }
+
+    .tour-tooltip-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+
+    .tour-tooltip-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      padding: 12px;
+    }
+
+    .tour-tooltip-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: white;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .tour-tooltip-title {
+      font-size: 18px;
+      font-weight: 700;
       color: var(--text-dark);
       margin: 0;
-      flex: 1;
-      min-width: 200px;
     }
 
-    .nav-buttons {
+    .tour-tooltip-content {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .tour-tooltip-footer {
       display: flex;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .nav-btn {
-      display: inline-flex;
+      justify-content: space-between;
       align-items: center;
       gap: 8px;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.3s;
-      color: white;
-      background: var(--primary);
+      flex-wrap: wrap;
+      margin-top: 4px;
     }
 
-    .nav-btn:hover {
-      background: var(--secondary);
+    .tour-progress {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .tour-buttons {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+
+    .tour-btn {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .tour-btn-secondary {
+      background: #f0f0f0;
+      color: var(--text-dark);
+    }
+
+    .tour-btn-secondary:hover {
+      background: #e0e0e0;
+    }
+
+    .tour-btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+    }
+
+    .tour-btn-primary:hover {
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(47, 107, 49, 0.3);
     }
 
-    .nav-btn.upload {
-      background: var(--accent);
+    .tour-btn-skip {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid #e0e0e0;
     }
 
-    .nav-btn.upload:hover {
-      background: #4caf50;
-      box-shadow: 0 4px 12px rgba(102, 187, 106, 0.3);
+    .tour-btn-skip:hover {
+      background: #f8f9fa;
+      color: var(--text-dark);
     }
 
-    .nav-btn.profile {
-      background: #6366f1;
+    .start-tour-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #4CA858 0%, #6BCF78 100%);
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: 'Poppins', sans-serif;
+      margin: 0 0 15px 0;
+      box-shadow: 0 2px 8px rgba(76, 168, 88, 0.2);
+      position: relative;
+      overflow: hidden;
     }
 
-    .nav-btn.profile:hover {
-      background: #4f46e5;
-      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    .start-tour-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
     }
+
+    .start-tour-btn:hover::before {
+      left: 100%;
+    }
+
+    .start-tour-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(76, 168, 88, 0.35);
+      background: linear-gradient(135deg, #5CB85C 0%, #7DD87D 100%);
+    }
+
+    .start-tour-btn:active {
+      transform: translateY(0);
+    }
+
+    .start-tour-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2.5;
+    }
+
+    /* Navigation Section - Removed, now using sidebar */
 
     /* Alert Messages */
     .alert {
@@ -249,22 +604,85 @@
     }
 
     .visual-card,
-    .table-card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 25px;
+    .table-card,
+    .chart-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      border-radius: 20px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+      padding: 30px;
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 20px;
+      border: 1px solid rgba(47, 107, 49, 0.1);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .visual-card::before,
+    .table-card::before,
+    .chart-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .visual-card:hover,
+    .table-card:hover,
+    .chart-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(47, 107, 49, 0.12);
+    }
+
+    .visual-card:hover::before,
+    .table-card:hover::before,
+    .chart-card:hover::before {
+      opacity: 1;
     }
 
     .visual-card h3,
-    .table-card h3 {
-      font-size: 18px;
-      font-weight: 600;
+    .table-card h3,
+    .chart-card h3 {
+      font-size: 24px;
+      font-weight: 700;
       color: var(--text-dark);
       margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .chart-card h3::before {
+      content: '';
+      width: 4px;
+      height: 24px;
+      background: linear-gradient(180deg, var(--primary), var(--secondary));
+      border-radius: 2px;
+    }
+
+    /* Highlight untuk visualisasi utama */
+    .visual-card.highlight-main {
+      border: 3px solid var(--primary);
+      box-shadow: 0 8px 30px rgba(47, 107, 49, 0.25);
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .visual-card.highlight-main::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
     }
 
     .visual-card .subtext,
@@ -316,26 +734,69 @@
     }
 
     .stat-card {
-      background: var(--card-bg);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      padding: 25px;
-      text-align: center;
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      padding: 30px 25px;
+      text-align: left;
       position: relative;
+      overflow: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border: 1px solid rgba(47, 107, 49, 0.1);
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background: linear-gradient(180deg, var(--primary), var(--secondary));
+      transition: width 0.3s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(47, 107, 49, 0.15);
+    }
+
+    .stat-card:hover::before {
+      width: 100%;
+      opacity: 0.05;
+    }
+
+    .stat-card-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .stat-card-text {
+      flex: 1;
+      text-align: center;
     }
 
     .stat-card h3 {
       font-size: 14px;
       color: var(--text-muted);
-      margin: 0 0 10px 0;
-      font-weight: 500;
+      margin: 0 0 8px 0;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .stat-card .stat-value {
-      font-size: 32px;
+      font-size: 42px;
       font-weight: 700;
-      color: var(--primary);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
       margin: 0;
+      line-height: 1.2;
     }
 
     /* Editable Total Alumni */
@@ -425,10 +886,22 @@
 
     /* Main Layout */
     .main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+
+    .charts-grid-top {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 25px;
-      margin-bottom: 40px;
+    }
+
+    .charts-grid-bottom {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
     }
 
     .left-column {
@@ -440,6 +913,7 @@
     .right-column {
       display: flex;
       flex-direction: column;
+      gap: 25px;
     }
 
     /* Chart Cards */
@@ -448,18 +922,23 @@
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       padding: 25px;
+      min-height: 420px;
+      display: flex;
+      flex-direction: column;
     }
 
     .chart-card h3 {
-      font-size: 16px;
-      font-weight: 600;
+      font-size: 20px;
+      font-weight: 700;
       margin: 0 0 20px 0;
       color: var(--text-dark);
     }
 
     .chart-container {
-      height: 280px;
+      height: 320px;
       position: relative;
+      flex: 1;
+      min-height: 300px;
     }
 
     .chart-container-large {
@@ -472,12 +951,13 @@
       display: flex;
       align-items: center;
       gap: 30px;
-      height: 100%;
+      flex: 1;
+      min-height: 300px;
     }
 
     .circular-chart-container {
-      width: 200px;
-      height: 200px;
+      width: 220px;
+      height: 220px;
       position: relative;
     }
 
@@ -510,35 +990,57 @@
     /* Donut Chart Special Layout */
     .donut-chart-wrapper {
       display: flex;
-      gap: 40px;
+      gap: 30px;
       align-items: center;
-      height: 100%;
+      flex: 1;
+      min-height: 300px;
     }
 
     .donut-chart-container {
-      width: 300px;
-      height: 300px;
+      width: 280px;
+      height: 280px;
       position: relative;
     }
 
     .donut-details {
       flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 20px;
     }
 
     .detail-item {
-      margin-bottom: 25px;
+      margin-bottom: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(47, 107, 49, 0.05) 0%, rgba(76, 168, 88, 0.05) 100%);
+      border-radius: 12px;
+      border-left: 4px solid var(--primary);
+      transition: all 0.3s ease;
+    }
+
+    .detail-item:hover {
+      background: linear-gradient(135deg, rgba(47, 107, 49, 0.1) 0%, rgba(76, 168, 88, 0.1) 100%);
+      transform: translateX(5px);
     }
 
     .detail-label {
       font-size: 13px;
       color: var(--text-muted);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
 
     .detail-value {
-      font-size: 28px;
+      font-size: 32px;
       font-weight: 700;
-      color: var(--text-dark);
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1.2;
     }
 
     .action-buttons {
@@ -594,25 +1096,31 @@
 
     /* Responsive */
     @media (max-width: 1200px) {
-      .main-content {
+      .charts-grid-top,
+      .charts-grid-bottom {
         grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 768px) {
-      .header {
-        flex-direction: column;
-        padding: 20px;
-        gap: 15px;
+      .sidebar {
+        transform: translateX(-100%);
       }
 
-      .header-left {
-        flex-direction: column;
-        text-align: center;
+      .sidebar.open {
+        transform: translateX(0);
       }
 
-      .header-center {
+      .main-wrapper {
         margin-left: 0;
+      }
+
+      .header {
+        padding: 15px 20px;
+      }
+
+      .header-center h1 {
+        font-size: 20px;
       }
 
       .container {
@@ -629,6 +1137,81 @@
       }
     }
 
+    .mobile-menu-toggle {
+      display: none;
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-toggle {
+        display: block;
+      }
+
+      .tour-tooltip {
+        max-width: 90vw;
+        left: 5vw !important;
+        right: 5vw;
+      }
+
+      .tour-tooltip.top::before,
+      .tour-tooltip.bottom::before {
+        left: 50%;
+      }
+
+      .tour-tooltip.left::before,
+      .tour-tooltip.right::before {
+        top: 50%;
+      }
+
+      .tour-tooltip {
+        min-width: 280px;
+        max-width: 95vw;
+        padding: 16px;
+      }
+
+      .tour-tooltip-footer {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+
+      .tour-progress {
+        text-align: center;
+        margin-bottom: 8px;
+      }
+
+      .tour-buttons {
+        flex-wrap: wrap;
+        justify-content: center;
+        width: 100%;
+      }
+
+      .tour-btn {
+        flex: 1;
+        min-width: 70px;
+        padding: 8px 12px;
+        font-size: 11px;
+      }
+
+      .start-tour-btn {
+        padding: 12px 16px;
+        font-size: 13px;
+        margin: 15px auto;
+        width: calc(100% - 30px);
+      }
+
+      .start-tour-btn svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+
     @media (max-width: 1024px) {
       .data-visual-section {
         grid-template-columns: 1fr;
@@ -638,20 +1221,145 @@
 </head>
 
 <body>
-  <!-- Header -->
-  <div class="header">
-    <div class="header-left">
+  <% 
+    // Deklarasi permissions untuk digunakan di seluruh halaman (harus di bagian atas)
+    const userPermissions = typeof user !== 'undefined' && user && user.permissions ? user.permissions : {};
+    const isSuperAdmin = typeof user !== 'undefined' && user && user.role === 'superadmin';
+    const hasPermission = (perm) => isSuperAdmin || userPermissions[perm] === true;
+    const currentPath = '/dashboard';
+  %>
+  
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
       <img src="/images/logounand.png" alt="Logo UNAND">
+      <h2>Career Development Center Unand</h2>
     </div>
-    <div class="header-center">
-      <h1>CDC Universitas Andalas</h1>
-      <p>Career Development Center Andalas University</p>
-      <div class="date" id="currentDate"></div>
+    <nav class="sidebar-menu">
+      <!-- Dashboard selalu bisa diakses semua user yang sudah login -->
+      <a href="/dashboard" class="menu-item <%= currentPath === '/dashboard' ? 'active' : '' %>">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        Dashboard
+      </a>
+      
+      <% if (hasPermission('riwayat')) { %>
+        <a href="/riwayat" class="menu-item <%= currentPath === '/riwayat' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          Riwayat Capaian
+        </a>
+      <% } %>
+      
+      <% if (hasPermission('upload')) { %>
+        <a href="/upload" class="menu-item <%= currentPath === '/upload' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Upload Data CSV
+        </a>
+      <% } %>
+      
+      <% if (hasPermission('pembobotan')) { %>
+        <a href="/pembobotan" class="menu-item <%= currentPath === '/pembobotan' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          Pencatatan Pembobotan
+        </a>
+      <% } %>
+      
+      <div class="menu-divider"></div>
+      
+      <% if (hasPermission('manage_admin')) { %>
+        <a href="/admin" class="menu-item <%= currentPath === '/admin' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          Manajemen Admin
+        </a>
+      <% } %>
+      
+      <% if (hasPermission('profile')) { %>
+        <a href="/profile" class="menu-item <%= currentPath === '/profile' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          Profil Admin
+        </a>
+      <% } %>
+      
+    </nav>
+    <div class="sidebar-footer">
+      <!-- Tour Guide Button -->
+      <button class="start-tour-btn" id="startTourBtn" onclick="startTour()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 16v-4M12 8h.01"></path>
+        </svg>
+        Mulai Panduan
+      </button>
+      <div class="user-info">
+        <div class="user-avatar">
+          <%= typeof user !== 'undefined' && user ? user.username.charAt(0).toUpperCase() : 'A' %>
+        </div>
+        <div class="user-details">
+          <div class="user-name"><%= typeof user !== 'undefined' && user ? user.username : 'Admin' %></div>
+          <div class="user-role"><%= typeof user !== 'undefined' && user && user.role ? user.role : 'Admin' %></div>
+        </div>
+      </div>
+      <a href="/logout" class="logout-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+        Logout
+      </a>
     </div>
-    <div class="header-right">
-      <a href="/logout">Logout</a>
+  </aside>
+
+  <!-- Main Content Wrapper -->
+  <div class="main-wrapper">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <button class="mobile-menu-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="header-center">
+          <h1>Dashboard Monitoring Capaian IKU-1</h1>
+          <p>Career Development Center Andalas University</p>
+          <div class="date-display" id="currentDate"></div>
+        </div>
+      </div>
+      <div class="header-right">
+        <!-- Export PDF - fitur internal, langsung bisa digunakan tanpa permission check -->
+        <button class="nav-btn" id="exportPdfBtn" onclick="exportFullDashboard()" style="background: #f59e0b; cursor: pointer; color: white; border: none; padding: 10px 20px; border-radius: 8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Export PDF
+        </button>
+      </div>
     </div>
-  </div>
 
   <!-- Alert Message -->
   <% if (typeof msg !== 'undefined' && msg) { %>
@@ -665,49 +1373,46 @@
 
   <!-- Main Content -->
   <main class="container">
-    <!-- Navigation Section -->
-    <div class="navigation-section">
-      <h2>Menu Utama</h2>
-      <div class="nav-buttons">
-        <a href="/upload" class="nav-btn upload">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="17 8 12 3 7 8"></polyline>
-            <line x1="12" y1="3" x2="12" y2="15"></line>
-          </svg>
-          Upload Data CSV
-        </a>
-        <a href="/profile" class="nav-btn profile">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-            <circle cx="12" cy="7" r="4"></circle>
-          </svg>
-          Profil Admin
-        </a>
-        <button class="nav-btn" onclick="exportFullDashboard()" style="background: #f59e0b; cursor: pointer;">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          Export Dashboard PDF
-        </button>
+    <!-- Welcome Section -->
+    <div class="welcome-section" style="background: linear-gradient(135deg, #2F6B31 0%, #4CA858 50%, #6BCF78 100%); color: white; padding: 50px 60px; margin: 20px 50px; border-radius: 24px; box-shadow: 0 12px 50px rgba(47, 107, 49, 0.25); position: relative; overflow: hidden;">
+      <div style="position: relative; z-index: 2;">
+        <div style="margin-bottom: 20px;">
+          <h2 style="font-size: 36px; font-weight: 700; margin: 0; text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">Selamat Datang di Dashboard Monitoring Capaian IKU-1</h2>
+        </div>
+        <p style="font-size: 17px; opacity: 0.95; line-height: 1.8; margin: 0; max-width: 800px;">
+          Sistem manajemen Indikator Kinerja Utama (IKU-1) untuk memantau dan mengelola data capaian alumni Universitas Andalas. 
+          Dashboard ini menyediakan visualisasi data yang komprehensif untuk membantu pengambilan keputusan yang lebih baik.
+        </p>
       </div>
+      <div style="position: absolute; top: -50px; right: -50px; width: 200px; height: 200px; background: rgba(255, 255, 255, 0.1); border-radius: 50%; filter: blur(40px);"></div>
+      <div style="position: absolute; bottom: -80px; left: -80px; width: 250px; height: 250px; background: rgba(255, 255, 255, 0.08); border-radius: 50%; filter: blur(50px);"></div>
     </div>
 
     <!-- Stats Grid -->
     <div class="stats-grid">
       <div class="stat-card">
-        <h3>Total Alumni</h3>
-        <p class="stat-value" id="totalAlumniValue"><%= (data.totalAlumniFromTable !== undefined ? data.totalAlumniFromTable : data.totalAlumni) %></p>
+        <div class="stat-card-content">
+          <div class="stat-card-text">
+            <h3>Total Alumni</h3>
+            <p class="stat-value" id="totalAlumniValue"><%= (data.totalAlumniFromTable !== undefined ? data.totalAlumniFromTable : data.totalAlumni) %></p>
+          </div>
+        </div>
       </div>
       <div class="stat-card">
-        <h3>Total Responden</h3>
-        <p class="stat-value"><%= data.totalResponden %></p>
+        <div class="stat-card-content">
+          <div class="stat-card-text">
+            <h3>Total Responden</h3>
+            <p class="stat-value"><%= data.totalResponden %></p>
+          </div>
+        </div>
       </div>
       <div class="stat-card">
-        <h3>Rata-rata Capaian IKU</h3>
-        <p class="stat-value"><%= data.rataCapaian || '0' %> %</p>
+        <div class="stat-card-content">
+          <div class="stat-card-text">
+            <h3>Rata-rata Capaian IKU</h3>
+            <p class="stat-value"><%= data.rataCapaian || '0' %> %</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -717,7 +1422,7 @@
     <% } %>
 
     <div class="main-content">
-      <div class="left-column">
+      <div class="charts-grid-top">
         <div class="chart-card">
           <h3>Distribusi Status Alumni</h3>
           <div class="circular-chart-wrapper">
@@ -728,16 +1433,7 @@
           </div>
         </div>
 
-        <div class="chart-card">
-          <h3>Grafik Pertumbuhan Capaian</h3>
-          <div class="chart-container">
-            <canvas id="lulusanChart"></canvas>
-          </div>
-        </div>
-      </div>
-
-      <div class="right-column">
-        <div class="chart-card" style="height: 100%;">
+        <div class="chart-card highlight-main">
           <h3>Capaian IKU-1 UNAND:</h3>
           <div class="donut-chart-wrapper">
             <div class="donut-chart-container">
@@ -752,11 +1448,23 @@
                 <div class="detail-label">Rata-rata Capaian:</div>
                 <div class="detail-value"><%= data.rataCapaian || '0' %> %</div>
               </div>
-              <div class="action-buttons">
-                <a href="/pembobotan" class="action-btn btn-primary">Detail Pembobotan</a>
-                <a href="/riwayat" class="action-btn btn-success">Riwayat Capaian</a>
-              </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="charts-grid-bottom">
+        <div class="chart-card">
+          <h3>Grafik Pertumbuhan Capaian</h3>
+          <div class="chart-container">
+            <canvas id="lulusanChart"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <h3>Top 5 Program Studi</h3>
+          <div class="chart-container">
+            <canvas id="topProdiChart"></canvas>
           </div>
         </div>
       </div>
@@ -765,6 +1473,33 @@
   </main>
 
   <footer>© 2025 CDC Universitas Andalas — All Rights Reserved</footer>
+
+  <!-- Tour Guide Overlay -->
+  <div class="tour-overlay" id="tourOverlay"></div>
+  <div class="tour-highlight" id="tourHighlight"></div>
+  <div class="tour-tooltip" id="tourTooltip" style="display: none;">
+    <div class="tour-tooltip-header">
+      <div class="tour-tooltip-icon" id="tourIcon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <h3 class="tour-tooltip-title" id="tourTitle">Judul Panduan</h3>
+    </div>
+    <div class="tour-tooltip-content" id="tourContent">
+      Deskripsi fungsi elemen ini akan ditampilkan di sini.
+    </div>
+    <div class="tour-tooltip-footer">
+      <span class="tour-progress" id="tourProgress">1 / 10</span>
+      <div class="tour-buttons">
+        <button class="tour-btn tour-btn-skip" onclick="skipTour()">Lewati</button>
+        <button class="tour-btn tour-btn-secondary" id="tourPrevBtn" onclick="prevTourStep()" style="display: none;">Sebelumnya</button>
+        <button class="tour-btn tour-btn-primary" id="tourNextBtn" onclick="nextTourStep()">Selanjutnya</button>
+      </div>
+    </div>
+  </div>
 
   <script type="application/json" id="dashboard-data">
 <%- JSON.stringify(data) %>
@@ -795,9 +1530,22 @@
           }]
         },
         options: {
+          responsive: true,
+          maintainAspectRatio: true,
           plugins: {
-            legend: { display: false }
-          }
+            legend: { 
+              display: false 
+            },
+            tooltip: {
+              titleFont: {
+                size: 14,
+                weight: 'bold'
+              },
+              bodyFont: {
+                size: 13
+              }
+            }
+          },
         }
       });
 
@@ -852,26 +1600,61 @@
             maintainAspectRatio: false,
             scales: {
               x: {
+                title: {
+                  display: true,
+                  text: 'Program Studi',
+                  font: {
+                    size: 16,
+                    weight: 'bold'
+                  },
+                  padding: { top: 10, bottom: 10 }
+                },
                 ticks: {
                   maxRotation: 45,
                   minRotation: 0,
                   font: {
-                    size: 11
+                    size: 13
                   }
                 }
               },
               y: {
+                title: {
+                  display: true,
+                  text: 'Jumlah (Orang)',
+                  font: {
+                    size: 16,
+                    weight: 'bold'
+                  },
+                  padding: { top: 10, bottom: 10 }
+                },
                 beginAtZero: true,
                 ticks: {
+                  font: {
+                    size: 13
+                  },
                   callback: (value) => formatLabel(value)
                 }
               }
             },
             plugins: {
               legend: {
-                position: 'bottom'
+                position: 'bottom',
+                labels: {
+                  font: {
+                    size: 14,
+                    weight: 'bold'
+                  },
+                  padding: 15
+                }
               },
               tooltip: {
+                titleFont: {
+                  size: 14,
+                  weight: 'bold'
+                },
+                bodyFont: {
+                  size: 13
+                },
                 callbacks: {
                   label: (context) => `${context.dataset.label}: ${formatLabel(context.parsed.y)}`
                 }
@@ -890,33 +1673,51 @@
         labels: ["Capaian", "Target"],
         datasets: [{
           data: [rataCapaian, 100 - rataCapaian],
-          backgroundColor: ["#2F6B31", "#ddefe1"],
-          borderWidth: 0,
+            backgroundColor: ["#2F6B31", "#ddefe1"],
+            borderWidth: 0,
           cutout: "70%"
         }]
       },
       options: {
+        responsive: true,
+        maintainAspectRatio: true,
         plugins: {
-          legend: { display: false },
+          legend: { 
+            display: false 
+          },
           tooltip: {
+            backgroundColor: 'rgba(47, 107, 49, 0.95)',
+            titleColor: '#fff',
+            bodyColor: '#fff',
+            titleFont: {
+              size: 15,
+              weight: 'bold'
+            },
+            bodyFont: {
+              size: 14
+            },
+            padding: 12,
+            cornerRadius: 8,
             callbacks: {
               label: function(context) {
                 return context.label + ": " + context.parsed + "%";
               }
             }
           }
-        }
+        },
       },
       plugins: [{
         id: "centerText",
         afterDraw: function(chart) {
           const ctx = chart.ctx;
+          const centerX = chart.chartArea.left + (chart.chartArea.right - chart.chartArea.left) / 2;
+          const centerY = chart.chartArea.top + (chart.chartArea.bottom - chart.chartArea.top) / 2;
+          
           ctx.font = "700 48px Poppins";
           ctx.fillStyle = "#2c3e50";
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
-          ctx.fillText(rataCapaian.toFixed(2) + "%", chart.chartArea.left + (chart.chartArea.right - chart.chartArea.left) / 2,
-            chart.chartArea.top + (chart.chartArea.bottom - chart.chartArea.top) / 2);
+          ctx.fillText(rataCapaian.toFixed(2) + "%", centerX, centerY);
         }
       }]
     });
@@ -933,7 +1734,7 @@
         capaianData.push(Math.min(100, baseValue + (index * 2))); // Gradually increasing
       });
 
-      new Chart(document.getElementById("lulusanChart"), {
+      const lulusanChart = new Chart(document.getElementById("lulusanChart"), {
         type: "line",
         data: {
           labels: months,
@@ -944,6 +1745,9 @@
             borderColor: "#2F6B31",
             backgroundColor: "rgba(47, 107, 49, 0.1)",
             pointBackgroundColor: "#2F6B31",
+            borderWidth: 3,
+            pointRadius: 5,
+            pointHoverRadius: 7,
             pointBorderColor: "#fff",
             pointBorderWidth: 2,
             tension: 0.4,
@@ -951,12 +1755,46 @@
           }]
         },
         options: {
+          responsive: true,
+          maintainAspectRatio: false,
           scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Bulan',
+                font: {
+                  size: 16,
+                  weight: 'bold'
+                },
+                padding: { top: 10, bottom: 10 }
+              },
+              ticks: {
+                font: {
+                  size: 13
+                },
+                color: "#555"
+              },
+              grid: {
+                color: "#f0f0f0"
+              }
+            },
             y: {
+              title: {
+                display: true,
+                text: 'Capaian (%)',
+                font: {
+                  size: 16,
+                  weight: 'bold'
+                },
+                padding: { top: 10, bottom: 10 }
+              },
               beginAtZero: true,
               max: 100,
               ticks: {
                 stepSize: 25,
+                font: {
+                  size: 13
+                },
                 color: "#555"
               },
               grid: {
@@ -984,6 +1822,110 @@
       });
     }
 
+    // Top 5 Program Studi (Bar Chart Horizontal)
+    if (data.prodiData && data.prodiData.length > 0) {
+      const sortedProdi = data.prodiData.slice().sort((a, b) => (parseInt(b.total_responden) || 0) - (parseInt(a.total_responden) || 0)).slice(0, 5);
+      const prodiLabels = sortedProdi.map(p => p.prodi_nama || 'Unknown');
+      const prodiResponden = sortedProdi.map(p => parseInt(p.total_responden) || 0);
+      
+      const topProdiCanvas = document.getElementById("topProdiChart");
+      if (topProdiCanvas) {
+        new Chart(topProdiCanvas, {
+          type: "bar",
+          data: {
+            labels: prodiLabels,
+            datasets: [{
+              label: "Jumlah Responden",
+              data: prodiResponden,
+              backgroundColor: [
+                "rgba(47, 107, 49, 0.8)",
+                "rgba(76, 168, 88, 0.8)",
+                "rgba(107, 207, 120, 0.8)",
+                "rgba(139, 195, 74, 0.8)",
+                "rgba(156, 204, 101, 0.8)"
+              ],
+              borderColor: [
+                "#2F6B31",
+                "#4CA858",
+                "#6BCF78",
+                "#8BC34A",
+                "#9CCC65"
+              ],
+              borderWidth: 2,
+              borderRadius: 8
+            }]
+          },
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false
+              },
+              tooltip: {
+                backgroundColor: 'rgba(47, 107, 49, 0.95)',
+                titleColor: '#fff',
+                bodyColor: '#fff',
+                titleFont: {
+                  size: 14,
+                  weight: 'bold'
+                },
+                bodyFont: {
+                  size: 13
+                },
+                callbacks: {
+                  label: function(context) {
+                    return 'Responden: ' + context.parsed.x + ' orang';
+                  }
+                }
+              }
+            },
+            scales: {
+              x: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: 'Jumlah Responden',
+                  font: {
+                    size: 14,
+                    weight: 'bold'
+                  }
+                },
+                ticks: {
+                  font: {
+                    size: 12
+                  },
+                  stepSize: prodiResponden.length > 0 ? Math.ceil(Math.max(...prodiResponden) / 5) : 10
+                },
+                grid: {
+                  color: "rgba(47, 107, 49, 0.1)"
+                }
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: 'Program Studi',
+                  font: {
+                    size: 14,
+                    weight: 'bold'
+                  }
+                },
+                ticks: {
+                  font: {
+                    size: 12
+                  }
+                },
+                grid: {
+                  display: false
+                }
+              }
+            }
+          }
+        });
+      }
+    }
+
     // Handle Input Total Alumni per Prodi
 
     // Export Full Dashboard as PDF (hanya visualisasi, tanpa navbar)
@@ -1004,20 +1946,97 @@
         exportContainer.style.position = 'absolute';
         exportContainer.style.left = '-9999px';
         exportContainer.style.top = '0';
-        exportContainer.style.width = '210mm'; // A4 width in mm
+        exportContainer.style.width = '190mm'; // Lebih lebar untuk layout yang rapi
+        exportContainer.style.maxWidth = '190mm';
         exportContainer.style.backgroundColor = '#ffffff';
-        exportContainer.style.padding = '15mm';
-        exportContainer.style.fontFamily = 'Poppins, sans-serif';
+        exportContainer.style.padding = '10mm';
+        exportContainer.style.fontFamily = 'Arial, sans-serif';
         exportContainer.style.boxSizing = 'border-box';
+        exportContainer.style.overflow = 'visible';
+        exportContainer.style.lineHeight = '1.4';
 
         // Clone dan style stats grid
         const statsGrid = document.querySelector('.stats-grid');
         if (statsGrid) {
           const clonedStats = statsGrid.cloneNode(true);
-          clonedStats.style.marginBottom = '25px';
+          clonedStats.style.marginBottom = '15px';
           clonedStats.style.display = 'grid';
           clonedStats.style.gridTemplateColumns = 'repeat(3, 1fr)';
-          clonedStats.style.gap = '15px';
+          clonedStats.style.gap = '12px';
+          // Style stat cards dengan lebih baik - seperti di gambar
+          const statCards = clonedStats.querySelectorAll('.stat-card');
+          statCards.forEach(card => {
+            // Reset semua style yang mungkin ada
+            card.style.padding = '20px';
+            card.style.fontSize = '14px';
+            card.style.borderRadius = '8px';
+            card.style.border = '1px solid #e0e0e0';
+            card.style.backgroundColor = '#ffffff';
+            card.style.boxShadow = '0 1px 3px rgba(0,0,0,0.08)';
+            card.style.textAlign = 'center';
+            card.style.position = 'relative';
+            card.style.overflow = 'visible';
+            card.style.display = 'flex';
+            card.style.flexDirection = 'column';
+            card.style.justifyContent = 'center';
+            card.style.minHeight = '100px';
+            
+            // Hilangkan gradient background dan pseudo elements
+            card.style.background = '#ffffff';
+            const beforeElement = card.querySelector('::before');
+            if (beforeElement) {
+              card.style.setProperty('--before-display', 'none');
+            }
+            
+            // Tambahkan accent line hijau di kiri
+            const accentLine = document.createElement('div');
+            accentLine.style.position = 'absolute';
+            accentLine.style.left = '0';
+            accentLine.style.top = '0';
+            accentLine.style.width = '5px';
+            accentLine.style.height = '100%';
+            accentLine.style.backgroundColor = '#2F6B31';
+            accentLine.style.borderRadius = '8px 0 0 8px';
+            card.insertBefore(accentLine, card.firstChild);
+            
+            // Style stat label - konsisten untuk semua
+            const statLabel = card.querySelector('h3');
+            if (statLabel) {
+              statLabel.style.fontSize = '13px';
+              statLabel.style.fontWeight = '600';
+              statLabel.style.marginBottom = '15px';
+              statLabel.style.marginTop = '0';
+              statLabel.style.color = '#000';
+              statLabel.style.textTransform = 'uppercase';
+              statLabel.style.letterSpacing = '0.5px';
+              statLabel.style.lineHeight = '1.4';
+              statLabel.style.flexShrink = '0';
+            }
+            
+            // Style stat value - seimbang untuk semua angka
+            const statValue = card.querySelector('.stat-value');
+            if (statValue) {
+              // Hapus semua gradient dan background
+              statValue.style.background = 'none';
+              statValue.style.webkitBackgroundClip = 'unset';
+              statValue.style.webkitTextFillColor = 'unset';
+              statValue.style.backgroundClip = 'unset';
+              
+              // Style hanya angka dengan warna hijau - seimbang
+              statValue.style.fontSize = '32px';
+              statValue.style.fontWeight = 'bold';
+              statValue.style.color = '#2F6B31';
+              statValue.style.margin = '0';
+              statValue.style.padding = '0';
+              statValue.style.textAlign = 'center';
+              statValue.style.lineHeight = '1.2';
+              statValue.style.display = 'block';
+              statValue.style.minHeight = '38px';
+              statValue.style.display = 'flex';
+              statValue.style.alignItems = 'center';
+              statValue.style.justifyContent = 'center';
+            }
+          });
           exportContainer.appendChild(clonedStats);
         }
 
@@ -1025,9 +2044,51 @@
         const mainContent = document.querySelector('.main-content');
         if (mainContent) {
           const clonedContent = mainContent.cloneNode(true);
-          clonedContent.style.display = 'grid';
-          clonedContent.style.gridTemplateColumns = '1fr 1fr';
+          clonedContent.style.display = 'flex';
+          clonedContent.style.flexDirection = 'column';
           clonedContent.style.gap = '20px';
+          
+          // Style charts-grid-top dan charts-grid-bottom
+          const chartsGridTop = clonedContent.querySelector('.charts-grid-top');
+          const chartsGridBottom = clonedContent.querySelector('.charts-grid-bottom');
+          
+          if (chartsGridTop) {
+            chartsGridTop.style.display = 'grid';
+            chartsGridTop.style.gridTemplateColumns = '1fr 1fr';
+            chartsGridTop.style.gap = '10px';
+            chartsGridTop.style.marginBottom = '10px';
+          }
+          
+          if (chartsGridBottom) {
+            chartsGridBottom.style.display = 'grid';
+            chartsGridBottom.style.gridTemplateColumns = '1fr 1fr';
+            chartsGridBottom.style.gap = '10px';
+          }
+          
+          // Style all chart cards dengan lebih baik
+          const chartCards = clonedContent.querySelectorAll('.chart-card');
+          chartCards.forEach(card => {
+            card.style.minHeight = 'auto';
+            card.style.height = 'auto';
+            card.style.padding = '15px';
+            card.style.marginBottom = '0';
+            card.style.borderRadius = '6px';
+            card.style.border = '1px solid #d0d0d0';
+            card.style.backgroundColor = '#ffffff';
+            card.style.boxShadow = '0 1px 3px rgba(0,0,0,0.08)';
+            // Style heading
+            const heading = card.querySelector('h3');
+            if (heading) {
+              heading.style.fontSize = '15px';
+              heading.style.fontWeight = 'bold';
+              heading.style.marginBottom = '12px';
+              heading.style.color = '#000';
+              heading.style.textAlign = 'left';
+              heading.style.paddingBottom = '8px';
+              heading.style.borderBottom = '1px solid #e0e0e0';
+            }
+          });
+          
           exportContainer.appendChild(clonedContent);
         }
 
@@ -1038,7 +2099,7 @@
         // Wait for charts to be fully rendered
         await new Promise(resolve => setTimeout(resolve, 300));
 
-        // Chart 1: Status Chart (doughnut)
+        // Chart 1: Status Chart (pie)
         const originalStatusChartEl = document.getElementById('statusChart');
         const clonedStatusChartEl = exportContainer.querySelector('#statusChart');
         if (originalStatusChartEl && clonedStatusChartEl && window.Chart) {
@@ -1047,15 +2108,41 @@
             try {
               // Force update chart to ensure it's fully rendered
               statusChartInstance.update('none');
-              await new Promise(resolve => setTimeout(resolve, 100));
+              await new Promise(resolve => setTimeout(resolve, 150));
               const chartImg = statusChartInstance.toBase64Image('image/png', 1.0);
               const img = document.createElement('img');
               img.src = chartImg;
               img.style.width = '200px';
               img.style.height = '200px';
               img.style.objectFit = 'contain';
+              img.style.display = 'block';
+              img.style.margin = '0';
               img.alt = 'Status Chart';
-              clonedStatusChartEl.parentNode.replaceChild(img, clonedStatusChartEl);
+              
+              // Style legend jika ada
+              const legend = exportContainer.querySelector('#statusLegend');
+              if (legend) {
+                legend.style.fontSize = '11px';
+                legend.style.marginTop = '0';
+                legend.style.marginLeft = '15px';
+                legend.style.textAlign = 'left';
+                legend.style.display = 'flex';
+                legend.style.flexDirection = 'column';
+                legend.style.justifyContent = 'center';
+                legend.style.gap = '8px';
+                // Style legend items
+                const legendItems = legend.querySelectorAll('.legend-item');
+                legendItems.forEach(item => {
+                  item.style.display = 'flex';
+                  item.style.alignItems = 'center';
+                  item.style.gap = '6px';
+                  item.style.marginBottom = '4px';
+                });
+              }
+              const parent = clonedStatusChartEl.parentNode;
+              if (parent) {
+                parent.replaceChild(img, clonedStatusChartEl);
+              }
             } catch (e) {
               console.error('Error exporting status chart:', e);
             }
@@ -1071,15 +2158,20 @@
             try {
               // Force update chart to ensure it's fully rendered
               lulusanChartInstance.update('none');
-              await new Promise(resolve => setTimeout(resolve, 100));
+              await new Promise(resolve => setTimeout(resolve, 150));
               const chartImg = lulusanChartInstance.toBase64Image('image/png', 1.0);
               const img = document.createElement('img');
               img.src = chartImg;
               img.style.width = '100%';
-              img.style.height = '280px';
+              img.style.height = '220px';
+              img.style.maxHeight = '220px';
               img.style.objectFit = 'contain';
+              img.style.display = 'block';
               img.alt = 'Lulusan Chart';
-              clonedLulusanChartEl.parentNode.replaceChild(img, clonedLulusanChartEl);
+              const parent = clonedLulusanChartEl.parentNode;
+              if (parent) {
+                parent.replaceChild(img, clonedLulusanChartEl);
+              }
             } catch (e) {
               console.error('Error exporting lulusan chart:', e);
             }
@@ -1099,13 +2191,90 @@
               const chartImg = donutChartInstance.toBase64Image('image/png', 1.0);
               const img = document.createElement('img');
               img.src = chartImg;
-              img.style.width = '300px';
-              img.style.height = '300px';
+              img.style.width = '200px';
+              img.style.height = '200px';
               img.style.objectFit = 'contain';
+              img.style.display = 'block';
               img.alt = 'Donut Chart';
-              clonedDonutChartEl.parentNode.replaceChild(img, clonedDonutChartEl);
+              
+              // Style detail items - minimalis tanpa highlight
+              const donutDetails = exportContainer.querySelector('.donut-details');
+              if (donutDetails) {
+                donutDetails.style.display = 'flex';
+                donutDetails.style.flexDirection = 'column';
+                donutDetails.style.gap = '15px';
+                donutDetails.style.fontSize = '13px';
+                donutDetails.style.marginLeft = '15px';
+                donutDetails.style.justifyContent = 'center';
+                const detailItems = donutDetails.querySelectorAll('.detail-item');
+                detailItems.forEach(item => {
+                  // Hapus semua background dan border
+                  item.style.padding = '0';
+                  item.style.borderRadius = '0';
+                  item.style.backgroundColor = 'transparent';
+                  item.style.border = 'none';
+                  item.style.margin = '0';
+                  const label = item.querySelector('.detail-label');
+                  const value = item.querySelector('.detail-value');
+                  if (label) {
+                    label.style.fontSize = '12px';
+                    label.style.fontWeight = '500';
+                    label.style.color = '#666';
+                    label.style.marginBottom = '6px';
+                    label.style.marginTop = '0';
+                    label.style.textTransform = 'none';
+                  }
+                  if (value) {
+                    // Hapus gradient text
+                    value.style.background = 'none';
+                    value.style.webkitBackgroundClip = 'unset';
+                    value.style.webkitTextFillColor = 'unset';
+                    value.style.backgroundClip = 'unset';
+                    // Style minimalis
+                    value.style.fontSize = '20px';
+                    value.style.fontWeight = 'bold';
+                    value.style.color = '#2F6B31';
+                    value.style.margin = '0';
+                    value.style.display = 'block';
+                    value.style.padding = '0';
+                  }
+                });
+              }
+              const parent = clonedDonutChartEl.parentNode;
+              if (parent) {
+                parent.replaceChild(img, clonedDonutChartEl);
+              }
             } catch (e) {
               console.error('Error exporting donut chart:', e);
+            }
+          }
+        }
+
+        // Chart 4: Top 5 Program Studi (horizontal bar)
+        const originalTopProdiChartEl = document.getElementById('topProdiChart');
+        const clonedTopProdiChartEl = exportContainer.querySelector('#topProdiChart');
+        if (originalTopProdiChartEl && clonedTopProdiChartEl && window.Chart) {
+          const topProdiChartInstance = Chart.getChart(originalTopProdiChartEl);
+          if (topProdiChartInstance) {
+            try {
+              // Force update chart to ensure it's fully rendered
+              topProdiChartInstance.update('none');
+              await new Promise(resolve => setTimeout(resolve, 100));
+              const chartImg = topProdiChartInstance.toBase64Image('image/png', 1.0);
+              const img = document.createElement('img');
+              img.src = chartImg;
+              img.style.width = '100%';
+              img.style.height = '220px';
+              img.style.maxHeight = '220px';
+              img.style.objectFit = 'contain';
+              img.style.display = 'block';
+              img.alt = 'Top Prodi Chart';
+              const parent = clonedTopProdiChartEl.parentNode;
+              if (parent) {
+                parent.replaceChild(img, clonedTopProdiChartEl);
+              }
+            } catch (e) {
+              console.error('Error exporting top prodi chart:', e);
             }
           }
         }
@@ -1138,13 +2307,22 @@
 
         const canvas = await html2canvas(exportContainer, {
           backgroundColor: '#ffffff',
-          scale: 2,
+          scale: 1.2,
           logging: false,
           useCORS: true,
+          allowTaint: false,
           width: exportContainer.scrollWidth,
           height: exportContainer.scrollHeight,
           windowWidth: exportContainer.scrollWidth,
-          windowHeight: exportContainer.scrollHeight
+          windowHeight: exportContainer.scrollHeight,
+          onclone: function(clonedDoc) {
+            // Ensure all styles are applied in cloned document
+            const clonedContainer = clonedDoc.getElementById('export-container-temp');
+            if (clonedContainer) {
+              // Force repaint
+              clonedContainer.style.display = 'block';
+            }
+          }
         });
 
         // Remove temporary container
@@ -1169,60 +2347,47 @@
         const margin = 10; // margin 10mm
         const contentWidth = pageWidth - (margin * 2);
         
-        // Calculate image dimensions to fit page width
-        const imgAspectRatio = canvas.width / canvas.height;
-        const imgWidth = contentWidth;
-        const imgHeight = imgWidth / imgAspectRatio;
-        
-        // Add title to first page
-        const titleHeight = 35;
+        // Add title to first page dengan styling lebih baik
         pdf.setFontSize(20);
         pdf.setFont('helvetica', 'bold');
-        pdf.text('Dashboard IKU-1', margin, 20);
-        pdf.setFontSize(12);
-        pdf.text('CDC Universitas Andalas', margin, 28);
-        pdf.setFontSize(10);
+        pdf.setTextColor(0, 0, 0);
+        pdf.text('Dashboard Monitoring Capaian IKU-1', margin, 12);
+        
+        pdf.setFontSize(11);
         pdf.setFont('helvetica', 'normal');
+        pdf.text('CDC Universitas Andalas', margin, 18);
+        pdf.setFontSize(9);
         pdf.text(`Tanggal: ${new Date().toLocaleDateString('id-ID', { 
           weekday: 'long', 
           year: 'numeric', 
           month: 'long', 
           day: 'numeric' 
-        })}`, margin, 35);
+        })}`, margin, 23);
         
-        // Calculate available height after title
+        // Calculate image dimensions to fit page width
+        const imgAspectRatio = canvas.width / canvas.height;
+        const imgWidth = contentWidth;
+        const imgHeight = imgWidth / imgAspectRatio;
+        
+        // Calculate available height after title (lebih banyak ruang)
+        const titleHeight = 28;
         const availableHeight = pageHeight - titleHeight - margin;
-        const startY = titleHeight + 5;
+        const startY = titleHeight;
         
-        // Calculate how many pages needed
-        let heightLeft = imgHeight;
-        let yPos = startY;
+        // Pastikan muat dalam satu halaman
+        const maxHeight = pageHeight - margin - titleHeight;
+        let finalImgHeight = imgHeight;
+        let finalImgWidth = imgWidth;
         
-        // Add first page
-        const firstPageHeight = Math.min(heightLeft, availableHeight);
-        pdf.addImage(imgData, 'PNG', margin, yPos, imgWidth, firstPageHeight);
-        heightLeft -= firstPageHeight;
-        
-        // Add additional pages if needed
-        while (heightLeft > 0) {
-          pdf.addPage();
-          const pageHeightToShow = Math.min(heightLeft, pageHeight - (margin * 2));
-          
-          // Calculate source position in original canvas
-          const sourceY = ((imgHeight - heightLeft) / imgHeight) * canvas.height;
-          const sourceHeight = (pageHeightToShow / imgHeight) * canvas.height;
-          
-          // Create canvas for this page slice
-          const pageCanvas = document.createElement('canvas');
-          pageCanvas.width = canvas.width;
-          pageCanvas.height = sourceHeight;
-          const ctx = pageCanvas.getContext('2d');
-          ctx.drawImage(canvas, 0, sourceY, canvas.width, sourceHeight, 0, 0, canvas.width, sourceHeight);
-          
-          const pageImgData = pageCanvas.toDataURL('image/png', 1.0);
-          pdf.addImage(pageImgData, 'PNG', margin, margin, imgWidth, pageHeightToShow);
-          
-          heightLeft -= pageHeightToShow;
+        // Jika terlalu tinggi, kurangi ukuran
+        if (imgHeight > maxHeight) {
+          finalImgHeight = maxHeight;
+          finalImgWidth = finalImgHeight * imgAspectRatio;
+          // Center jika lebih kecil dari contentWidth
+          const xOffset = (contentWidth - finalImgWidth) / 2;
+          pdf.addImage(imgData, 'PNG', margin + xOffset, startY, finalImgWidth, finalImgHeight, undefined, 'FAST');
+        } else {
+          pdf.addImage(imgData, 'PNG', margin, startY, finalImgWidth, finalImgHeight, undefined, 'FAST');
         }
 
         // Save PDF
@@ -1248,6 +2413,378 @@
         }
       }
     }
+    // Toggle sidebar for mobile
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('open');
+    }
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(event) {
+      const sidebar = document.getElementById('sidebar');
+      const toggleBtn = document.querySelector('.mobile-menu-toggle');
+      
+      if (window.innerWidth <= 768) {
+        if (!sidebar.contains(event.target) && !toggleBtn.contains(event.target) && sidebar.classList.contains('open')) {
+          sidebar.classList.remove('open');
+        }
+      }
+    });
+
+    // Update active menu item based on current page
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPath = window.location.pathname;
+      const menuItems = document.querySelectorAll('.menu-item');
+      
+      menuItems.forEach(item => {
+        const href = item.getAttribute('href');
+        if (href === currentPath) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+    });
+  </script>
+
+  <!-- Tour Guide Script -->
+  <script>
+    // Icon SVG minimalis untuk tour guide
+    const tourIcons = {
+      menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>',
+      dashboard: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>',
+      history: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>',
+      upload: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>',
+      weight: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>',
+      admin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>',
+      export: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>',
+      users: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>',
+      chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>',
+      trend: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>',
+      donut: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="4"></circle></svg>',
+      target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>',
+      trophy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path></svg>'
+    };
+
+    // Tour Guide Configuration
+    // Fungsi untuk mendapatkan semua step yang tersedia berdasarkan elemen yang ada di halaman
+    function getAvailableTourSteps() {
+      const allSteps = [
+        {
+          element: '#sidebar',
+          title: 'Menu Navigasi',
+          content: 'Ini adalah menu navigasi utama. Gunakan menu ini untuk berpindah antar halaman seperti Dashboard, Riwayat Capaian, Upload Data, dan lainnya.',
+          iconKey: 'menu',
+          position: 'right'
+        },
+        {
+          element: '.menu-item[href="/dashboard"]',
+          title: 'Dashboard',
+          content: 'Halaman utama yang menampilkan ringkasan data dan statistik capaian IKU-1. Klik untuk kembali ke dashboard.',
+          iconKey: 'dashboard',
+          position: 'right'
+        },
+        {
+          element: '.menu-item[href="/riwayat"]',
+          title: 'Riwayat Capaian',
+          content: 'Lihat riwayat dan catatan capaian IKU-1 dari waktu ke waktu. Berguna untuk tracking perkembangan data.',
+          iconKey: 'history',
+          position: 'right',
+          optional: true
+        },
+        {
+          element: '.menu-item[href="/upload"]',
+          title: 'Upload Data CSV',
+          content: 'Upload file CSV untuk mengimpor data alumni atau responden ke dalam sistem. Pastikan format CSV sesuai dengan panduan.',
+          iconKey: 'upload',
+          position: 'right',
+          optional: true
+        },
+        {
+          element: '.menu-item[href="/pembobotan"]',
+          title: 'Pencatatan Pembobotan',
+          content: 'Halaman untuk mengatur dan mencatat pembobotan data. Digunakan untuk perhitungan IKU-1 yang lebih akurat.',
+          iconKey: 'weight',
+          position: 'right',
+          optional: true
+        },
+        {
+          element: '.menu-item[href="/admin"]',
+          title: 'Manajemen Admin',
+          content: 'Kelola akun admin dan pengguna sistem. Hanya dapat diakses oleh superadmin.',
+          iconKey: 'admin',
+          position: 'right',
+          optional: true
+        },
+        {
+          element: '#exportPdfBtn',
+          title: 'Export PDF',
+          content: 'Tombol ini digunakan untuk mengekspor seluruh dashboard ke dalam format PDF. Berguna untuk laporan atau dokumentasi.',
+          iconKey: 'export',
+          position: 'bottom'
+        },
+        {
+          element: '.stat-card:first-child',
+          title: 'Total Alumni',
+          content: 'Menampilkan jumlah total alumni yang terdaftar dalam sistem. Data ini diambil dari tabel alumni.',
+          iconKey: 'users',
+          position: 'bottom'
+        },
+        {
+          element: '.stat-card:nth-child(2)',
+          title: 'Total Responden',
+          content: 'Menampilkan jumlah total responden yang telah mengisi tracer study. Data ini digunakan untuk perhitungan IKU-1.',
+          iconKey: 'chart',
+          position: 'bottom'
+        },
+        {
+          element: '.stat-card:nth-child(3)',
+          title: 'Rata-rata Capaian IKU',
+          content: 'Menampilkan persentase rata-rata capaian IKU-1 dari semua responden. Ini adalah indikator utama performa.',
+          iconKey: 'trend',
+          position: 'bottom'
+        },
+        {
+          element: '#statusChart',
+          title: 'Grafik Status Alumni',
+          content: 'Visualisasi distribusi status alumni (Bekerja, Melanjutkan Studi, Wirausaha, dll) dalam bentuk donut chart.',
+          iconKey: 'donut',
+          position: 'top'
+        },
+        {
+          element: '#donutChart',
+          title: 'Capaian IKU-1',
+          content: 'Grafik utama yang menampilkan capaian IKU-1 UNAND. Menunjukkan persentase responden yang mencapai target IKU.',
+          iconKey: 'target',
+          position: 'top'
+        },
+        {
+          element: '#lulusanChart',
+          title: 'Grafik Pertumbuhan',
+          content: 'Menampilkan grafik pertumbuhan capaian dari waktu ke waktu. Berguna untuk melihat tren perkembangan.',
+          iconKey: 'trend',
+          position: 'top'
+        },
+        {
+          element: '#topProdiChart',
+          title: 'Top 5 Program Studi',
+          content: 'Menampilkan 5 program studi dengan jumlah responden terbanyak. Membantu identifikasi prodi dengan partisipasi tinggi.',
+          iconKey: 'trophy',
+          position: 'top'
+        }
+      ];
+
+      // Filter hanya step yang elemennya ada di halaman
+      return allSteps.filter(step => {
+        const element = document.querySelector(step.element);
+        return element !== null;
+      });
+    }
+
+    let currentTourStep = 0;
+    let tourActive = false;
+    let tourSteps = [];
+
+    function startTour() {
+      // Check if tour was completed before
+      const tourCompleted = localStorage.getItem('tourCompleted');
+      if (tourCompleted === 'true') {
+        if (!confirm('Apakah Anda ingin melihat panduan lagi?')) {
+          return;
+        }
+      }
+
+      // Get available tour steps
+      tourSteps = getAvailableTourSteps();
+      
+      if (tourSteps.length === 0) {
+        alert('Tidak ada elemen yang dapat ditampilkan dalam panduan.');
+        return;
+      }
+
+      tourActive = true;
+      currentTourStep = 0;
+      
+      // Show overlay only when tour starts
+      const overlay = document.getElementById('tourOverlay');
+      overlay.style.display = 'block';
+      setTimeout(() => {
+        overlay.classList.add('active');
+      }, 10);
+      
+      showTourStep(0);
+    }
+
+    function showTourStep(stepIndex) {
+      if (stepIndex < 0 || stepIndex >= tourSteps.length) {
+        endTour();
+        return;
+      }
+
+      const step = tourSteps[stepIndex];
+      const element = document.querySelector(step.element);
+
+      if (!element) {
+        // Skip if element not found
+        if (stepIndex < tourSteps.length - 1) {
+          showTourStep(stepIndex + 1);
+        } else {
+          endTour();
+        }
+        return;
+      }
+
+      // Update tooltip content
+      const iconElement = document.getElementById('tourIcon');
+      iconElement.innerHTML = tourIcons[step.iconKey] || tourIcons.menu;
+      document.getElementById('tourTitle').textContent = step.title;
+      document.getElementById('tourContent').textContent = step.content;
+      document.getElementById('tourProgress').textContent = `${stepIndex + 1} / ${tourSteps.length}`;
+
+      // Show/hide navigation buttons
+      const prevBtn = document.getElementById('tourPrevBtn');
+      const nextBtn = document.getElementById('tourNextBtn');
+      
+      prevBtn.style.display = stepIndex === 0 ? 'none' : 'flex';
+      nextBtn.textContent = stepIndex === tourSteps.length - 1 ? 'Selesai' : 'Selanjutnya';
+
+      // Calculate element position
+      const rect = element.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+
+      // Highlight element
+      const highlight = document.getElementById('tourHighlight');
+      highlight.classList.add('active');
+      highlight.style.top = (rect.top + scrollTop - 4) + 'px';
+      highlight.style.left = (rect.left + scrollLeft - 4) + 'px';
+      highlight.style.width = (rect.width + 8) + 'px';
+      highlight.style.height = (rect.height + 8) + 'px';
+
+      // Position tooltip
+      const tooltip = document.getElementById('tourTooltip');
+      tooltip.style.display = 'block';
+      tooltip.className = 'tour-tooltip ' + step.position;
+
+      // Calculate tooltip position based on step.position
+      let tooltipTop, tooltipLeft;
+      // Get actual dimensions after display
+      const tooltipWidth = Math.max(300, tooltip.offsetWidth || 350);
+      const tooltipHeight = Math.max(180, tooltip.offsetHeight || 200);
+      const spacing = 20;
+
+      switch(step.position) {
+        case 'top':
+          tooltipTop = rect.top + scrollTop - tooltipHeight - spacing;
+          tooltipLeft = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+          break;
+        case 'bottom':
+          tooltipTop = rect.bottom + scrollTop + spacing;
+          tooltipLeft = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+          break;
+        case 'left':
+          tooltipTop = rect.top + scrollTop + (rect.height / 2) - (tooltipHeight / 2);
+          tooltipLeft = rect.left + scrollLeft - tooltipWidth - spacing;
+          break;
+        case 'right':
+          tooltipTop = rect.top + scrollTop + (rect.height / 2) - (tooltipHeight / 2);
+          tooltipLeft = rect.right + scrollLeft + spacing;
+          break;
+        default:
+          tooltipTop = rect.bottom + scrollTop + spacing;
+          tooltipLeft = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+      }
+
+      // Ensure tooltip stays within viewport
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      if (tooltipLeft < 10) tooltipLeft = 10;
+      if (tooltipLeft + tooltipWidth > viewportWidth - 10) {
+        tooltipLeft = viewportWidth - tooltipWidth - 10;
+      }
+      if (tooltipTop < 10) tooltipTop = 10;
+      if (tooltipTop + tooltipHeight > viewportHeight - 10) {
+        tooltipTop = viewportHeight - tooltipHeight - 10;
+      }
+
+      tooltip.style.top = tooltipTop + 'px';
+      tooltip.style.left = tooltipLeft + 'px';
+
+      // Scroll element into view if needed
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+      // Add pulse animation to highlighted element
+      highlight.style.animation = 'pulse 2s infinite';
+    }
+
+    function nextTourStep() {
+      if (currentTourStep < tourSteps.length - 1) {
+        currentTourStep++;
+        showTourStep(currentTourStep);
+      } else {
+        endTour();
+      }
+    }
+
+    function prevTourStep() {
+      if (currentTourStep > 0) {
+        currentTourStep--;
+        showTourStep(currentTourStep);
+      }
+    }
+
+    function skipTour() {
+      endTour();
+    }
+
+    function endTour() {
+      tourActive = false;
+      const overlay = document.getElementById('tourOverlay');
+      overlay.classList.remove('active');
+      setTimeout(() => {
+        overlay.style.display = 'none';
+      }, 300);
+      const highlight = document.getElementById('tourHighlight');
+      highlight.classList.remove('active');
+      highlight.style.display = 'none';
+      document.getElementById('tourTooltip').style.display = 'none';
+      localStorage.setItem('tourCompleted', 'true');
+    }
+
+    // Add pulse animation
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes pulse {
+        0%, 100% {
+          box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 20px rgba(47, 107, 49, 0.5);
+        }
+        50% {
+          box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 30px rgba(47, 107, 49, 0.8);
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Close tour on overlay click
+    document.getElementById('tourOverlay').addEventListener('click', function(e) {
+      if (e.target === this) {
+        endTour();
+      }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+      if (!tourActive) return;
+      
+      if (e.key === 'Escape') {
+        endTour();
+      } else if (e.key === 'ArrowRight' || e.key === 'Enter') {
+        nextTourStep();
+      } else if (e.key === 'ArrowLeft') {
+        prevTourStep();
+      }
+    });
   </script>
 </body>
 </html>

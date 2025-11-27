@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 import { spawn } from "child_process";
 import fs from "fs";
 import { createRequire } from "module";
-import { requireAuth } from "../middleware/auth.js";
+import { requireAuth, requirePermission } from "../middleware/auth.js";
 
 const require = createRequire(import.meta.url);
 const multer = require("multer");
@@ -17,6 +17,7 @@ const router = express.Router();
 
 // Apply auth middleware to all dashboard routes
 router.use(requireAuth);
+// Note: Individual routes will have their own permission checks
 
 // Helper function untuk memastikan tabel settings ada
 async function ensureSettingsTable() {
@@ -92,10 +93,14 @@ const upload = multer({
 });
 
 // 🟢 Route: GET /dashboard
+// Dashboard bisa diakses semua user yang sudah login (tidak perlu permission khusus)
 router.get("/", async (req, res) => {
   try {
     // Pastikan tabel settings ada
     await ensureSettingsTable();
+
+    // Ambil user dari session untuk ditampilkan di view
+    const user = req.session.user || null;
 
     // Pastikan tabel responden ada
     await db.promise().execute(`
@@ -208,6 +213,7 @@ router.get("/", async (req, res) => {
     const msg = req.query.msg || undefined;
 
     res.render("dashboard", {
+      user: user,
       data: {
         status,
         capaianFakultas,
@@ -223,7 +229,11 @@ router.get("/", async (req, res) => {
   } catch (err) {
     console.error("❌ Error mengambil data dashboard:", err);
     const msg = req.query.msg || undefined;
-    res.render("dashboard", { data: {}, msg: msg });
+    res.render("dashboard", { 
+      user: req.session.user || null,
+      data: {}, 
+      msg: msg 
+    });
   }
 });
 
@@ -235,20 +245,23 @@ export const uploadRouter = express.Router();
 
 // Apply auth middleware to upload routes
 uploadRouter.use(requireAuth);
+uploadRouter.use(requirePermission('upload'));
 
 // 🟢 Route: GET /upload - Halaman upload CSV
-uploadRouter.get("/upload", (req, res) => {
+// Note: Router sudah di-mount di /upload di app.js, jadi route ini adalah "/"
+uploadRouter.get("/", (req, res) => {
   console.log("✅ Route GET /upload diakses");
   const msg = req.query.msg || undefined;
   try {
-    res.render("upload", { msg: msg });
+    res.render("upload", { msg: msg, user: req.session.user || null });
   } catch (error) {
     console.error("❌ Error rendering upload view:", error);
     res.status(500).send("Error loading upload page: " + error.message);
   }
 });
 
-uploadRouter.post("/upload", upload.single("csvfile"), async (req, res) => {
+// Note: Router sudah di-mount di /upload di app.js, jadi route ini adalah "/"
+uploadRouter.post("/", upload.single("csvfile"), async (req, res) => {
   if (!req.file) {
     return res.redirect("/upload?msg=" + encodeURIComponent("Error: File tidak ditemukan"));
   }
@@ -364,11 +377,24 @@ uploadRouter.post("/upload", upload.single("csvfile"), async (req, res) => {
         
           if (result.success) {
           let msg;
+          let recordCount = 0;
+          let insertedCount = 0;
+          let updatedCount = 0;
+          let eliminatedCount = 0;
+          
           if (targetType === "responden") {
             msg = `Berhasil! Total responden diupdate untuk ${result.updated || 0} prodi. Total responden: ${result.total_responden || 0}. Alumni baru ditambahkan: ${result.added_alumni || 0}.`;
+            recordCount = result.total_responden || 0;
+            updatedCount = result.updated || 0;
+            insertedCount = result.added_alumni || 0;
           } else {
             msg = `Berhasil! ${result.inserted || 0} data diimpor, ${result.updated || 0} data diupdate, ${result.eliminated || 0} data dieliminasi.`;
+            recordCount = (result.inserted || 0) + (result.updated || 0);
+            insertedCount = result.inserted || 0;
+            updatedCount = result.updated || 0;
+            eliminatedCount = result.eliminated || 0;
           }
+          
           res.redirect(`/upload?msg=${encodeURIComponent(msg)}`);
           } else {
             res.redirect(`/upload?msg=${encodeURIComponent("Error: " + (result.error || "Gagal memproses"))}`);
@@ -399,12 +425,13 @@ uploadRouter.post("/upload", upload.single("csvfile"), async (req, res) => {
           errorMsg = pythonOutput.substring(0, 200);
         }
       }
+      
       res.redirect(`/upload?msg=${encodeURIComponent("Error: " + errorMsg)}`);
     }
   });
 });
 
-// 🟢 Route: POST /dashboard/update-total-alumni - Update total alumni manual
+// 🟢 Route: POST /dashboard/update-total-alumni - Update total alumni manual (fitur internal, tidak perlu permission khusus)
 router.post("/update-total-alumni", async (req, res) => {
   try {
     await ensureSettingsTable();
@@ -441,7 +468,7 @@ router.post("/update-total-alumni", async (req, res) => {
   }
 });
 
-// 🟢 Route: POST /dashboard/update-total-alumni-prodi - Update total alumni per prodi
+// 🟢 Route: POST /dashboard/update-total-alumni-prodi - Update total alumni per prodi (fitur internal, tidak perlu permission khusus)
 router.post("/update-total-alumni-prodi", async (req, res) => {
   try {
     const { prodiId, totalAlumni, totalResponden } = req.body;

@@ -32,6 +32,443 @@
       background: var(--bg);
       margin: 0;
       color: var(--text-dark);
+      display: flex;
+    }
+
+    /* Sidebar - Minimalis Putih */
+    .sidebar {
+      width: 260px;
+      background: #ffffff;
+      color: var(--text-dark);
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 1000;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.05);
+      border-right: 1px solid #e9ecef;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar-header {
+      padding: 25px 20px;
+      border-bottom: 1px solid #e9ecef;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .sidebar-header img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+      filter: none;
+    }
+
+    .sidebar-header h2 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0;
+      color: var(--text-dark);
+    }
+
+    .sidebar-menu {
+      padding: 15px 0;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+      border-left: 3px solid transparent;
+    }
+
+    .menu-item:hover {
+      background: #f8f9fa;
+      border-left-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .menu-item.active {
+      background: #f0f7f1;
+      border-left-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .menu-item svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+    }
+
+    .menu-divider {
+      height: 1px;
+      background: #e9ecef;
+      margin: 10px 20px;
+    }
+
+    .sidebar-footer {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      border-top: 1px solid #e9ecef;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+
+    .user-info .user-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .user-info .user-details {
+      flex: 1;
+    }
+
+    .user-info .user-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+      color: var(--text-dark);
+    }
+
+    .user-info .user-role {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .logout-btn {
+      width: 100%;
+      padding: 10px;
+      background: #f8f9fa;
+      border: 1px solid #e9ecef;
+      border-radius: 6px;
+      color: var(--text-dark);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+
+    .logout-btn:hover {
+      background: #e9ecef;
+      color: var(--primary);
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--text-dark);
+      padding: 8px;
+    }
+
+    .start-tour-btn {
+      width: 100%;
+      background: linear-gradient(135deg, #4CA858 0%, #6BCF78 100%);
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-family: 'Poppins', sans-serif;
+      margin: 0 0 15px 0;
+      box-shadow: 0 2px 8px rgba(76, 168, 88, 0.2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .start-tour-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .start-tour-btn:hover::before {
+      left: 100%;
+    }
+
+    .start-tour-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(76, 168, 88, 0.35);
+      background: linear-gradient(135deg, #5CB85C 0%, #7DD87D 100%);
+    }
+
+    .start-tour-btn:active {
+      transform: translateY(0);
+    }
+
+    .start-tour-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Tour Guide Styles */
+    .tour-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 9998;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      display: none;
+    }
+
+    .tour-overlay.active {
+      opacity: 1;
+      pointer-events: all;
+      display: block;
+    }
+
+    .tour-highlight {
+      position: absolute;
+      border: 3px solid var(--primary);
+      border-radius: 8px;
+      box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 20px rgba(47, 107, 49, 0.5);
+      z-index: 9999;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      display: none;
+    }
+
+    .tour-highlight.active {
+      display: block;
+    }
+
+    .tour-tooltip {
+      position: absolute;
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      max-width: 350px;
+      min-width: 300px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+      z-index: 10000;
+      animation: tooltipFadeIn 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    @keyframes tooltipFadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .tour-tooltip::before {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 0;
+      border: 12px solid transparent;
+    }
+
+    .tour-tooltip.top::before {
+      bottom: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-top-color: white;
+    }
+
+    .tour-tooltip.bottom::before {
+      top: -24px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-bottom-color: white;
+    }
+
+    .tour-tooltip.left::before {
+      right: -24px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-left-color: white;
+    }
+
+    .tour-tooltip.right::before {
+      left: -24px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-right-color: white;
+    }
+
+    .tour-tooltip-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #f0f0f0;
+    }
+
+    .tour-tooltip-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      padding: 12px;
+    }
+
+    .tour-tooltip-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: white;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    .tour-tooltip-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin: 0;
+    }
+
+    .tour-tooltip-content {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .tour-tooltip-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    .tour-progress {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .tour-buttons {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      flex-shrink: 0;
+    }
+
+    .tour-btn {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Poppins', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .tour-btn-secondary {
+      background: #f0f0f0;
+      color: var(--text-dark);
+    }
+
+    .tour-btn-secondary:hover {
+      background: #e0e0e0;
+    }
+
+    .tour-btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+      color: white;
+    }
+
+    .tour-btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(47, 107, 49, 0.3);
+    }
+
+    .tour-btn-skip {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid #e0e0e0;
+    }
+
+    .tour-btn-skip:hover {
+      background: #f8f9fa;
+      color: var(--text-dark);
+    }
+
+    /* Main Content Area */
+    .main-wrapper {
+      flex: 1;
+      margin-left: 260px;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     /* Header */
@@ -107,6 +544,7 @@
       align-items: center;
       justify-content: space-between;
       margin-bottom: 20px;
+      gap: 20px;
     }
 
     .section-header h2 {
@@ -114,6 +552,12 @@
       font-weight: 700;
       color: var(--text-dark);
       margin: 0;
+      flex: 1;
+    }
+
+    .section-header .btn {
+      white-space: nowrap;
+      flex-shrink: 0;
     }
 
     .btn {
@@ -460,23 +904,137 @@
 </head>
 
 <body>
-  <!-- Header -->
-  <div class="header">
-    <div class="header-left">
+  <% 
+    // Deklarasi permissions untuk digunakan di seluruh halaman
+    const userPermissions = typeof user !== 'undefined' && user && user.permissions ? user.permissions : {};
+    const isSuperAdmin = typeof user !== 'undefined' && user && user.role === 'superadmin';
+    const hasPermission = (perm) => isSuperAdmin || userPermissions[perm] === true;
+    const currentPath = '/pembobotan';
+  %>
+  
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
       <img src="/images/logounand.png" alt="Logo UNAND">
+      <h2>Career Development Center Unand</h2>
     </div>
-    <div class="header-center">
-      <h1>CDC Universitas Andalas</h1>
-      <p>Career Development Center Andalas University</p>
-      <div class="date" id="currentDate"></div>
-    </div>
-    <div class="header-right">
+    <nav class="sidebar-menu">
+      <a href="/dashboard" class="menu-item <%= currentPath === '/dashboard' ? 'active' : '' %>">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        Dashboard
+      </a>
       
+      <% if (hasPermission('riwayat')) { %>
+        <a href="/riwayat" class="menu-item <%= currentPath === '/riwayat' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          Riwayat Capaian
+        </a>
+      <% } %>
+      
+      <% if (hasPermission('upload')) { %>
+        <a href="/upload" class="menu-item <%= currentPath === '/upload' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+          Upload Data CSV
+        </a>
+      <% } %>
+      
+      <% if (hasPermission('pembobotan')) { %>
+        <a href="/pembobotan" class="menu-item <%= currentPath === '/pembobotan' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="8" x2="12" y2="12"></line>
+            <line x1="12" y1="16" x2="12.01" y2="16"></line>
+          </svg>
+          Pencatatan Pembobotan
+        </a>
+      <% } %>
+      
+      <div class="menu-divider"></div>
+      
+      <% if (hasPermission('manage_admin')) { %>
+        <a href="/admin" class="menu-item <%= currentPath === '/admin' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          Manajemen Admin
+        </a>
+      <% } %>
+      
+      <% if (hasPermission('profile')) { %>
+        <a href="/profile" class="menu-item <%= currentPath === '/profile' ? 'active' : '' %>">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          Profil Admin
+        </a>
+      <% } %>
+    </nav>
+    <div class="sidebar-footer">
+      <!-- Tour Guide Button -->
+      <button class="start-tour-btn" id="startTourBtn" onclick="startTour()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 16v-4M12 8h.01"></path>
+        </svg>
+        Mulai Panduan
+      </button>
+      <div class="user-info">
+        <div class="user-avatar">
+          <%= typeof user !== 'undefined' && user ? user.username.charAt(0).toUpperCase() : 'A' %>
+        </div>
+        <div class="user-details">
+          <div class="user-name"><%= typeof user !== 'undefined' && user ? user.username : 'Admin' %></div>
+          <div class="user-role"><%= typeof user !== 'undefined' && user && user.role ? user.role : 'Admin' %></div>
+        </div>
+      </div>
+      <a href="/logout" class="logout-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+          <polyline points="16 17 21 12 16 7"></polyline>
+          <line x1="21" y1="12" x2="9" y2="12"></line>
+        </svg>
+        Logout
+      </a>
     </div>
-  </div>
+  </aside>
 
-  <!-- Main Content -->
-  <main class="container">
+  <!-- Main Content Wrapper -->
+  <div class="main-wrapper">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <button class="mobile-menu-toggle" onclick="toggleSidebar()">☰</button>
+        <div class="header-center">
+          <h1>Pencatatan Pembobotan</h1>
+          <p>Career Development Center Andalas University</p>
+          <div class="date" id="currentDate"></div>
+        </div>
+      </div>
+      <div class="header-right">
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container">
     <div class="main-content">
       <!-- Left Section: Pembobotan -->
       <div class="left-section">
@@ -491,18 +1049,18 @@
             <thead>
               <tr>
                 <th>Gaji / Masa Tunggu</th>
-                <th>≤ 6 bulan</th>
-                <th>6 < Waktu Tunggu ≤ 12 bulan</th>
+                <th>≤ <span class="header-waktu-tunggu-1">6</span> bulan</th>
+                <th><span class="header-waktu-tunggu-1">6</span> < Waktu Tunggu ≤ <span class="header-waktu-tunggu-2">12</span> bulan</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Gaji ≥ <span id="multiplierDisplay">1.2</span>x UMP</td>
+                <td>Gaji ≥ n x UMP</td>
                 <td class="editable" onclick="editCell(this, 'bekerja_t6')">1.0</td>
                 <td class="editable" onclick="editCell(this, 'bekerja_t12_high')">0.8</td>
               </tr>
               <tr>
-                <td>Gaji < <span id="multiplierDisplay2">1.2</span>x UMP</td>
+                <td>Gaji < n x UMP</td>
                 <td class="editable" onclick="editCell(this, 'bekerja_t6_low')">0.8</td>
                 <td class="editable" onclick="editCell(this, 'bekerja_t12')">0.6</td>
               </tr>
@@ -517,18 +1075,18 @@
             <thead>
               <tr>
                 <th>Pendapatan / Masa Tunggu</th>
-                <th>≤ 6 bulan</th>
-                <th>6 < Waktu Tunggu ≤ 12 bulan</th>
+                <th>≤ <span class="header-waktu-tunggu-1">6</span> bulan</th>
+                <th><span class="header-waktu-tunggu-1">6</span> < Waktu Tunggu ≤ <span class="header-waktu-tunggu-2">12</span> bulan</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Pendapatan ≥ <span id="multiplierDisplay3">1.2</span>x UMP</td>
+                <td>Pendapatan ≥ n x UMP</td>
                 <td class="editable" onclick="editCell(this, 'wiraswasta_t6')">1.2</td>
                 <td class="editable" onclick="editCell(this, 'wiraswasta_t12_high')">1.0</td>
               </tr>
               <tr>
-                <td>Pendapatan < <span id="multiplierDisplay4">1.2</span>x UMP</td>
+                <td>Pendapatan < n x UMP</td>
                 <td class="editable" onclick="editCell(this, 'wiraswasta_t6_low')">1.0</td>
                 <td class="editable" onclick="editCell(this, 'wiraswasta_t12')">0.8</td>
               </tr>
@@ -561,7 +1119,7 @@
                 <th>No.</th>
                 <th>PROPINSI</th>
                 <th>UMP (Rp)</th>
-                <th>LEBIH DARI <span id="multiplierDisplay5">1.2</span> X UMP (Rp)</th>
+                <th>LEBIH DARI n x UMP (Rp)</th>
                 <th>Tanggal Update</th>
               </tr>
             </thead>
@@ -577,6 +1135,33 @@
   </main>
 
   <footer>© 2025 CDC Universitas Andalas — All Rights Reserved</footer>
+
+  <!-- Tour Guide Overlay -->
+  <div class="tour-overlay" id="tourOverlay"></div>
+  <div class="tour-highlight" id="tourHighlight"></div>
+  <div class="tour-tooltip" id="tourTooltip" style="display: none;">
+    <div class="tour-tooltip-header">
+      <div class="tour-tooltip-icon" id="tourIcon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+      </div>
+      <h3 class="tour-tooltip-title" id="tourTitle">Judul Panduan</h3>
+    </div>
+    <div class="tour-tooltip-content" id="tourContent">
+      Deskripsi fungsi elemen ini akan ditampilkan di sini.
+    </div>
+    <div class="tour-tooltip-footer">
+      <span class="tour-progress" id="tourProgress">1 / 10</span>
+      <div class="tour-buttons">
+        <button class="tour-btn tour-btn-skip" onclick="skipTour()">Lewati</button>
+        <button class="tour-btn tour-btn-secondary" id="tourPrevBtn" onclick="prevTourStep()" style="display: none;">Sebelumnya</button>
+        <button class="tour-btn tour-btn-primary" id="tourNextBtn" onclick="nextTourStep()">Selanjutnya</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Edit Pembobotan Modal -->
   <div id="editModal" class="modal">
@@ -597,22 +1182,38 @@
           </div>
         </div>
 
+        <!-- Waktu Tunggu Setting -->
+        <div class="multiplier-setting">
+          <h4>Pengaturan Waktu Tunggu (Bulan)</h4>
+          <p>Catatan: Atur rentang waktu tunggu untuk kategori pembobotan</p>
+          <div class="edit-grid">
+            <div class="form-group">
+              <label>Waktu Tunggu Kategori 1 (bulan):</label>
+              <input type="number" id="waktuTunggu1" value="6" step="1" min="1" max="24">
+            </div>
+            <div class="form-group">
+              <label>Waktu Tunggu Kategori 2 (bulan):</label>
+              <input type="number" id="waktuTunggu2" value="12" step="1" min="1" max="24">
+            </div>
+          </div>
+        </div>
+
         <h3>Data Pembobotan - Bekerja</h3>
         <div class="edit-grid">
           <div class="form-group">
-            <label>≤ 6 bulan (Gaji ≥ Xx UMP):</label>
+            <label id="label_bekerja_t6">≤ <span class="waktu-tunggu-1">6</span> bulan (Gaji ≥ n x UMP):</label>
             <input type="number" id="edit_bekerja_t6" value="1.0" step="0.1">
           </div>
           <div class="form-group">
-            <label>6 < Waktu ≤ 12 bulan (Gaji ≥ Xx UMP):</label>
+            <label id="label_bekerja_t12_high"><span class="waktu-tunggu-1">6</span> < Waktu ≤ <span class="waktu-tunggu-2">12</span> bulan (Gaji ≥ n x UMP):</label>
             <input type="number" id="edit_bekerja_t12_high" value="0.8" step="0.1">
           </div>
           <div class="form-group">
-            <label>≤ 6 bulan (Gaji < Xx UMP):</label>
+            <label id="label_bekerja_t6_low">≤ <span class="waktu-tunggu-1">6</span> bulan (Gaji < n x UMP):</label>
             <input type="number" id="edit_bekerja_t6_low" value="0.8" step="0.1">
           </div>
           <div class="form-group">
-            <label>6 < Waktu ≤ 12 bulan (Gaji < Xx UMP):</label>
+            <label id="label_bekerja_t12"><span class="waktu-tunggu-1">6</span> < Waktu ≤ <span class="waktu-tunggu-2">12</span> bulan (Gaji < n x UMP):</label>
             <input type="number" id="edit_bekerja_t12" value="0.6" step="0.1">
           </div>
         </div>
@@ -620,19 +1221,19 @@
         <h3>Data Pembobotan - Wiraswasta</h3>
         <div class="edit-grid">
           <div class="form-group">
-            <label>≤ 6 bulan (Pendapatan ≥ Xx UMP):</label>
+            <label id="label_wiraswasta_t6">≤ <span class="waktu-tunggu-1">6</span> bulan (Pendapatan ≥ n x UMP):</label>
             <input type="number" id="edit_wiraswasta_t6" value="1.2" step="0.1">
           </div>
           <div class="form-group">
-            <label>6 < Waktu ≤ 12 bulan (Pendapatan ≥ Xx UMP):</label>
+            <label id="label_wiraswasta_t12_high"><span class="waktu-tunggu-1">6</span> < Waktu ≤ <span class="waktu-tunggu-2">12</span> bulan (Pendapatan ≥ n x UMP):</label>
             <input type="number" id="edit_wiraswasta_t12_high" value="1.0" step="0.1">
           </div>
           <div class="form-group">
-            <label>≤ 6 bulan (Pendapatan < Xx UMP):</label>
+            <label id="label_wiraswasta_t6_low">≤ <span class="waktu-tunggu-1">6</span> bulan (Pendapatan < n x UMP):</label>
             <input type="number" id="edit_wiraswasta_t6_low" value="1.0" step="0.1">
           </div>
           <div class="form-group">
-            <label>6 < Waktu ≤ 12 bulan (Pendapatan < Xx UMP):</label>
+            <label id="label_wiraswasta_t12"><span class="waktu-tunggu-1">6</span> < Waktu ≤ <span class="waktu-tunggu-2">12</span> bulan (Pendapatan < n x UMP):</label>
             <input type="number" id="edit_wiraswasta_t12" value="0.8" step="0.1">
           </div>
         </div>
@@ -692,7 +1293,9 @@
       bekerja: { t6: 1.0, t12_high: 0.8, t6_low: 0.8, t12: 0.6 },
       wiraswasta: { t6: 1.2, t12_high: 1.0, t6_low: 1.0, t12: 0.8 },
       pendidikan: 0.6,
-      multiplier: 1.2
+      multiplier: 1.2,
+      waktu_tunggu_1: 6,  // Waktu tunggu pertama (bulan)
+      waktu_tunggu_2: 12  // Waktu tunggu kedua (bulan)
     };
 
     // Display current date
@@ -851,6 +1454,8 @@
     function openEditModal() {
       document.getElementById('editModal').classList.add('active');
       document.getElementById('umpMultiplier').value = pembobotan.multiplier;
+      document.getElementById('waktuTunggu1').value = pembobotan.waktu_tunggu_1;
+      document.getElementById('waktuTunggu2').value = pembobotan.waktu_tunggu_2;
       document.getElementById('edit_bekerja_t6').value = pembobotan.bekerja.t6;
       document.getElementById('edit_bekerja_t12_high').value = pembobotan.bekerja.t12_high;
       document.getElementById('edit_bekerja_t6_low').value = pembobotan.bekerja.t6_low;
@@ -860,6 +1465,27 @@
       document.getElementById('edit_wiraswasta_t6_low').value = pembobotan.wiraswasta.t6_low;
       document.getElementById('edit_wiraswasta_t12').value = pembobotan.wiraswasta.t12;
       document.getElementById('edit_pendidikan').value = pembobotan.pendidikan;
+      
+      // Update label waktu tunggu di modal
+      updateWaktuTungguDisplay();
+      
+      // Add event listeners untuk update real-time saat input berubah
+      const waktuTunggu1Input = document.getElementById('waktuTunggu1');
+      const waktuTunggu2Input = document.getElementById('waktuTunggu2');
+      
+      if (waktuTunggu1Input) {
+        waktuTunggu1Input.addEventListener('input', function() {
+          pembobotan.waktu_tunggu_1 = parseInt(this.value) || 6;
+          updateWaktuTungguDisplay();
+        });
+      }
+      
+      if (waktuTunggu2Input) {
+        waktuTunggu2Input.addEventListener('input', function() {
+          pembobotan.waktu_tunggu_2 = parseInt(this.value) || 12;
+          updateWaktuTungguDisplay();
+        });
+      }
     }
 
     function closeEditModal() {
@@ -904,6 +1530,8 @@
     // Save pembobotan
     function savePembobotan() {
       pembobotan.multiplier = parseFloat(document.getElementById('umpMultiplier').value);
+      pembobotan.waktu_tunggu_1 = parseInt(document.getElementById('waktuTunggu1').value);
+      pembobotan.waktu_tunggu_2 = parseInt(document.getElementById('waktuTunggu2').value);
       pembobotan.bekerja.t6 = parseFloat(document.getElementById('edit_bekerja_t6').value);
       pembobotan.bekerja.t12_high = parseFloat(document.getElementById('edit_bekerja_t12_high').value);
       pembobotan.bekerja.t6_low = parseFloat(document.getElementById('edit_bekerja_t6_low').value);
@@ -916,19 +1544,54 @@
 
       // Update display
       updateMultiplierDisplay();
+      updateWaktuTungguDisplay(); // Update waktu tunggu di seluruh halaman
       updateTables();
+      updateUMPTable(); // Refresh tabel UMP dengan multiplier baru
       document.getElementById('pendidikanValue').textContent = pembobotan.pendidikan;
+      
+      // Simpan ke localStorage
+      localStorage.setItem('pembobotan', JSON.stringify(pembobotan));
+      
       alert('Data pembobotan berhasil disimpan!');
       closeEditModal();
     }
 
     // Update multiplier display throughout the page
+    // Catatan: Angka multiplier sudah tidak ditampilkan di kolom tabel
+    // Hanya tampil "n x UMP" di semua tempat
     function updateMultiplierDisplay() {
-      document.getElementById('multiplierDisplay').textContent = pembobotan.multiplier;
-      document.getElementById('multiplierDisplay2').textContent = pembobotan.multiplier;
-      document.getElementById('multiplierDisplay3').textContent = pembobotan.multiplier;
-      document.getElementById('multiplierDisplay4').textContent = pembobotan.multiplier;
-      document.getElementById('multiplierDisplay5').textContent = pembobotan.multiplier;
+      // Fungsi ini tetap ada untuk kompatibilitas, tapi tidak perlu update apapun
+      // karena semua angka multiplier sudah dihapus dari tampilan
+    }
+
+    // Update waktu tunggu display throughout the page
+    function updateWaktuTungguDisplay() {
+      const waktu1 = pembobotan.waktu_tunggu_1;
+      const waktu2 = pembobotan.waktu_tunggu_2;
+      
+      // Update header tabel
+      const headerWaktu1 = document.querySelectorAll('.header-waktu-tunggu-1');
+      const headerWaktu2 = document.querySelectorAll('.header-waktu-tunggu-2');
+      
+      headerWaktu1.forEach(el => {
+        el.textContent = waktu1;
+      });
+      
+      headerWaktu2.forEach(el => {
+        el.textContent = waktu2;
+      });
+      
+      // Update label di modal
+      const labelWaktu1 = document.querySelectorAll('.waktu-tunggu-1');
+      const labelWaktu2 = document.querySelectorAll('.waktu-tunggu-2');
+      
+      labelWaktu1.forEach(el => {
+        el.textContent = waktu1;
+      });
+      
+      labelWaktu2.forEach(el => {
+        el.textContent = waktu2;
+      });
     }
 
     // Update table values
@@ -978,6 +1641,339 @@
 
     // Load on page init
     loadUMPData();
+    
+    // Initialize multiplier display on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      // Load pembobotan from localStorage if available
+      const savedPembobotan = localStorage.getItem('pembobotan');
+      if (savedPembobotan) {
+        try {
+          const parsed = JSON.parse(savedPembobotan);
+          if (parsed.multiplier) {
+            pembobotan.multiplier = parsed.multiplier;
+          }
+          // Load data pembobotan lainnya jika ada
+          if (parsed.bekerja) pembobotan.bekerja = parsed.bekerja;
+          if (parsed.wiraswasta) pembobotan.wiraswasta = parsed.wiraswasta;
+          if (parsed.pendidikan !== undefined) pembobotan.pendidikan = parsed.pendidikan;
+          if (parsed.waktu_tunggu_1 !== undefined) pembobotan.waktu_tunggu_1 = parsed.waktu_tunggu_1;
+          if (parsed.waktu_tunggu_2 !== undefined) pembobotan.waktu_tunggu_2 = parsed.waktu_tunggu_2;
+        } catch (e) {
+          console.error('Error loading pembobotan from localStorage:', e);
+        }
+      }
+      
+      // Update multiplier display
+      updateMultiplierDisplay();
+      
+      // Update waktu tunggu display
+      updateWaktuTungguDisplay();
+      
+      // Update tables dengan data yang dimuat
+      updateTables();
+      document.getElementById('pendidikanValue').textContent = pembobotan.pendidikan;
+      
+      // Update UMP table setelah data dimuat
+      setTimeout(() => {
+        updateUMPTable();
+      }, 500);
+    });
+  </script>
+
+  <script>
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('open');
+    }
+
+    // Update active menu item based on current page
+    document.addEventListener('DOMContentLoaded', function() {
+      const currentPath = window.location.pathname;
+      const menuItems = document.querySelectorAll('.menu-item');
+      
+      menuItems.forEach(item => {
+        const href = item.getAttribute('href');
+        if (href === currentPath) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+    });
+
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', function(event) {
+      const sidebar = document.getElementById('sidebar');
+      const toggleBtn = document.querySelector('.mobile-menu-toggle');
+      
+      if (window.innerWidth <= 768) {
+        if (sidebar && toggleBtn && !sidebar.contains(event.target) && !toggleBtn.contains(event.target) && sidebar.classList.contains('open')) {
+          sidebar.classList.remove('open');
+        }
+      }
+    });
+
+    // Tour Guide Script
+    const tourIcons = {
+      menu: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>',
+      weight: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>',
+      table: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>',
+      edit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>',
+      map: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>'
+    };
+
+    function getAvailableTourSteps() {
+      const allSteps = [
+        {
+          element: '#sidebar',
+          title: 'Menu Navigasi',
+          content: 'Ini adalah menu navigasi utama. Gunakan menu ini untuk berpindah antar halaman seperti Dashboard, Riwayat Capaian, Upload Data, dan lainnya.',
+          iconKey: 'menu',
+          position: 'right'
+        },
+        {
+          element: '.left-section',
+          title: 'Pencatatan Pembobotan',
+          content: 'Bagian ini menampilkan data pembobotan untuk perhitungan IKU-1, termasuk pembobotan untuk status Bekerja, Wiraswasta, dan Melanjutkan Studi.',
+          iconKey: 'weight',
+          position: 'top'
+        },
+        {
+          element: '#bekerjaTable',
+          title: 'Pembobotan Status Bekerja',
+          content: 'Tabel ini menampilkan nilai pembobotan untuk alumni yang bekerja berdasarkan gaji dan masa tunggu mendapatkan pekerjaan. Klik pada sel untuk mengedit nilai.',
+          iconKey: 'table',
+          position: 'top'
+        },
+        {
+          element: '#wiraswastaTable',
+          title: 'Pembobotan Status Wiraswasta',
+          content: 'Tabel ini menampilkan nilai pembobotan untuk alumni yang berwiraswasta berdasarkan pendapatan dan masa tunggu. Klik pada sel untuk mengedit nilai.',
+          iconKey: 'table',
+          position: 'top'
+        },
+        {
+          element: '.card.highlight',
+          title: 'Pembobotan Melanjutkan Studi',
+          content: 'Nilai pembobotan untuk alumni yang melanjutkan studi. Klik pada nilai untuk mengedit.',
+          iconKey: 'weight',
+          position: 'top'
+        },
+        {
+          element: 'button[onclick="openEditModal()"]',
+          title: 'Edit Data Pembobotan',
+          content: 'Tombol ini membuka modal untuk mengedit semua nilai pembobotan sekaligus. Gunakan untuk mengubah multiplier UMP dan semua nilai pembobotan.',
+          iconKey: 'edit',
+          position: 'top'
+        },
+        {
+          element: '.right-section',
+          title: 'Upah Minimum Provinsi',
+          content: 'Bagian ini menampilkan data Upah Minimum Provinsi (UMP) yang digunakan sebagai acuan perhitungan pembobotan berdasarkan gaji/pendapatan.',
+          iconKey: 'map',
+          position: 'top'
+        },
+        {
+          element: 'button[onclick="openEditUMPModal()"]',
+          title: 'Tambah/Edit Data UMP',
+          content: 'Tombol ini membuka modal untuk menambah atau mengedit data Upah Minimum Provinsi. Data UMP digunakan dalam perhitungan pembobotan.',
+          iconKey: 'edit',
+          position: 'top'
+        }
+      ];
+
+      return allSteps.filter(step => {
+        const element = document.querySelector(step.element);
+        return element !== null;
+      });
+    }
+
+    let currentTourStep = 0;
+    let tourActive = false;
+    let tourSteps = [];
+
+    function startTour() {
+      const tourCompleted = localStorage.getItem('tourCompleted');
+      if (tourCompleted === 'true') {
+        if (!confirm('Apakah Anda ingin melihat panduan lagi?')) {
+          return;
+        }
+      }
+
+      tourSteps = getAvailableTourSteps();
+      
+      if (tourSteps.length === 0) {
+        alert('Tidak ada elemen yang dapat ditampilkan dalam panduan.');
+        return;
+      }
+
+      tourActive = true;
+      currentTourStep = 0;
+      
+      const overlay = document.getElementById('tourOverlay');
+      overlay.style.display = 'block';
+      setTimeout(() => {
+        overlay.classList.add('active');
+      }, 10);
+      
+      showTourStep(0);
+    }
+
+    function showTourStep(stepIndex) {
+      if (stepIndex < 0 || stepIndex >= tourSteps.length) {
+        endTour();
+        return;
+      }
+
+      const step = tourSteps[stepIndex];
+      const element = document.querySelector(step.element);
+
+      if (!element) {
+        if (stepIndex < tourSteps.length - 1) {
+          showTourStep(stepIndex + 1);
+        } else {
+          endTour();
+        }
+        return;
+      }
+
+      const iconElement = document.getElementById('tourIcon');
+      iconElement.innerHTML = tourIcons[step.iconKey] || tourIcons.menu;
+      document.getElementById('tourTitle').textContent = step.title;
+      document.getElementById('tourContent').textContent = step.content;
+      document.getElementById('tourProgress').textContent = `${stepIndex + 1} / ${tourSteps.length}`;
+
+      const prevBtn = document.getElementById('tourPrevBtn');
+      const nextBtn = document.getElementById('tourNextBtn');
+      
+      prevBtn.style.display = stepIndex === 0 ? 'none' : 'flex';
+      nextBtn.textContent = stepIndex === tourSteps.length - 1 ? 'Selesai' : 'Selanjutnya';
+
+      const rect = element.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+
+      const highlight = document.getElementById('tourHighlight');
+      highlight.classList.add('active');
+      highlight.style.top = (rect.top + scrollTop - 4) + 'px';
+      highlight.style.left = (rect.left + scrollLeft - 4) + 'px';
+      highlight.style.width = (rect.width + 8) + 'px';
+      highlight.style.height = (rect.height + 8) + 'px';
+
+      const tooltip = document.getElementById('tourTooltip');
+      tooltip.style.display = 'block';
+      tooltip.className = 'tour-tooltip ' + step.position;
+
+      let tooltipTop, tooltipLeft;
+      const tooltipWidth = Math.max(300, tooltip.offsetWidth || 350);
+      const tooltipHeight = Math.max(180, tooltip.offsetHeight || 200);
+      const spacing = 20;
+
+      switch(step.position) {
+        case 'top':
+          tooltipTop = rect.top + scrollTop - tooltipHeight - spacing;
+          tooltipLeft = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+          break;
+        case 'bottom':
+          tooltipTop = rect.bottom + scrollTop + spacing;
+          tooltipLeft = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+          break;
+        case 'left':
+          tooltipTop = rect.top + scrollTop + (rect.height / 2) - (tooltipHeight / 2);
+          tooltipLeft = rect.left + scrollLeft - tooltipWidth - spacing;
+          break;
+        case 'right':
+          tooltipTop = rect.top + scrollTop + (rect.height / 2) - (tooltipHeight / 2);
+          tooltipLeft = rect.right + scrollLeft + spacing;
+          break;
+        default:
+          tooltipTop = rect.bottom + scrollTop + spacing;
+          tooltipLeft = rect.left + scrollLeft + (rect.width / 2) - (tooltipWidth / 2);
+      }
+
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+
+      if (tooltipLeft < 10) tooltipLeft = 10;
+      if (tooltipLeft + tooltipWidth > viewportWidth - 10) {
+        tooltipLeft = viewportWidth - tooltipWidth - 10;
+      }
+      if (tooltipTop < 10) tooltipTop = 10;
+      if (tooltipTop + tooltipHeight > viewportHeight - 10) {
+        tooltipTop = viewportHeight - tooltipHeight - 10;
+      }
+
+      tooltip.style.top = tooltipTop + 'px';
+      tooltip.style.left = tooltipLeft + 'px';
+
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      highlight.style.animation = 'pulse 2s infinite';
+    }
+
+    function nextTourStep() {
+      if (currentTourStep < tourSteps.length - 1) {
+        currentTourStep++;
+        showTourStep(currentTourStep);
+      } else {
+        endTour();
+      }
+    }
+
+    function prevTourStep() {
+      if (currentTourStep > 0) {
+        currentTourStep--;
+        showTourStep(currentTourStep);
+      }
+    }
+
+    function skipTour() {
+      endTour();
+    }
+
+    function endTour() {
+      tourActive = false;
+      const overlay = document.getElementById('tourOverlay');
+      overlay.classList.remove('active');
+      setTimeout(() => {
+        overlay.style.display = 'none';
+      }, 300);
+      const highlight = document.getElementById('tourHighlight');
+      highlight.classList.remove('active');
+      highlight.style.display = 'none';
+      document.getElementById('tourTooltip').style.display = 'none';
+      localStorage.setItem('tourCompleted', 'true');
+    }
+
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes pulse {
+        0%, 100% {
+          box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 20px rgba(47, 107, 49, 0.5);
+        }
+        50% {
+          box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.7), 0 0 30px rgba(47, 107, 49, 0.8);
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    document.getElementById('tourOverlay').addEventListener('click', function(e) {
+      if (e.target === this) {
+        endTour();
+      }
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (!tourActive) return;
+      
+      if (e.key === 'Escape') {
+        endTour();
+      } else if (e.key === 'ArrowRight' || e.key === 'Enter') {
+        nextTourStep();
+      } else if (e.key === 'ArrowLeft') {
+        prevTourStep();
+      }
+    });
   </script>
 </body>
 </html>

@@ -14,6 +14,7 @@ import indexRouter from "./routes/index.js";
 import authRouter from "./routes/auth.js";
 // import capaianRouter from "./routes/capaian.js"; // ❌ tidak dipakai
 import pembobotanRouter from "./routes/pembobotan.js";
+import adminRouter from "./routes/admin.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -51,11 +52,12 @@ app.use("/stylesheets", express.static(path.join(__dirname, "stylesheets")));
 // Routes
 // Auth routes (login/logout) - harus di atas routes lain
 app.use("/", authRouter);
-// Mount uploadRouter sebelum indexRouter untuk memastikan route /upload ditangkap
-app.use("/", uploadRouter); // Route untuk upload CSV di root /upload
+// Mount uploadRouter dengan path spesifik untuk menghindari konflik
+app.use("/upload", uploadRouter); // Route untuk upload CSV di /upload
 app.use("/", indexRouter);
 // app.use("/capaian", capaianRouter); // ❌ hapus atau komentar
 app.use("/pembobotan", pembobotanRouter);
+app.use("/admin", adminRouter);
 app.use("/dashboard", dashboardRouter);
 
 // Debug: Test route

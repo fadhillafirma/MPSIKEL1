@@ -1,12 +1,16 @@
 import express from "express";
 import db from "../config/db.js";
-import { requireAuth } from "../middleware/auth.js";
+import { requireAuth, requirePermission } from "../middleware/auth.js";
 
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  // Redirect root path to login
-  res.redirect("/login");
+  // Jika sudah login, redirect ke dashboard
+  if (req.session && req.session.user) {
+    return res.redirect("/dashboard");
+  }
+  // Tampilkan landing page
+  res.render("landing");
 });
 
 // Helper function untuk memastikan tabel settings ada (sama seperti di dashboard)
@@ -43,7 +47,7 @@ async function ensureSettingsTable() {
 }
 
 // Route untuk halaman riwayat capaian
-router.get("/riwayat", requireAuth, async (req, res) => {
+router.get("/riwayat", requireAuth, requirePermission('riwayat'), async (req, res) => {
   try {
     // Pastikan tabel settings ada
     await ensureSettingsTable();
@@ -129,6 +133,7 @@ router.get("/riwayat", requireAuth, async (req, res) => {
             const totalFakultas = new Set(results.map((item) => item.fakultas)).size;
 
             res.render("index", {
+              user: req.session.user || null,
               data: results,
               tahunList: tahunResults.map((t) => t.tahun_lulus),
               fakultasList: fakultasResults.map((f) => f.nama),
@@ -146,7 +151,7 @@ router.get("/riwayat", requireAuth, async (req, res) => {
 });
 
 // API untuk refresh data (tanpa reload)
-router.get("/api/data", requireAuth, async (req, res) => {
+router.get("/api/data", requireAuth, requirePermission('riwayat'), async (req, res) => {
   try {
     // Pastikan tabel settings ada
     await ensureSettingsTable();
