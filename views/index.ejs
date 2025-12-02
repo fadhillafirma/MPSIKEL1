@@ -1203,12 +1203,34 @@
                   let capaianRata = 0;
                   if (jumlahAlumni > 0 && item.capaian_rata !== null && item.capaian_rata !== undefined && item.capaian_rata !== '') {
                     const parsed = parseFloat(item.capaian_rata);
-                    capaianRata = isNaN(parsed) ? 0 : parsed;
+                    capaianRata = isNaN(parsed) ? 0 : Math.max(0, parsed); // Pastikan tidak negatif
                   }
                   
-                  const colorClass = jumlahAlumni === 0 ? '' : (capaianRata >= 75 ? 'green' : capaianRata >= 50 ? 'yellow' : 'red');
-                  const statusClass = jumlahAlumni === 0 ? '' : (capaianRata >= 75 ? 'success' : capaianRata >= 50 ? 'warning' : 'danger');
-                  const statusText = jumlahAlumni === 0 ? '-' : (capaianRata >= 75 ? 'Mencapai Target' : capaianRata >= 50 ? 'Mendekati Target' : 'Perlu Peningkatan');
+                  // Tentukan status berdasarkan capaian
+                  let colorClass = '';
+                  let statusClass = '';
+                  let statusText = '-';
+                  
+                  if (jumlahAlumni > 0) {
+                    if (capaianRata >= 75) {
+                      colorClass = 'green';
+                      statusClass = 'success';
+                      statusText = 'Mencapai Target';
+                    } else if (capaianRata >= 50) {
+                      colorClass = 'yellow';
+                      statusClass = 'warning';
+                      statusText = 'Mendekati Target';
+                    } else if (capaianRata > 0) {
+                      colorClass = 'red';
+                      statusClass = 'danger';
+                      statusText = 'Perlu Peningkatan';
+                    } else {
+                      // Jika capaian 0 atau belum ada data
+                      colorClass = 'red';
+                      statusClass = 'danger';
+                      statusText = 'Perlu Peningkatan';
+                    }
+                  }
                 %>
                 <tr data-fakultas="<%= item.fakultas %>" data-prodi="<%= item.prodi %>" data-persentase="<%= capaianRata %>">
                   <td><%= item.fakultas %></td>
@@ -1406,12 +1428,34 @@
         let capaianRata = 0;
         if (jumlahAlumni > 0 && item.capaian_rata !== null && item.capaian_rata !== undefined && item.capaian_rata !== '') {
           const parsed = parseFloat(item.capaian_rata);
-          capaianRata = isNaN(parsed) ? 0 : parsed;
+          capaianRata = isNaN(parsed) ? 0 : Math.max(0, parsed); // Pastikan tidak negatif
         }
         
-        const colorClass = jumlahAlumni === 0 ? '' : (capaianRata >= 75 ? 'green' : capaianRata >= 50 ? 'yellow' : 'red');
-        const statusClass = jumlahAlumni === 0 ? '' : (capaianRata >= 75 ? 'success' : capaianRata >= 50 ? 'warning' : 'danger');
-        const statusText = jumlahAlumni === 0 ? '-' : (capaianRata >= 75 ? 'Mencapai Target' : capaianRata >= 50 ? 'Mendekati Target' : 'Perlu Peningkatan');
+        // Tentukan status berdasarkan capaian
+        let colorClass = '';
+        let statusClass = '';
+        let statusText = '-';
+        
+        if (jumlahAlumni > 0) {
+          if (capaianRata >= 75) {
+            colorClass = 'green';
+            statusClass = 'success';
+            statusText = 'Mencapai Target';
+          } else if (capaianRata >= 50) {
+            colorClass = 'yellow';
+            statusClass = 'warning';
+            statusText = 'Mendekati Target';
+          } else if (capaianRata > 0) {
+            colorClass = 'red';
+            statusClass = 'danger';
+            statusText = 'Perlu Peningkatan';
+          } else {
+            // Jika capaian 0 atau belum ada data
+            colorClass = 'red';
+            statusClass = 'danger';
+            statusText = 'Perlu Peningkatan';
+          }
+        }
         
         // Pastikan status badge selalu ada
         const statusBadge = jumlahAlumni === 0 
